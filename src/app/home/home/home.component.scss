@@ -1,0 +1,83 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    max-width: none;
+    padding:0px;
+}
+
+.card-container{
+    overflow-x: scroll;
+    padding:40px 20px;
+}
+
+.card-container::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+.card-container::-webkit-scrollbar-track {
+    background-color: rgba(49, 49, 49, 0.25);
+    border-radius: 100px;
+    margin:25vw;
+}
+ 
+.card-container::-webkit-scrollbar-thumb {
+    border: 5px solid transparent;
+    border-radius: 100px;
+    background-color: rgba(78, 78, 78, 0.8);
+    background-clip: content-box;
+}
+
+div>.card:first-child{
+    margin-left:0px;
+}
+
+div>.card{
+    margin-left:20px;
+}
+
+.card-device{
+    padding: 10px 25px;
+    border-radius: 25px;
+    position: relative;
+    background-color: rgb(0, 0, 0,0.5);
+}
+
+.card-device label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right:25px;
+    color:#e2e2e2;
+}
+
+.card-device button{
+    border-radius: 25px;
+}
+
+.card-module{
+    background: #FFFFFF;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    width: calc(25% - 20px);
+    min-width: calc(300px - 10px);
+    height: 60vh;
+}
+
+.module-process{
+    background-color: rgb(102, 16, 242,0.8);
+    background-image: var(--bs-gradient);
+}
+.module-dashboard{
+    background-color: rgb(220, 53, 69,0.8);
+    background-image: var(--bs-gradient);
+}
+.module-guide{
+    background-color: rgba(159, 183, 14, 0.8);
+    background-image: var(--bs-gradient);
+}
+.module-account{
+    background-color:rgb(25, 135, 84,0.8);
+    background-image: var(--bs-gradient);
+}

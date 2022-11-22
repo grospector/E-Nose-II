@@ -1,0 +1,51 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
+body,
+html {
+  height: 100%;
+  background-color: #F5F5F5;
+}
+
+.top-15px{
+    top:15px !important;
+}
+.top-25px{
+    top:25px !important;
+}
+.top-5{
+    top:5% !important;
+}
+.top-15{
+    top:15% !important;
+}
+.top-25{
+    top:25% !important;
+}
+
+
+.bottom-15px{
+    bottom:15px !important;
+}
+.bottom-25px{
+    bottom:25px !important;
+}
+.bottom-5{
+    bottom:5% !important;
+}
+.bottom-15{
+    bottom:15% !important;
+}
+.bottom-25{
+    bottom:25% !important;
+}
+
+$blue:    #0d6efd;
+$indigo:  #6610f2;
+$purple:  #6f42c1;
+$pink:    #d63384;
+$red:     #dc3545;
+$orange:  #fd7e14;
+$yellow:  #ffc107;
+$green:   #198754;
+$teal:    #20c997;
+$cyan:    #0dcaf0;
