@@ -16,4 +16,8 @@ export class HomeComponent implements OnInit {
   onClickLogout(): void{
     this.router.navigateByUrl('/sign-in');
   }
+
+  onClickMobule(module:string): void{
+    this.router.navigateByUrl('/'+module);
+  }
 }

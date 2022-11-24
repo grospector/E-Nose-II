@@ -1,0 +1,102 @@
+<div class="position-absolute top-5 start-50 translate-middle-x">
+    <div class="card card-device">
+        <div class="d-flex">
+            <label>
+                Device 1
+            </label>
+            <button type="button" class="btn btn-danger" (click)="onClickLogout()">Logout</button>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="d-flex justify-content-between w-100 card-container">
+        <article class="card card-module module-process" (click)="onClickMobule('testing')">
+            <header>
+                Header
+            </header>
+            <main>
+                <article>
+                    <header class="text-end">
+                        <label>
+                            <h5>
+                                START TESTING
+                            </h5>
+                        </label>
+                    </header>
+                    <main class="">
+                        <label>
+                            - Create Case
+                        </label>
+                        <br>
+                        <label> 
+                            - Enter a sample
+                        </label>
+                        <br>
+                        <label>
+                            - Analyze Data
+                        </label>
+                    </main>
+                </article>
+            </main>
+        </article>
+        <article class="card card-module module-dashboard" (click)="onClickMobule('dashboard')">
+            <header>
+                Header
+            </header>
+            <main>
+                <article>
+                    <header class="text-end">
+                        <label>
+                            <h5>
+                                GO TO DASHBOARD
+                            </h5>
+                        </label>
+                    </header>
+                    <main>
+                    </main>
+                </article>
+            </main>
+        </article>
+        <article class="card card-module module-guide" (click)="onClickMobule('guide')">
+            <header>
+                Header
+            </header>
+            <main>
+                <article>
+                    <header class="text-end">
+                        <label>
+                            <h5>
+                                QUICK GUIDE
+                            </h5>
+                        </label>
+                    </header>
+                    <main class="text-end">
+                        <label>
+                            Explore our powerful 
+                            documentation
+                        </label>
+                    </main>
+                </article>
+            </main>
+        </article>
+        <article class="card card-module module-account" (click)="onClickMobule('my-account')">
+            <header>
+                Header
+            </header>
+            <main>
+                <article>
+                    <header class="text-end">
+                        <label>
+                            <h5>
+                                MY ACCOUNT
+                            </h5>
+                        </label>
+                    </header>
+                    <main>
+                    </main>
+                </article>
+            </main>
+        </article>
+    </div>
+</div>
+<app-footer></app-footer>
