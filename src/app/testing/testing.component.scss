@@ -1,0 +1,14 @@
+.parent{
+    width:300px;
+    border:5px solid red;
+    overflow-x: hidden; 
+    float:left;
+  }
+  .child{
+    width:1000px;
+    float:left;
+    font-size:15px;
+    font-family:arial;
+    padding:10px;
+    cursor: pointer;
+  }
