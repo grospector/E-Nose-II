@@ -1,0 +1,31 @@
+nav{
+    position: sticky;
+    bottom:0px;
+    background: rgba(214, 221, 232, 0.8);
+    box-shadow: 0 0 0 100vmax rgba(214, 221, 232, 0.8);
+    clip-path: inset(0 -100vmax); 
+}
+
+nav>div>div{
+    padding:10px 2rem;
+}
+nav>div:hover{
+    cursor: pointer !important;
+}
+nav>div>div.active{
+    background: rgba(84, 120, 177, 0.1);
+}
+label h2{
+    font-size: 1rem;
+    color: rgba(122, 138, 164, 1);
+    margin:0px;
+}
+nav>label:hover{
+    cursor: pointer !important;
+}
+nav>label h2:hover{
+    cursor: pointer !important;
+}
+fa-icon{
+    filter: invert(60%) sepia(7%) saturate(1457%) hue-rotate(178deg) brightness(89%) contrast(77%);
+}

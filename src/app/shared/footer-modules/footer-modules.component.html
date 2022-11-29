@@ -1,0 +1,49 @@
+<nav>
+    <div class="d-flex justify-content-center">
+        <div class="d-flex flex-column text-center {{module == 0 ? 'active' : ''}}"
+            (click)="onClickModule(0)">
+            <label>
+                <h2>
+                    Home
+                </h2>
+            </label>
+        </div>
+        <div class="d-flex flex-column text-center {{module == 1 ? 'active' : ''}}">
+            <label>
+                <h2>
+                    Dashboard
+                </h2>
+            </label>
+        </div>
+        <div class="d-flex flex-column text-center {{module == 2 ? 'active' : ''}}">
+            <label>
+                <h2>
+                    Test Report
+                </h2>
+            </label>
+        </div>
+        <div class="d-flex flex-column text-center {{module == 3 ? 'active' : ''}}">
+            <label>
+                <h2>
+                    Case Management
+                </h2>
+            </label>
+        </div>
+        <div class="d-flex flex-column text-center {{module == 4 ? 'active' : ''}}">
+            <label>
+                <h2>
+                    Device Setting
+                </h2>
+            </label>
+        </div>
+        <div class="d-flex flex-column text-center {{module == 5 ? 'active' : ''}}"
+            (click)="onClickModule(5)">
+            <fa-icon class="fa-2xl" icon="users-gear"></fa-icon>
+            <label>
+                <h2>
+                    Account Setting
+                </h2>
+            </label>
+        </div>
+    </div>
+</nav>
