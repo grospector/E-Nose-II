@@ -25,6 +25,15 @@ export class FooterModulesComponent implements OnInit {
       case 1:
         this.router.navigateByUrl('/dashboard');
         break;
+      case 2:
+        this.router.navigateByUrl('/test-report');
+        break;
+      case 3:
+        this.router.navigateByUrl('/case-management');
+        break;
+      case 4:
+        this.router.navigateByUrl('/device-setting');
+        break;
       case 5:
         this.router.navigateByUrl('/account-setting');
         break;

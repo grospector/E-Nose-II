@@ -7,6 +7,9 @@ import { HomeComponent } from './modules/home/home.component';
 import { TestingComponent } from './modules/testing/testing.component';
 import { AuthGuard } from './core/auth/guards/auth.guard';
 import { AccountSettingComponent } from './modules/account-setting/account-setting.component';
+import { TestReportComponent } from './modules/test-report/test-report.component';
+import { CaseManagementComponent } from './modules/case-management/case-management.component';
+import { DeviceSettingComponent } from './modules/device-setting/device-setting.component';
 
 const routes: Routes = [   
   { path: 'sign-in', component: SignInComponent },  
@@ -15,7 +18,11 @@ const routes: Routes = [
   { path: '', component: HomeComponent, canActivate : [AuthGuard] },
   { path: 'testing', component: TestingComponent, canActivate : [AuthGuard] },
   { path: 'dashboard', component: DashboardComponent, canActivate : [AuthGuard] },
+  { path: 'test-report', component: TestReportComponent, canActivate : [AuthGuard] },
+  { path: 'case-management', component: CaseManagementComponent, canActivate : [AuthGuard] },
+  { path: 'device-setting', component: DeviceSettingComponent, canActivate : [AuthGuard] },
   { path: 'account-setting', component: AccountSettingComponent, canActivate : [AuthGuard] },
+
   // {
   //   path:'',
   //   children:[

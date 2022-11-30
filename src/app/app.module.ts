@@ -21,6 +21,9 @@ import { faUsersGear } from '@fortawesome/free-solid-svg-icons';
 import { FooterModulesComponent } from './shared/footer-modules/footer-modules.component';
 import { AccountSettingComponent } from './modules/account-setting/account-setting.component';
 import { HeaderModulesComponent } from './shared/header-modules/header-modules.component';
+import { DeviceSettingComponent } from './modules/device-setting/device-setting.component';
+import { CaseManagementComponent } from './modules/case-management/case-management.component';
+import { TestReportComponent } from './modules/test-report/test-report.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import { HeaderModulesComponent } from './shared/header-modules/header-modules.c
     DashboardComponent,
     FooterModulesComponent,
     AccountSettingComponent,
-    HeaderModulesComponent
+    HeaderModulesComponent,
+    DeviceSettingComponent,
+    CaseManagementComponent,
+    TestReportComponent
   ],
   imports: [
     BrowserModule,

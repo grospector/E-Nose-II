@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { EnumModules } from 'src/app/shared/footer-modules/footer-modules';
 
 @Component({
   selector: 'app-account-setting',
@@ -6,8 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./account-setting.component.scss']
 })
 export class AccountSettingComponent implements OnInit {
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }
