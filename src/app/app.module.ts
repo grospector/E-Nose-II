@@ -14,16 +14,27 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { GuideComponent } from './shared/guide/guide.component';
 import { AuthGuard } from './core/auth/guards/auth.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { FontAwesomeModule,FaIconLibrary  } from '@fortawesome/angular-fontawesome';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUsersGear } from '@fortawesome/free-solid-svg-icons';
+
 import { FooterModulesComponent } from './shared/footer-modules/footer-modules.component';
 import { AccountSettingComponent } from './modules/account-setting/account-setting.component';
 import { HeaderModulesComponent } from './shared/header-modules/header-modules.component';
 import { DeviceSettingComponent } from './modules/device-setting/device-setting.component';
 import { CaseManagementComponent } from './modules/case-management/case-management.component';
 import { TestReportComponent } from './modules/test-report/test-report.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { AuthInterceptor } from './core/auth/auth.interceptor';
+import { AuthService } from './core/auth/auth.service';
+
 
 @NgModule({
   declarations: [
@@ -46,13 +57,28 @@ import { TestReportComponent } from './modules/test-report/test-report.component
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    InputTextModule,
+    TableModule,
+    DropdownModule,
+    DialogModule,
+    ButtonModule,
+    CheckboxModule
   ],
-  providers: [AuthGuard],
+  providers: [
+    AuthGuard,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

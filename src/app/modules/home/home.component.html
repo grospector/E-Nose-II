@@ -1,11 +1,45 @@
-<div class="position-absolute top-5 start-50 translate-middle-x">
+<div class="position-absolute top-25px start-50 translate-middle-x">
     <div class="card card-device">
-        <div class="d-flex">
-            <label>
-                {{CurrentUser.username}}
-            </label>
-            <button type="button" class="btn btn-danger" (click)="onClickLogout()">Logout</button>
+        <div class="d-flex flex-row">
+            <div class="d-flex flex-column">
+                <div class="d-flex align-items-center h-100">
+                    <label class="">
+                        Username : {{CurrentUser.username}}
+                    </label>
+                </div>
+                <div class="d-flex align-items-center h-100 pt-2">
+                    <label class="">
+                        Device : {{CurrentDevice.name}}
+                    </label>
+                </div>
+            </div>
+            <div class="d-flex flex-column">
+                <div>
+                    <button type="button" class="btn btn-danger" (click)="onClickLogout()">Logout</button>
+                </div>
+                <div class="pt-2">
+                    <button type="button" class="btn btn-warning" (click)="onClickSwitch()">Switch</button>
+                </div>
+            </div>
         </div>
+        <!-- <div class="d-flex flex-column">
+            <div class="d-flex flex-row">
+                <label>
+                    {{CurrentUser.username}}
+                </label>
+                <div>
+                    <button type="button" class="btn btn-danger" (click)="onClickLogout()">Logout</button>
+                </div>
+            </div>
+            <div class="d-flex flex-row">
+                <label>
+                    {{CurrentDevice.name}}
+                </label>
+                <div>
+                    <button type="button" class="btn btn-warning" (click)="onClickLogout()">Switch</button>
+                </div>
+            </div>
+        </div> -->
     </div>
 </div>
 <div class="container">

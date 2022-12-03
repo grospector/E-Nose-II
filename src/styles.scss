@@ -3,7 +3,27 @@
 body,
 html {
   height: 100%;
-  background-color: #F5F5F5;
+  background-color: #F5F5F5 !important;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+body::-webkit-scrollbar {
+    width: 1em;
+}
+ 
+body::-webkit-scrollbar-track {
+    background-color: rgba(49, 49, 49, 0.25);
+    border-radius: 100px;
+    margin-top: 70px;
+    margin-bottom: 80px;
+}
+
+body::-webkit-scrollbar-thumb {
+    border: 5px solid transparent;
+    border-radius: 100px;
+    background-color: rgba(78, 78, 78, 0.8);
+    background-clip: content-box;
 }
 
 .top-15px{
@@ -37,6 +57,12 @@ html {
 }
 .bottom-25{
     bottom:25% !important;
+}
+
+.p-datatable , 
+.p-datatable .p-datatable-header,
+.p-datatable-thead , .p-datatable .p-datatable-thead > tr > th{
+    background-color: white !important;
 }
 
 $blue:    #0d6efd;

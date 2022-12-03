@@ -43,6 +43,18 @@ div>.card{
     position: relative;
     background-color: rgb(0, 0, 0,0.5);
 }
+// .card-device>div>label{
+//     margin-top:10px;
+// }
+// .card-device>div>label:last-child{
+//     margin-top:0px;
+// }
+// .card-device>div button{
+//     margin-top:10px;
+// }
+// .card-device>div button:last-child{
+//     margin-top:0px;
+// }
 
 .card-device label{
     display: flex;
@@ -54,6 +66,7 @@ div>.card{
 
 .card-device button{
     border-radius: 25px;
+    width: 80px;
 }
 
 .card-module{

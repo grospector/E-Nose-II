@@ -4,52 +4,109 @@
     </header>
     <main>
         <div class="d-flex flex-column justify-content-between">
-            <article class="card">
-                <header>
-                    <h3></h3>
-                </header>
-                <main>
-                    <input placeholder="Search account"/>
-                    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
-                            class="mat-elevation-z8">
-
-                        <!-- Position Column -->
-                        <ng-container matColumnDef="position">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
-                            No.
-                        </th>
-                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-                        </ng-container>
-
-                        <!-- Name Column -->
-                        <ng-container matColumnDef="name">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-                            Name
-                        </th>
-                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                        </ng-container>
-
-                        <!-- Weight Column -->
-                        <ng-container matColumnDef="weight">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
-                            Weight
-                        </th>
-                        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-                        </ng-container>
-
-                        <!-- Symbol Column -->
-                        <ng-container matColumnDef="symbol">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
-                            Symbol
-                        </th>
-                        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        </table>
-                </main>
-            </article>
+            <div class="card">
+                <div>
+                    <!-- <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input type="text" placeholder="Search" pInputText/>
+                    </span> -->
+                    <p-table #dt1 [value]="users" dataKey="id" 
+                        [scrollable]="true" scrollHeight="calc((100vh - 120px - 200px)/1)"
+                        [rows]="10" [showCurrentPageReport]="true"
+                        [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-users p-datatable-gridlines"
+                        [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [globalFilterFields]="['Id','Username','Name','Email','Role','IsActive','Action']">
+                        <ng-template pTemplate="caption">
+                            <div class="p-d-flex">
+                                <span class="p-input-icon-left p-ml-auto">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" (input)="dt1.filterGlobal($event.target, 'contains')" placeholder="Search keyword" />
+                                </span>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Id
+                                        <p-columnFilter type="text" field="id" display="menu"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Username
+                                        <p-columnFilter type="text" field="username" display="menu"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Name
+                                        <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Email
+                                        <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Role
+                                        <p-columnFilter type="text" field="role" display="menu"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        IsActive
+                                        <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="p-d-flex p-jc-between p-ai-center">
+                                        Action
+                                        <p-columnFilter type="text" field="action" display="menu"></p-columnFilter>
+                                    </div>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-user>
+                            <td>
+                                <label class="text-center">
+                                    {{user.id}}
+                                </label>
+                            </td>
+                            <td>
+                                {{user.username}}
+                            </td>
+                            <td>
+                                {{user.name}}
+                            </td>
+                            <td>
+                                {{user.email}}
+                            </td>
+                            <td>
+                                {{user.role}}
+                            </td>
+                            <td>
+                                <p-checkbox [(ngModel)]="user.is_active" [binary]="true" [inputId]="user?.id" [disabled]="true"></p-checkbox>
+                            </td>
+                            <td>
+                                <div id="action" class="d-flex">
+                                    <button pButton pRipple type="button" label="View" class="p-button-raised"></button>
+                                    <button *ngIf="getGetUserRole() == 'admin'" pButton pRipple type="button" label="Reset" class="p-button-raised p-button-warning" (click)="onClickReset(user.id)"></button>
+                                    <button *ngIf="getGetUserRole() == 'admin'" pButton pRipple type="button" label="Delete" class="p-button-raised p-button-danger" (click)="onClickDelete(user.id)"></button>
+                                </div>
+                            </td>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="7">No users found.</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
         </div>
     </main>
     <footer>

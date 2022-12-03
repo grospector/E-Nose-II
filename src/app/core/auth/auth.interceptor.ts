@@ -3,10 +3,11 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import Swal from 'sweetalert2';
 
 
 @Injectable()
-export class ErrorInterceptor implements HttpInterceptor {
+export class AuthInterceptor implements HttpInterceptor {
     constructor(private authService: AuthService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -17,6 +18,16 @@ export class ErrorInterceptor implements HttpInterceptor {
             }
 
             const error = err.error.message || err.statusText;
+            Swal.fire({
+                title: err.status,
+                text: err.statusText,
+                icon: 'error',
+                confirmButtonText: 'OK',
+            }).then(
+                () => {
+                    console.log(err);
+                }
+            );
             return throwError(error);
         }))
     }
