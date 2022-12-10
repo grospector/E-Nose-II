@@ -34,6 +34,7 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { AuthService } from './core/auth/auth.service';
+import { DeviceModalComponent } from './shared/modal/device-modal/device-modal.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { AuthService } from './core/auth/auth.service';
     HeaderModulesComponent,
     DeviceSettingComponent,
     CaseManagementComponent,
-    TestReportComponent
+    TestReportComponent,
+    DeviceModalComponent
   ],
   imports: [
     BrowserModule,

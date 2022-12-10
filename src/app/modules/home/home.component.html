@@ -1,48 +1,50 @@
-<div class="position-absolute top-25px start-50 translate-middle-x">
-    <div class="card card-device">
-        <div class="d-flex flex-row">
-            <div class="d-flex flex-column">
-                <div class="d-flex align-items-center h-100">
-                    <label class="">
-                        Username : {{CurrentUser.username}}
-                    </label>
+<div class="container d-flex flex-column">
+    <div class="p-5"> 
+        <!-- position-absolute top-25px start-50 translate-middle-x -->
+        <div class="card card-device">
+            <div class="d-flex flex-row">
+                <div class="d-flex flex-column">
+                    <div class="d-flex align-items-center h-100">
+                        <label class="">
+                            Username : {{CurrentUser.username}}
+                        </label>
+                    </div>
+                    <div class="d-flex align-items-center h-100 pt-2">
+                        <label class="">
+                            Device : {{CurrentDevice.name}}
+                        </label>
+                    </div>
                 </div>
-                <div class="d-flex align-items-center h-100 pt-2">
-                    <label class="">
-                        Device : {{CurrentDevice.name}}
-                    </label>
+                <div class="d-flex flex-column">
+                    <div>
+                        <button type="button" class="btn btn-danger" (click)="onClickLogout()">Logout</button>
+                    </div>
+                    <div class="pt-2">
+                        <button type="button" class="btn btn-warning" (click)="onClickSwitch()">Switch</button>
+                        <p-button (click)="showBasicDialog2()" icon="pi pi-external-link" label="Long Content"></p-button>
+                    </div>
                 </div>
             </div>
-            <div class="d-flex flex-column">
-                <div>
-                    <button type="button" class="btn btn-danger" (click)="onClickLogout()">Logout</button>
+            <!-- <div class="d-flex flex-column">
+                <div class="d-flex flex-row">
+                    <label>
+                        {{CurrentUser.username}}
+                    </label>
+                    <div>
+                        <button type="button" class="btn btn-danger" (click)="onClickLogout()">Logout</button>
+                    </div>
                 </div>
-                <div class="pt-2">
-                    <button type="button" class="btn btn-warning" (click)="onClickSwitch()">Switch</button>
+                <div class="d-flex flex-row">
+                    <label>
+                        {{CurrentDevice.name}}
+                    </label>
+                    <div>
+                        <button type="button" class="btn btn-warning" (click)="onClickLogout()">Switch</button>
+                    </div>
                 </div>
-            </div>
+            </div> -->
         </div>
-        <!-- <div class="d-flex flex-column">
-            <div class="d-flex flex-row">
-                <label>
-                    {{CurrentUser.username}}
-                </label>
-                <div>
-                    <button type="button" class="btn btn-danger" (click)="onClickLogout()">Logout</button>
-                </div>
-            </div>
-            <div class="d-flex flex-row">
-                <label>
-                    {{CurrentDevice.name}}
-                </label>
-                <div>
-                    <button type="button" class="btn btn-warning" (click)="onClickLogout()">Switch</button>
-                </div>
-            </div>
-        </div> -->
     </div>
-</div>
-<div class="container">
     <div #elemt class="d-flex justify-content-between w-100 card-container">
         <article class="card card-module module-process" (click)="onClickMobule('testing')">
             <header>
@@ -132,5 +134,17 @@
             </main>
         </article>
     </div>
+    <app-footer></app-footer>
 </div>
-<app-footer></app-footer>
+
+<!-- <app-device-modal [(displayModal)]="displayModal"></app-device-modal> -->
+<p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false">
+    <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="displayModal=false" label="Yes" class="p-button-text"></p-button>
+            <p-button icon="pi pi-times" (click)="displayModal=false" label="No"></p-button>
+        </ng-template>
+</p-dialog>

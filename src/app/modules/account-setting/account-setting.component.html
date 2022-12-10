@@ -15,12 +15,12 @@
                         [rows]="10" [showCurrentPageReport]="true"
                         [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-users p-datatable-gridlines"
                         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                        [globalFilterFields]="['Id','Username','Name','Email','Role','IsActive','Action']">
+                        [globalFilterFields]="['id','username','name','email','role','isActive','action']">
                         <ng-template pTemplate="caption">
                             <div class="p-d-flex">
                                 <span class="p-input-icon-left p-ml-auto">
                                     <i class="pi pi-search"></i>
-                                    <input pInputText type="text" (input)="dt1.filterGlobal($event.target, 'contains')" placeholder="Search keyword" />
+                                    <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
                                 </span>
                             </div>
                         </ng-template>
@@ -71,33 +71,35 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-user>
-                            <td>
-                                <label class="text-center">
-                                    {{user.id}}
-                                </label>
-                            </td>
-                            <td>
-                                {{user.username}}
-                            </td>
-                            <td>
-                                {{user.name}}
-                            </td>
-                            <td>
-                                {{user.email}}
-                            </td>
-                            <td>
-                                {{user.role}}
-                            </td>
-                            <td>
-                                <p-checkbox [(ngModel)]="user.is_active" [binary]="true" [inputId]="user?.id" [disabled]="true"></p-checkbox>
-                            </td>
-                            <td>
-                                <div id="action" class="d-flex">
-                                    <button pButton pRipple type="button" label="View" class="p-button-raised"></button>
-                                    <button *ngIf="getGetUserRole() == 'admin'" pButton pRipple type="button" label="Reset" class="p-button-raised p-button-warning" (click)="onClickReset(user.id)"></button>
-                                    <button *ngIf="getGetUserRole() == 'admin'" pButton pRipple type="button" label="Delete" class="p-button-raised p-button-danger" (click)="onClickDelete(user.id)"></button>
-                                </div>
-                            </td>
+                            <tr>
+                                <td>
+                                    <label class="text-center">
+                                        {{user.id}}
+                                    </label>
+                                </td>
+                                <td>
+                                    {{user.username}}
+                                </td>
+                                <td>
+                                    {{user.name}}
+                                </td>
+                                <td>
+                                    {{user.email}}
+                                </td>
+                                <td>
+                                    {{user.role}}
+                                </td>
+                                <td>
+                                    <p-checkbox [(ngModel)]="user.is_active" [binary]="true" [inputId]="user?.id" [disabled]="true"></p-checkbox>
+                                </td>
+                                <td>
+                                    <div id="action" class="d-flex">
+                                        <button pButton pRipple type="button" label="View" class="p-button-raised"></button>
+                                        <button *ngIf="getGetUserRole() == 'admin'" pButton pRipple type="button" label="Reset" class="p-button-raised p-button-warning" (click)="onClickReset(user.id)"></button>
+                                        <button *ngIf="getGetUserRole() == 'admin'" pButton pRipple type="button" label="Delete" class="p-button-raised p-button-danger" (click)="onClickDelete(user.id)"></button>
+                                    </div>
+                                </td>
+                            </tr>
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
                             <tr>

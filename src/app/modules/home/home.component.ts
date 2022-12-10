@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
   CurrentUser!:IUser;
   CurrentDevice!:IDevice;
 
+  displayModal!: boolean;
+
   constructor(private router: Router
               ,private authService:AuthService) { }
 
@@ -35,5 +37,12 @@ export class HomeComponent implements OnInit {
 
   onClickMobule(module:string): void{
     this.router.navigateByUrl('/'+module);
+  }
+
+  showBasicDialog2() {
+    if(!this.displayModal)
+    {
+      this.displayModal = true;
+    }
   }
 }

@@ -3,13 +3,12 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    max-width: none;
-    padding:0px;
+    max-width: calc(100vw - 20px);
 }
 
 .card-container{
     overflow-x: scroll;
-    padding:40px 20px;
+    padding-bottom:85px;
 }
 
 .card-container::-webkit-scrollbar {
@@ -76,7 +75,7 @@ div>.card{
     width: calc(25% - 20px);
     min-width: calc(300px - 20px);
     max-width: calc(300px - 20px);
-    height: 60vh;
+    height: calc(100vh - 200px - 90px);
 }
 .card-module:hover{
     cursor: pointer;
@@ -122,10 +121,15 @@ div>.card{
 
 @media (min-width:1200px){
     .container {
-        max-width: 1200px;
+        //max-width: 1200px;
+        padding: 0px 10vw;
     }
 
     .card-container::-webkit-scrollbar-track {
         margin: 100vw;
+    }
+
+    .card-module{
+        max-width: calc(25% - 2vw);
     }
 }
