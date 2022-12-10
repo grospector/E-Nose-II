@@ -354,3 +354,7 @@ MigrationBackup/
 .vscode/
 .editorconfig
 .browserslistrc
+
+# angular
+.angular/
+dist/

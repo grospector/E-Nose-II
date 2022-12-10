@@ -28,7 +28,10 @@ export class HomeComponent implements OnInit {
   }
 
   onClickSwitch(): void{
-
+    if(!this.displayModal)
+    {
+      this.displayModal = true;
+    }
   }
   
   onClickLogout(): void{
@@ -37,12 +40,5 @@ export class HomeComponent implements OnInit {
 
   onClickMobule(module:string): void{
     this.router.navigateByUrl('/'+module);
-  }
-
-  showBasicDialog2() {
-    if(!this.displayModal)
-    {
-      this.displayModal = true;
-    }
   }
 }
