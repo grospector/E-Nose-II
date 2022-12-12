@@ -6,7 +6,7 @@ import { IUser } from "src/app/models/common/user";
 
 export class AuthUtils
 {
-static GetSession() : ISession {
+  static GetSession() : ISession {
     var session = sessionStorage.getItem("user");
     if(session == "" || session == null)
     {
@@ -53,17 +53,37 @@ static GetSession() : ISession {
     var session = sessionStorage.getItem("device");
     if(session == "" || session == null)
     {
-      return <IDevice>{
+      return <IDevice>
+      {
         id: 0,
-        name:'-'
+        name:'-',
+        mac_serial_no: '-:0',
+        status: '-',
+        is_connecting: false,
+        is_active: false,
+        connecting_user_name: '',
+        created_at: '',
+        updated_at: '',
+        working_test_id: '',
+        connecting_user_id: ''
       }
     }
-    else{
-    //   var sessionJson = <ILoginReponse>JSON.parse(session);
-    //   return sessionJson.session.user;
+    else
+    {
+      //   var sessionJson = <ILoginReponse>JSON.parse(session);
+      //   return sessionJson.session.user;
       return <IDevice>{
         id: 999,
-        name:'Mock'
+        name:'Mock',
+        mac_serial_no: '-:999',
+        status: '-',
+        is_connecting: false,
+        is_active: false,
+        connecting_user_name: '',
+        created_at: '',
+        updated_at: '',
+        working_test_id: '',
+        connecting_user_id: ''
       }
     }
   }

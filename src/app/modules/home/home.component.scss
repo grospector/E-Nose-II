@@ -28,11 +28,11 @@
     background-clip: content-box;
 }
 
-div>.card:first-child{
+div>.card-module:first-child{
     margin-left:0px;
 }
 
-div>.card{
+div>.card-module{
     margin-left:20px;
 }
 
@@ -117,6 +117,46 @@ div>.card{
     background-color:rgb(25, 135, 84,0.8);
     background-image: var(--bs-gradient);
     padding:15px 25px;
+}
+
+:host {
+    ::ng-deep{
+        .p-dialog{
+            border-radius: 20px !important;
+            //background-color: rgba(0, 0, 0, 0.5) !important;
+        }
+        .p-dialog .p-dialog-header {
+            border-radius: 20px 20px 0px 0px !important;
+            background-color: rgba(41, 41, 41, 0.8) !important;
+        }  
+        .p-dialog .p-dialog-header label{
+            color: rgba(251, 251, 251, 0.8) !important;
+        }  
+        .p-dialog .p-dialog-body,.p-dialog-content {
+            min-height: 400px;
+            background-color: rgba(41, 41, 41, 0.8) !important;
+        }  
+        .p-dialog label.loading{
+            color: rgba(251, 251, 251, 0.5) !important;
+        }
+        .p-dialog .p-dialog-footer {
+            border-radius: 0px 0px 20px 20px !important;
+            background-color: rgba(41, 41, 41, 0.8) !important;
+        }  
+        .p-dialog .device{
+            margin-bottom: 10px !important;
+            background-color: rgba(251, 251, 251, 0.5) !important;
+        }
+        .p-dialog .device:last-child{
+            margin-bottom: 0px !important;
+        }
+        .p-dialog .device button{
+            margin-right: 5px !important;
+        }
+        .p-dialog .device button:last-child{
+            margin-bottom: 0px !important;
+        }
+    }   
 }
 
 @media (min-width:1200px){

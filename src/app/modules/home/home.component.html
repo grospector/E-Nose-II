@@ -136,14 +136,41 @@
     <app-footer></app-footer>
 </div>
 
-<!-- <app-device-modal [(displayModal)]="displayModal"></app-device-modal> -->
-<p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+<p-dialog [(visible)]="displayModal" [modal]="true" [style]="{width:'800px'}" [baseZIndex]="-100"
     [draggable]="false" [resizable]="false">
-    <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <ng-template pTemplate="footer">
-            <p-button icon="pi pi-check" (click)="displayModal=false" label="Yes" class="p-button-text"></p-button>
-            <p-button icon="pi pi-times" (click)="displayModal=false" label="No"></p-button>
-        </ng-template>
+    <ng-template pTemplate="header">
+        <div class="text-center w-100">
+            <label>
+                <h3>
+                    Devices
+                </h3>
+            </label>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="body">
+        <div *ngIf="IsDialogLoading" class="h-100">
+            <label class="d-flex align-items-center loading h-100">
+                <h4 class="m-auto">
+                    Loading . . .
+                </h4>
+            </label>
+        </div>
+        <div *ngIf="!IsDialogLoading" class="flex-column">
+            <div *ngFor="let device of Devices" class="card device p-3">
+                <div class="d-flex flex-row w-100">
+                    <label class="d-flex align-items-center">
+                        <h4 class="m-auto">
+                            {{device.name}}
+                        </h4>
+                    </label>
+                    <div class="ms-auto">
+                        <button pButton pRipple type="button" label="Connect" class="p-button-raised p-button-warning" (click)="onClickConnect(device.mac_serial_no)"></button>
+                        <button pButton pRipple type="button" label="Other" class="p-button-raised"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+    </ng-template>
 </p-dialog>
