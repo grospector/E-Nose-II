@@ -15,7 +15,7 @@ export class DevicesService {
 
   GetListDevices(): Observable<IListDevicesReponse>{
     const httpHeaders: HttpHeaders = new HttpHeaders({
-      'Authorization':  AuthUtils.GetSession().access_token ?? "",
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
     });
 
     
@@ -37,7 +37,7 @@ export class DevicesService {
 
   Connect(deviceSerialNo:string): Observable<IConnectResponse>{
     const httpHeaders: HttpHeaders = new HttpHeaders({
-      'Authorization':  AuthUtils.GetSession().access_token ?? "",
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
     });
     
     const body = {
@@ -45,7 +45,7 @@ export class DevicesService {
     };
 
     return this.http.post<IConnectResponse>(
-      this.BaseUrl,
+      this.BaseUrl+"/connect",
       body,
       {
         headers: httpHeaders

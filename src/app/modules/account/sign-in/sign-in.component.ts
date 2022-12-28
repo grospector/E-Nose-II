@@ -43,14 +43,15 @@ export class SignInComponent implements OnInit {
       .subscribe((res) =>{
         if(res.success){
           console.log("Login successful");  
-          sessionStorage.setItem('isLoggedIn', "true");  
+          localStorage.setItem('isLoggedIn', "true");  
 
           const session = res.session;
-          sessionStorage.setItem('token', session.access_token ?? "");  
+          localStorage.setItem('token', session.access_token ?? "");  
           this.router.navigate(["/"]);  
         }
         else {  
           this.message = "Please check your username and password";  
+          alert(this.message);
         }  
       });
     }  

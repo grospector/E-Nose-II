@@ -34,7 +34,7 @@ export class AccountSettingComponent implements OnInit {
   }
 
   getGetUserRole(){
-    const currentUser:IUser = AuthUtils.GetSessionUser();
+    const currentUser:IUser = AuthUtils.GetCurrentUser();
     return currentUser.role;
   }
 

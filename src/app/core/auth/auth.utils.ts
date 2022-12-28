@@ -1,14 +1,14 @@
 import { InjectSetupWrapper } from "@angular/core/testing";
 import { IDevice } from "src/app/api/models/device.model";
-import { ILoginReponse, ISession } from "src/app/models/common/login";
+import { ISession, ILoginReponse } from "src/app/models/common/login";
 import { Role } from "src/app/models/common/role";
 import { IUser } from "src/app/models/common/user";
 
 export class AuthUtils
 {
-  static GetSession() : ISession {
-    var session = sessionStorage.getItem("user");
-    if(session == "" || session == null)
+  static GetLocalStorage() : ISession {
+    var local = localStorage.getItem("user");
+    if(local == "" || local == null)
     {
         return <ISession>{
             id: 0,
@@ -26,14 +26,14 @@ export class AuthUtils
         }
     }
     else{
-        var sessionJson = <ILoginReponse>JSON.parse(session);
-        return sessionJson.session;
+        var localStorageJson = <ILoginReponse>JSON.parse(local);
+        return localStorageJson.session;
     }
 }
 
-  static GetSessionUser() : IUser {
-    var session = sessionStorage.getItem("user");
-    if(session == "" || session == null)
+  static GetCurrentUser() : IUser {
+    var local = localStorage.getItem("user");
+    if(local == "" || local == null)
     {
       return <IUser>{
         id: 0,
@@ -44,18 +44,18 @@ export class AuthUtils
       }
     }
     else{
-      var sessionJson = <ILoginReponse>JSON.parse(session);
-      return sessionJson.session.user;
+      var localStorageJson = <ILoginReponse>JSON.parse(local);
+      return localStorageJson.session.user;
     }
   }
 
-  static GetSessionDevice() : IDevice {
-    var session = sessionStorage.getItem("device");
-    if(session == "" || session == null)
+  static GetCurrentDevice() : IDevice {
+    var local = localStorage.getItem("device");
+    if(local == "" || local == null)
     {
       return <IDevice>
       {
-        id: 0,
+        id: -1,
         name:'-',
         mac_serial_no: '-:0',
         status: '-',
@@ -70,20 +70,19 @@ export class AuthUtils
     }
     else
     {
-      //   var sessionJson = <ILoginReponse>JSON.parse(session);
-      //   return sessionJson.session.user;
+      var device = <IDevice>JSON.parse(local);
       return <IDevice>{
-        id: 999,
-        name:'Mock',
-        mac_serial_no: '-:999',
-        status: '-',
-        is_connecting: false,
-        is_active: false,
-        connecting_user_name: '',
-        created_at: '',
-        updated_at: '',
-        working_test_id: '',
-        connecting_user_id: ''
+        id: device.id,
+        name: device.name,
+        mac_serial_no: device.mac_serial_no,
+        status: device.status,
+        is_connecting: device.is_connecting,
+        is_active: device.is_active,
+        connecting_user_name: device.connecting_user_name,
+        created_at: device.created_at,
+        updated_at: device.updated_at,
+        working_test_id: device.working_test_id,
+        connecting_user_id: device.connecting_user_id
       }
     }
   }

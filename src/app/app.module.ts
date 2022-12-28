@@ -18,7 +18,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faUsersGear } from '@fortawesome/free-solid-svg-icons';
+import { faUsersGear, faFlaskVial } from '@fortawesome/free-solid-svg-icons';
 
 import { FooterModulesComponent } from './shared/footer-modules/footer-modules.component';
 import { AccountSettingComponent } from './modules/account-setting/account-setting.component';
@@ -32,10 +32,21 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ChartModule } from 'primeng/chart';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { AuthService } from './core/auth/auth.service';
 import { DeviceModalComponent } from './shared/modal/device-modal/device-modal.component';
+import { CollectingDataComponent } from './shared/collecting-data/collecting-data.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
 
+
+const config: SocketIoConfig = {
+	url: environment.socketUrl,
+	options: {
+		//transports: ['websocket']
+	}
+}
 
 @NgModule({
   declarations: [
@@ -55,7 +66,8 @@ import { DeviceModalComponent } from './shared/modal/device-modal/device-modal.c
     DeviceSettingComponent,
     CaseManagementComponent,
     TestReportComponent,
-    DeviceModalComponent
+    DeviceModalComponent,
+    CollectingDataComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +82,9 @@ import { DeviceModalComponent } from './shared/modal/device-modal/device-modal.c
     DropdownModule,
     DialogModule,
     ButtonModule,
-    CheckboxModule
+    CheckboxModule,
+    ChartModule,
+		SocketIoModule.forRoot(config), 
   ],
   providers: [
     AuthGuard,
@@ -86,5 +100,6 @@ import { DeviceModalComponent } from './shared/modal/device-modal/device-modal.c
 export class AppModule {
   constructor(library:FaIconLibrary){
     library.addIcons(faUsersGear);
+    library.addIcons(faFlaskVial);
   }
  }

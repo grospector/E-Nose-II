@@ -18,10 +18,10 @@ export class AuthService {
     private router: Router,
     private http: HttpClient
   ) {
-    var sessionUser = sessionStorage.getItem("user") ?? "";
-    if(sessionUser != "")
+    var localUser = localStorage.getItem("user") ?? "";
+    if(localUser != "")
     {
-      this.userSubject = new BehaviorSubject<IUser>(JSON.parse(sessionUser));
+      this.userSubject = new BehaviorSubject<IUser>(JSON.parse(localUser));
       this.user = this.userSubject.asObservable();
     }
   }
@@ -36,7 +36,7 @@ export class AuthService {
           .pipe(map(user => {
               // store user details and jwt token in local storage to keep user logged in between page refreshes
               const userString = JSON.stringify(user);
-              sessionStorage.setItem('user', userString);
+              localStorage.setItem('user', userString);
 
               //this.userSubject.next(user);
               return user;
@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   logout(){
-    sessionStorage.clear();
+    localStorage.clear();
     this.router.navigate(['/sign-in']);
   }
 }

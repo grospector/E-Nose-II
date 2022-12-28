@@ -26,8 +26,8 @@ export class HomeComponent implements OnInit {
               ,private devicesService:DevicesService) { }
 
   ngOnInit(): void {
-    this.CurrentUser = AuthUtils.GetSessionUser();
-    this.CurrentDevice = AuthUtils.GetSessionDevice();
+    this.CurrentUser = AuthUtils.GetCurrentUser();
+    this.CurrentDevice = AuthUtils.GetCurrentDevice();
     console.log("CurrentUser",this.CurrentUser);
     console.log("CurrentDevice",this.CurrentDevice);
   }
@@ -60,9 +60,10 @@ export class HomeComponent implements OnInit {
       {
         this.CurrentDevice = <IDevice>this.Devices.find(d => d.mac_serial_no == macSerialNo); 
         const deviceString = JSON.stringify(this.CurrentDevice);
-        sessionStorage.setItem("device",deviceString);
+        localStorage.setItem("device",deviceString);
 
         this.IsDialogLoading = false;
+        this.displayModal = false;
       }
       else{
         this.IsDialogLoading = false;

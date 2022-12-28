@@ -1,11 +1,43 @@
-<div class="parent" #elemt (mousedown)="startDragging($event, false, elemt)" (mouseup)="stopDragging($event, false)"
-  (mouseleave)="stopDragging($event, false)" (mousemove)="moveEvent($event, elemt)">
-  <div class="child">
-    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-    type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
-    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing
-    Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of
-    Lorem Ipsum
-  </div>
-</div>
+<article class="card d-flex flex-column mx-auto"> 
+  <header class="d-flex justify-content-between">
+    Logo
+  </header>
+  <main [ngSwitch]="mode">
+    <div *ngSwitchCase="1">
+
+    </div>
+    <div *ngSwitchCase="2">
+
+    </div>
+    <div *ngSwitchCase="3">
+
+    </div>
+    <div *ngSwitchCase="4" class="h-100">
+      <app-collecting-data></app-collecting-data>
+    </div>
+    <div *ngSwitchDefault class="d-flex flex-column menu-testing h-100">
+      <div class="d-flex flex-row h-50">
+        <div class="card w-100">
+          CHECK DEVICE INIT
+        </div>
+        <div class="card w-100">
+          CALIBRATION
+        </div>
+        <div class="card w-100">
+          CLEANING
+        </div>
+      </div>
+      <div class="h-50 d-flex align-items-center">
+        <div class="card w-100 h-100 text-center start-process h-100" (click)="onClickCollectingData()">
+          <fa-icon class="fa-10x" icon="flask-vial"></fa-icon>
+          <label>
+            START PROCESS COLLECTING DATA
+          </label>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="d-flex">
+    Footer
+  </footer>
+</article>

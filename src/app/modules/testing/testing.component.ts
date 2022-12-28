@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Mode } from './testing';
 
 @Component({
   selector: 'app-testing',
@@ -11,10 +12,12 @@ export class TestingComponent implements OnInit {
   mouseDown = false;
   startX: any;
   scrollLeft: any;
+  isShowMenu:boolean = true;
+  mode:Mode = Mode.Menu;
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() : void {
   }
 
   startDragging(e:any, flag:any, el:any) {
@@ -34,5 +37,9 @@ export class TestingComponent implements OnInit {
     const x = e.pageX - el.offsetLeft;
     const scroll = x - this.startX;
     el.scrollLeft = this.scrollLeft - scroll;
+  }
+
+  onClickCollectingData(){
+    this.mode = Mode.CollectingData;
   }
 }

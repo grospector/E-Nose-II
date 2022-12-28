@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: "https://api-enose.at44.co.th"
+  apiUrl: "https://api-enose.at44.co.th",
+  socketUrl: "https://socket.at44.co.th"
 };
 
 /*

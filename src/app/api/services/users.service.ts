@@ -17,7 +17,7 @@ export class UsersService {
 
   GetListUsers(): Observable<IListUsersReponse>{
     const httpHeaders: HttpHeaders = new HttpHeaders({
-      'Authorization':  AuthUtils.GetSession().access_token ?? "",
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
     });
     
     return this.http.get<IListUsersReponse>(
@@ -30,7 +30,7 @@ export class UsersService {
 
   ResetPassword(userId:number): Observable<any>{
     const httpHeaders: HttpHeaders = new HttpHeaders({
-      'Authorization':  AuthUtils.GetSession().access_token ?? "",
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
     });
     
     const body = {
