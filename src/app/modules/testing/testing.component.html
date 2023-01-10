@@ -4,18 +4,40 @@
   </header>
   <main [ngSwitch]="mode">
     <div *ngSwitchCase="1">
-
+      <aside class="position-absolute">
+        <button (click)="onClickBack()">
+          <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
+        </button>
+      </aside>
     </div>
     <div *ngSwitchCase="2">
-
+      <aside class="position-absolute">
+        <button (click)="onClickBack()">
+          <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
+        </button>
+      </aside>
     </div>
     <div *ngSwitchCase="3">
-
+      <aside class="position-absolute">
+        <button (click)="onClickBack()">
+          <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
+        </button>
+      </aside>
     </div>
     <div *ngSwitchCase="4" class="h-100">
+      <aside class="position-absolute">
+        <button (click)="onClickBack()">
+          <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
+        </button>
+      </aside>
       <app-collecting-data></app-collecting-data>
     </div>
     <div *ngSwitchDefault class="d-flex flex-column menu-testing h-100">
+      <aside class="position-absolute">
+        <button (click)="onClickHome()">
+          <fa-icon class="fa-3x" icon="home"></fa-icon>
+        </button>
+      </aside>
       <div class="d-flex flex-row h-50">
         <div class="card w-100">
           CHECK DEVICE INIT
@@ -24,11 +46,16 @@
           CALIBRATION
         </div>
         <div class="card w-100">
-          CLEANING
+          <div class="card w-100 h-100 text-center cleaning justify-content-center h-100" (click)="onClickCollectingData()">
+            <fa-icon class="fa-5x" icon="hand-sparkles"></fa-icon>
+            <label>
+              CLEANING
+            </label>
+          </div>
         </div>
       </div>
       <div class="h-50 d-flex align-items-center">
-        <div class="card w-100 h-100 text-center start-process h-100" (click)="onClickCollectingData()">
+        <div class="card w-100 h-100 text-center start-process justify-content-center h-100" (click)="onClickCollectingData()">
           <fa-icon class="fa-10x" icon="flask-vial"></fa-icon>
           <label>
             START PROCESS COLLECTING DATA

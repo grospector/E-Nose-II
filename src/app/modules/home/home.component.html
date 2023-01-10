@@ -157,15 +157,15 @@
         </div>
         <div *ngIf="!IsDialogLoading" class="flex-column">
             <div *ngFor="let device of Devices" class="card device p-3">
-                <div class="d-flex flex-row w-100">
+                <div class="d-flex flex-row w-100 py-2 px-3">
                     <label class="d-flex align-items-center">
                         <h4 class="m-auto">
                             {{device.name}}
                         </h4>
                     </label>
                     <div class="ms-auto">
-                        <button pButton pRipple type="button" label="Connect" class="p-button-raised p-button-warning" (click)="onClickConnect(device.mac_serial_no)"></button>
-                        <button pButton pRipple type="button" label="Other" class="p-button-raised"></button>
+                        <button pButton pRipple type="button" label="Switch" class="p-button-raised btn-primary" (click)="onClickConnect(device.mac_serial_no)"></button>
+                        <!-- <button pButton pRipple type="button" label="Other" class="p-button-raised"></button> -->
                     </div>
                 </div>
             </div>

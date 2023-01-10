@@ -3,7 +3,7 @@
 body,
 html {
   height: 100%;
-  background-color: #F5F5F5 !important;
+  background-color: #A9D9D0 !important;
   overflow-y: auto;
   overflow-x: auto;
 }
@@ -49,6 +49,9 @@ body::-webkit-scrollbar-thumb {
 .bottom-25px{
     bottom:25px !important;
 }
+.bottom-45px{
+    bottom:45px !important;
+}
 .bottom-5{
     bottom:5% !important;
 }
@@ -63,6 +66,25 @@ body::-webkit-scrollbar-thumb {
 .p-datatable .p-datatable-header,
 .p-datatable-thead , .p-datatable .p-datatable-thead > tr > th{
     background-color: white !important;
+}
+
+
+.btn-primary{
+    background-color: #038C7F !important;
+    border-color: #038C7F !important;
+}
+
+.btn-outline-primary{
+    color:#038C7F !important;
+    border-color: #038C7F !important;
+}
+.btn-outline-primary:hover{
+    color:#FFFFFF !important;
+    background-color: #038C7F !important;
+}
+
+.p-component-overlay{
+    background-color: rgb(13, 13, 13,0.5) !important;
 }
 
 $blue:    #0d6efd;

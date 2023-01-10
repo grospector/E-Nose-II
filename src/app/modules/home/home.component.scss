@@ -16,7 +16,7 @@
 }
  
 .card-container::-webkit-scrollbar-track {
-    background-color: rgba(49, 49, 49, 0.25);
+    background-color: #0D0D0D;
     border-radius: 100px;
     margin: 25vw;
 }
@@ -40,7 +40,7 @@ div>.card-module{
     padding: 10px 25px;
     border-radius: 25px;
     position: relative;
-    background-color: rgb(0, 0, 0,0.5);
+    background-color: rgb(0, 0, 0,0.4);
 }
 // .card-device>div>label{
 //     margin-top:10px;
@@ -75,7 +75,7 @@ div>.card-module{
     width: calc(25% - 20px);
     min-width: calc(300px - 20px);
     max-width: calc(300px - 20px);
-    height: calc(100vh - 200px - 90px);
+    height: calc(100vh - 200px - 200px);
 }
 .card-module:hover{
     cursor: pointer;
@@ -98,25 +98,41 @@ div>.card-module{
 }
 
 .module-process{
-    background-color: rgb(102, 16, 242,0.8);
+    background-color: #F2E7DC;
     background-image: var(--bs-gradient);
     padding:15px 25px;
+    opacity: 0.9;
+}
+.module-process:hover{
+    box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
 }
 
 .module-dashboard{
-    background-color: rgb(220, 53, 69,0.8);
+    background-color: #F2E7DC;
     background-image: var(--bs-gradient);
     padding:15px 25px;
+    opacity: 0.9;
+}
+.module-dashboard:hover{
+    box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
 }
 .module-guide{
-    background-color: rgba(159, 183, 14, 0.8);
+    background-color: #F2E7DC;
     background-image: var(--bs-gradient);
     padding:15px 25px;
+    opacity: 0.9;
+}
+.module-guide:hover{
+    box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
 }
 .module-account{
-    background-color:rgb(25, 135, 84,0.8);
+    background-color: #F2E7DC;
     background-image: var(--bs-gradient);
     padding:15px 25px;
+    opacity: 0.9;
+}
+.module-account:hover{
+    box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
 }
 
 :host {
@@ -127,31 +143,43 @@ div>.card-module{
         }
         .p-dialog .p-dialog-header {
             border-radius: 20px 20px 0px 0px !important;
-            background-color: rgba(41, 41, 41, 0.8) !important;
+            background-color: #F2E7DC !important;
         }  
+        .p-dialog .p-dialog-header .p-dialog-header-icon{
+            color:#0D0D0D !important;
+        }
+        .p-dialog .p-dialog-header .p-dialog-header-icon:hover{
+            color:#0D0D0D !important;
+            background-color: #F2E7DC !important;
+            border:2px solid #0D0D0D !important;
+        }
         .p-dialog .p-dialog-header label{
-            color: rgba(251, 251, 251, 0.8) !important;
+            color: #0D0D0D !important;
         }  
         .p-dialog .p-dialog-body,.p-dialog-content {
             min-height: 400px;
-            background-color: rgba(41, 41, 41, 0.8) !important;
+            background-color: #F2E7DC !important;
         }  
         .p-dialog label.loading{
-            color: rgba(251, 251, 251, 0.5) !important;
+            color: #0D0D0D !important;
         }
         .p-dialog .p-dialog-footer {
             border-radius: 0px 0px 20px 20px !important;
-            background-color: rgba(41, 41, 41, 0.8) !important;
+            background-color: #F2E7DC !important;
         }  
         .p-dialog .device{
             margin-bottom: 10px !important;
-            background-color: rgba(251, 251, 251, 0.5) !important;
+            background-color: #EDCDAD !important;
+            border: 0.5px solid #000000;
+            box-shadow: inset 0px 0px 6px 4px rgba(0, 0, 0, 0.25);
         }
         .p-dialog .device:last-child{
             margin-bottom: 0px !important;
         }
         .p-dialog .device button{
             margin-right: 5px !important;
+            border-radius: 25px;
+            padding:10px 20px;
         }
         .p-dialog .device button:last-child{
             margin-bottom: 0px !important;
