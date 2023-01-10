@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Mode } from './testing';
 
 @Component({
@@ -15,7 +16,7 @@ export class TestingComponent implements OnInit {
   isShowMenu:boolean = true;
   mode:Mode = Mode.Menu;
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() : void {
   }
@@ -41,5 +42,13 @@ export class TestingComponent implements OnInit {
 
   onClickCollectingData(){
     this.mode = Mode.CollectingData;
+  }
+
+  onClickHome(): void{
+    this.router.navigateByUrl('/');
+  }
+
+  onClickBack(): void{
+    this.mode = Mode.Menu;
   }
 }

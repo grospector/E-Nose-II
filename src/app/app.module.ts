@@ -18,7 +18,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faUsersGear, faFlaskVial } from '@fortawesome/free-solid-svg-icons';
+import { faUsersGear, faFlaskVial , faHandSparkles , faHouse , faCircleChevronLeft} from '@fortawesome/free-solid-svg-icons';
 
 import { FooterModulesComponent } from './shared/footer-modules/footer-modules.component';
 import { AccountSettingComponent } from './modules/account-setting/account-setting.component';
@@ -101,5 +101,8 @@ export class AppModule {
   constructor(library:FaIconLibrary){
     library.addIcons(faUsersGear);
     library.addIcons(faFlaskVial);
+    library.addIcons(faHandSparkles);
+    library.addIcons(faHouse);
+    library.addIcons(faCircleChevronLeft);
   }
  }
