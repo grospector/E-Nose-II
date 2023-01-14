@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthUtils } from 'src/app/core/auth/auth.utils';
 import { environment } from 'src/environments/environment';
-import { IConnectResponse, IListDevicesReponse } from '../models/device.model';
+import Swal from 'sweetalert2';
+import { IConnectResponse, IDevice, IListDevicesReponse } from '../models/device.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,5 +52,18 @@ export class DevicesService {
         headers: httpHeaders
       }
     );
+  }
+
+  IsConnected(): boolean {
+    const deviceJson = localStorage.getItem("device");
+
+    if(deviceJson){
+      const device:IDevice = <IDevice>JSON.parse(deviceJson ?? "")
+    
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 }

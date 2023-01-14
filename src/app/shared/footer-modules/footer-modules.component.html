@@ -1,53 +1,62 @@
-<nav class="fixed-bottom">
-    <div class="d-flex justify-content-center">
-        <div class="d-flex flex-column text-center {{module == 0 ? 'active' : ''}}"
-            (click)="onClickModule(0)">
-            <label>
-                <h2>
-                    Home
-                </h2>
-            </label>
+<div class="">
+    <nav class="fixed-bottom">
+        <div class="d-flex justify-content-center">
+            <div class="d-flex flex-column text-center py-3 {{module == 0 ? 'active' : ''}}"
+                (click)="onClickModule(0)">
+                <fa-icon class="fa-2xl" icon="house-chimney"></fa-icon>
+                <label>
+                    <h2>
+                        Home
+                    </h2>
+                </label>
+            </div>
+            <div class="d-flex flex-column text-center py-3 {{module == 1 ? 'active' : ''}}"
+                (click)="onClickModule(1)">
+                <!-- <i class="fa-solid fa-rectangle-history-circle-user"></i> -->
+                <fa-icon class="fa-2xl" icon="chalkboard-user"></fa-icon>
+                <label>
+                    <h2>
+                        Dashboard
+                    </h2>
+                </label>
+            </div>
+            <div class="d-flex flex-column text-center py-3 {{module == 2 ? 'active' : ''}}"
+                (click)="onClickModule(2)">            
+                <!-- <i class="fa-regular fa-chart-user"></i> -->
+                <fa-icon class="fa-2xl" icon="file-waveform"></fa-icon>
+                <label>
+                    <h2>
+                        Test Report
+                    </h2>
+                </label>
+            </div>
+            <div class="d-flex flex-column text-center py-3 {{module == 3 ? 'active' : ''}}"
+                (click)="onClickModule(3)">
+                <fa-icon class="fa-2xl" icon="folder-plus"></fa-icon>
+                <label>
+                    <h2>
+                        Case Management
+                    </h2>
+                </label>
+            </div>
+            <div class="d-flex flex-column text-center py-3 {{module == 4 ? 'active' : ''}}"
+                (click)="onClickModule(4)">
+                <fa-icon class="fa-2xl" icon="gears"></fa-icon>
+                <label>
+                    <h2>
+                        Device Setting
+                    </h2>
+                </label>
+            </div>
+            <div class="d-flex flex-column text-center py-3 {{module == 5 ? 'active' : ''}}"
+                (click)="onClickModule(5)">
+                <fa-icon class="fa-2xl" icon="users-gear"></fa-icon>
+                <label>
+                    <h2>
+                        Account Setting
+                    </h2>
+                </label>
+            </div>
         </div>
-        <div class="d-flex flex-column text-center {{module == 1 ? 'active' : ''}}"
-            (click)="onClickModule(1)">
-            <label>
-                <h2>
-                    Dashboard
-                </h2>
-            </label>
-        </div>
-        <div class="d-flex flex-column text-center {{module == 2 ? 'active' : ''}}"
-            (click)="onClickModule(2)">
-            <label>
-                <h2>
-                    Test Report
-                </h2>
-            </label>
-        </div>
-        <div class="d-flex flex-column text-center {{module == 3 ? 'active' : ''}}"
-            (click)="onClickModule(3)">
-            <label>
-                <h2>
-                    Case Management
-                </h2>
-            </label>
-        </div>
-        <div class="d-flex flex-column text-center {{module == 4 ? 'active' : ''}}"
-            (click)="onClickModule(4)">
-            <label>
-                <h2>
-                    Device Setting
-                </h2>
-            </label>
-        </div>
-        <div class="d-flex flex-column text-center {{module == 5 ? 'active' : ''}}"
-            (click)="onClickModule(5)">
-            <fa-icon class="fa-2xl" icon="users-gear"></fa-icon>
-            <label>
-                <h2>
-                    Account Setting
-                </h2>
-            </label>
-        </div>
-    </div>
-</nav>
+    </nav>
+</div>

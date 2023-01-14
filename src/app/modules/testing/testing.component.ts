@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { IDevice } from 'src/app/api/models/device.model';
+import { DevicesService } from 'src/app/api/services/devices.service';
+import Swal from 'sweetalert2';
 import { Mode } from './testing';
 
 @Component({
@@ -16,9 +19,16 @@ export class TestingComponent implements OnInit {
   isShowMenu:boolean = true;
   mode:Mode = Mode.Menu;
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,
+              private devicesService:DevicesService) { }
 
   ngOnInit() : void {
+    if(this.devicesService.IsConnected()){
+
+    }
+    else{
+
+    }
   }
 
   startDragging(e:any, flag:any, el:any) {
@@ -40,8 +50,82 @@ export class TestingComponent implements OnInit {
     el.scrollLeft = this.scrollLeft - scroll;
   }
 
+  onClickCheckDeviceInit(){
+    if(this.devicesService.IsConnected())
+    {
+      this.mode = Mode.CheckInit;
+    }
+    else{
+      Swal.fire({
+        title: `Error device is't connected`,
+        text: '',
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonText: 'OK'
+      }).then(
+        (result) => {
+        }
+      );
+    }
+  }
+
+  
+  onClickCalibration(){
+    if(this.devicesService.IsConnected())
+    {
+      this.mode = Mode.Calibration;
+    }
+    else{
+      Swal.fire({
+        title: `Error device is't connected`,
+        text: '',
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonText: 'OK'
+      }).then(
+        (result) => {
+        }
+      );
+    }
+  }
+
+  
+  onClickCleaning(){
+    if(this.devicesService.IsConnected())
+    {
+      this.mode = Mode.Cleaning;
+    }
+    else{
+      Swal.fire({
+        title: `Error device is't connected`,
+        text: '',
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonText: 'OK'
+      }).then(
+        (result) => {
+        }
+      );
+    }
+  }
+
   onClickCollectingData(){
-    this.mode = Mode.CollectingData;
+    if(this.devicesService.IsConnected())
+    {
+      this.mode = Mode.CollectingData;
+    }
+    else{
+      Swal.fire({
+        title: `Error device is't connected`,
+        text: '',
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonText: 'OK'
+      }).then(
+        (result) => {
+        }
+      );
+    }
   }
 
   onClickHome(): void{

@@ -1,7 +1,7 @@
 nav{
     //position: sticky;
     bottom:0px;
-    background: rgba(214, 221, 232, 1);
+    background: #038C7F;
     box-shadow: 0 0 0 100vmax rgba(214, 221, 232, 1);
     clip-path: inset(0 -100vmax); 
 }
@@ -13,12 +13,17 @@ nav>div:hover{
     cursor: pointer !important;
 }
 nav>div>div.active{
-    background: rgba(84, 120, 177, 0.1);
+    background: #A9D9D0;
 }
 label h2{
     font-size: 1rem;
-    color: rgba(122, 138, 164, 1);
+    color: #A9D9D0;
     margin:0px;
+}
+
+.active label h2{
+    color: #038C7F;
+    text-shadow: 1px 1px 3px rgb(3, 140, 127,0.7);
 }
 label:hover{
     cursor: pointer !important;
@@ -27,5 +32,13 @@ label h2:hover{
     cursor: pointer !important;
 }
 fa-icon{
-    filter: invert(60%) sepia(7%) saturate(1457%) hue-rotate(178deg) brightness(89%) contrast(77%);
+    //filter: invert(60%) sepia(7%) saturate(1457%) hue-rotate(178deg) brightness(89%) contrast(77%);
+    filter: invert(88%) sepia(29%) saturate(243%) hue-rotate(115deg) brightness(91%) contrast(89%);
+    padding-bottom:5px;
+}
+
+.active fa-icon{
+    color: black;
+    filter: invert(34%) sepia(31%) saturate(4884%) hue-rotate(155deg) brightness(89%) contrast(98%) drop-shadow( 3px 3px 2px rgb(3, 140, 127,0.6));
+    padding-bottom:5px;
 }

@@ -13,6 +13,7 @@ export class FooterModulesComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    
   }
 
   onClickModule(module:EnumModules){

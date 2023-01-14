@@ -28,12 +28,17 @@ main aside button{
 main .menu-testing{
   margin-right:10px;
 }
-main .menu-testing div{
-  margin-right:10px;
+main .menu-testing>div{
   padding-bottom:10px;
 }
-main .menu-testing div:last-child{
-  padding-bottom:0px;
+main .menu-testing>div>div{
+  margin-right:10px;
+}
+main .menu-testing>div>div:first-child{
+  margin-left:40px;
+}
+main .menu-testing>div>div:last-child{
+  margin-right:40px;
 }
 main .menu-testing:last-child{
   margin-right:0px;
@@ -42,35 +47,78 @@ main .menu-testing aside{
   top:20px !important;
 }
 main .menu-testing aside button{
-  opacity: 0.5 !important;
+  opacity: 0.7 !important;
   border: 5px solid !important;
   border-radius: 100px !important;
   padding-left: 15px !important;
   padding-bottom: 8px !important;
   padding-right: 15px !important;
   background-color: #A9D9D0;
+  color:#0D0D0D;
 }
+main .menu-collecting-data aside button{
+  opacity: 0.7 !important;
+  background-color: #A9D9D0;
+  color:#0D0D0D;
+}
+
 .menu-testing aside button fa-icon{
   // filter: invert(21%) sepia(88%) saturate(2604%) hue-rotate(165deg) brightness(90%) contrast(98%);
 }
 
-.cleaning{
-  background-color: rgb(255, 255, 95);
+.init{
+  background-color: #2d86b5;
+  color: white;
+  border: 10px solid #004870;
+  text-shadow: 2px 2px 3px rgb(13, 13, 13,0.4);
+}
+.init fa-icon{
+  filter: drop-shadow(3px 3px 2px rgb(13, 13, 13,0.5));
+}
+.init:hover{
+  cursor: pointer;
 }
 
+.calibate{
+  background-color: #c7ba2e;
+  color: white;
+  border: 10px solid #8a7e00;
+  text-shadow: 2px 2px 3px rgb(13, 13, 13,0.4);
+}
+.calibate:hover{
+  cursor: pointer;
+}
+.calibate fa-icon{
+  filter: drop-shadow(3px 3px 2px rgb(13, 13, 13,0.5));
+}
+
+.cleaning{
+  background-color: #db803b;
+  color: white;
+  border: 10px solid #924002;
+  text-shadow: 2px 2px 3px rgb(13, 13, 13,0.4);
+}
 .cleaning fa-icon{
-  filter: invert(79%) sepia(85%) saturate(744%) hue-rotate(346deg) brightness(100%) contrast(90%);
+  filter: drop-shadow(3px 3px 2px rgb(13, 13, 13,0.5));
+}
+.cleaning:hover{
+  cursor: pointer;
 }
 
 .start-process{
-  background-color:lightseagreen;
-  color:white;
+  background-color: #038C7F;
+  color: white;
+  border: 10px solid #027373;
+  text-shadow: 2px 2px 3px rgb(13, 13, 13,0.4);
 }
 .start-process span{
   height: 80%;
 }
 .start-process label{
   height: 20%;
+}
+.start-process fa-icon{
+  filter: drop-shadow(3px 3px 2px rgb(13, 13, 13,0.5));
 }
 .start-process:hover{
   cursor: pointer;

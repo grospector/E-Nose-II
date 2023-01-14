@@ -24,7 +24,7 @@
         </button>
       </aside>
     </div>
-    <div *ngSwitchCase="4" class="h-100">
+    <div *ngSwitchCase="4" class="h-100 menu-collecting-data">
       <aside class="position-absolute">
         <button (click)="onClickBack()">
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
@@ -39,14 +39,24 @@
         </button>
       </aside>
       <div class="d-flex flex-row h-50">
-        <div class="card w-100">
-          CHECK DEVICE INIT
+        <div class="w-100">
+          <div class="card w-100 h-100 text-center init justify-content-center h-100" (click)="onClickCheckDeviceInit()">
+            <fa-icon class="fa-5x" icon="list-check"></fa-icon>
+            <label>
+              CHECK DEVICE INIT
+            </label>
+          </div>
         </div>
-        <div class="card w-100">
-          CALIBRATION
+        <div class="w-100">
+          <div class="card w-100 h-100 text-center calibate justify-content-center h-100" (click)="onClickCalibration()">
+            <fa-icon class="fa-5x" icon="magnifying-glass-chart"></fa-icon>
+            <label>
+              CALIBRATION
+            </label>
+          </div>
         </div>
-        <div class="card w-100">
-          <div class="card w-100 h-100 text-center cleaning justify-content-center h-100" (click)="onClickCollectingData()">
+        <div class="w-100">
+          <div class="card w-100 h-100 text-center cleaning justify-content-center h-100" (click)="onClickCleaning()">
             <fa-icon class="fa-5x" icon="hand-sparkles"></fa-icon>
             <label>
               CLEANING

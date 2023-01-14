@@ -13,16 +13,15 @@ main{
 }
 
 main .card{
+    margin-top: 20px;
     border-radius: 25px;
-    height: calc((100vh - 120px - 60px)/1);
+    height: calc((100vh - 120px - 70px)/1);
     //margin-top: 10px;
     //margin-bottom: 10px;
-    //background-color: rgba(217, 217, 217, 1);
-    //border-color: rgba(217, 217, 217, 1);
+    background-color: #F2E7DC !important;
+    border-color: #0D0D0D !important;
     //box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
-    border: 0px;
     padding:15px 30px;
-    background-color: #F5F5F5 !important;
 }
 
 main .card header h3{
@@ -37,10 +36,13 @@ main .card header h4{
     margin-right:10px;
 }
 
-td{
-    text-align: left;
-    border: 1px solid #dee2e6;
-    padding: 1rem 1rem;
+tbody, td, tfoot, th, thead, tr{
+    background-color: #F2E7DC !important;
+}
+td,th{
+    text-align: left !important;
+    border: 1px solid #0D0D0D !important;
+    padding: 1rem 1rem !important;
 }
 
 @media (min-width: 1200px)
