@@ -21,8 +21,13 @@ main aside{
   top:0px;
 }
 main aside button{
-  opacity: 0.5;
   border: 0px;
+}
+
+main .menu-init aside button{
+  opacity: 0.7 !important;
+  background-color: #A9D9D0;
+  color:#0D0D0D;
 }
 
 main .menu-testing{
@@ -53,6 +58,16 @@ main .menu-testing aside button{
   padding-left: 15px !important;
   padding-bottom: 8px !important;
   padding-right: 15px !important;
+  background-color: #A9D9D0;
+  color:#0D0D0D;
+}
+main .menu-calibration aside button{
+  opacity: 0.7 !important;
+  background-color: #A9D9D0;
+  color:#0D0D0D;
+}
+main .menu-cleaning aside button{
+  opacity: 0.7 !important;
   background-color: #A9D9D0;
   color:#0D0D0D;
 }

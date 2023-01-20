@@ -3,21 +3,21 @@
     Logo
   </header>
   <main [ngSwitch]="mode">
-    <div *ngSwitchCase="1">
+    <div *ngSwitchCase="1" class="d-flex flex-column menu-init h-100">
       <aside class="position-absolute">
         <button (click)="onClickBack()">
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
         </button>
       </aside>
     </div>
-    <div *ngSwitchCase="2">
+    <div *ngSwitchCase="2" class="menu-calibration h-100">
       <aside class="position-absolute">
         <button (click)="onClickBack()">
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
         </button>
       </aside>
     </div>
-    <div *ngSwitchCase="3">
+    <div *ngSwitchCase="3" class="menu-cleaning h-100">
       <aside class="position-absolute">
         <button (click)="onClickBack()">
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
