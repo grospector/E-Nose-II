@@ -7,7 +7,8 @@ import { ISocketResponse } from '../models/socket.mode';
 import { DevicesService } from './devices.service';
 import { connect, StringCodec } from "nats.ws";
 import { BehaviorSubject } from 'rxjs';
-const io = require("socket.io-client/dist/socket.io")
+import { io } from 'socket.io-client';
+// const io = require("socket.io-client/dist/socket.io")
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class SocketService {
 
   deviceJson = localStorage.getItem("device");
   device:IDevice = <IDevice>JSON.parse(this.deviceJson ?? "")
-  socket = io(environment.socketUrl).emit('subscribe_nats', {"channel_name":`_e-nose_user_device_${this.device.mac_serial_no}`});
+  socket = io(environment.socketUrl,{transports: ['websocket']}).emit('subscribe_nats', {"channel_name":`_e-nose_user_device_${this.device.mac_serial_no}`});
 
 	constructor() { }
 
