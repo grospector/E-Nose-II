@@ -8,11 +8,12 @@ import { Socket } from 'ngx-socket-io';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-collecting-data',
-  templateUrl: './collecting-data.component.html',
-  styleUrls: ['./collecting-data.component.scss']
+  selector: 'app-check-init',
+  templateUrl: './check-init.component.html',
+  styleUrls: ['./check-init.component.scss']
 })
-export class CollectingDataComponent {
+export class CheckInitComponent {
+
   basicData: any = {
     labels: [new Date().toLocaleString()],
     datasets: [

@@ -41,6 +41,7 @@ import { DeviceModalComponent } from './shared/modal/device-modal/device-modal.c
 import { CollectingDataComponent } from './shared/collecting-data/collecting-data.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
+import { CheckInitComponent } from './shared/check-init/check-init.component';
 
 
 const config: SocketIoConfig = {
@@ -69,7 +70,8 @@ const config: SocketIoConfig = {
     CaseManagementComponent,
     TestReportComponent,
     DeviceModalComponent,
-    CollectingDataComponent
+    CollectingDataComponent,
+    CheckInitComponent
   ],
   imports: [
     BrowserModule,

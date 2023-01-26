@@ -24,8 +24,31 @@ main aside button{
   border: 0px;
 }
 
-main .menu-init aside button{
+
+main .menu-check-init{
+  margin-right:10px;
+}
+main .menu-check-init>div{
+  padding-bottom:10px;
+}
+main .menu-check-init>div>div{
+  margin-right:10px;
+}
+main .menu-check-init>div>div:first-child{
+  margin-left:40px;
+}
+main .menu-check-init>div>div:last-child{
+  margin-right:40px;
+}
+main .menu-check-init:last-child{
+  margin-right:0px;
+}
+main .menu-check-init aside{
+  top:20px !important;
+}
+main .menu-check-init aside button{
   opacity: 0.7 !important;
+  border: 0px !important;
   background-color: #A9D9D0;
   color:#0D0D0D;
 }
