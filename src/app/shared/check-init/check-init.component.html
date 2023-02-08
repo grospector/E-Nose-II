@@ -1,1 +1,4 @@
-<p-chart type="line" [data]="basicData" [options]="basicOptions" width="100%" height="609px"></p-chart>
+<p-chart *ngIf="isShowChart" type="line" [data]="basicData" [options]="basicOptions" width="100%" height="100%"></p-chart>
+<div *ngIf="!isShowChart">
+    Occur Error Please , try again.
+</div>

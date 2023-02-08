@@ -3,7 +3,7 @@
     Logo
   </header>
   <main [ngSwitch]="mode">
-    <div *ngSwitchCase="1" class="d-flex flex-column menu-check-init h-100">
+    <div *ngSwitchCase="1" class="menu-check-init h-100">
       <aside class="position-absolute">
         <button (click)="onClickBack()">
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
@@ -25,7 +25,7 @@
         </button>
       </aside>
     </div>
-    <div *ngSwitchCase="4" class="h-100 menu-collecting-data">
+    <div *ngSwitchCase="4" class="menu-collecting-data h-100">
       <aside class="position-absolute">
         <button (click)="onClickBack()">
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
@@ -42,7 +42,7 @@
       <div class="d-flex flex-row h-50">
         <div class="w-100">
           <div class="card w-100 h-100 text-center init justify-content-center h-100" (click)="onClickCheckDeviceInit()">
-            <fa-icon class="fa-5x" icon="list-check"></fa-icon>
+            <fa-icon class="" icon="list-check"></fa-icon>
             <label>
               CHECK DEVICE INIT
             </label>

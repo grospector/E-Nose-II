@@ -5,6 +5,7 @@ import { DevicesService } from 'src/app/api/services/devices.service';
 import { UsersService } from 'src/app/api/services/users.service';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AuthUtils } from 'src/app/core/auth/auth.utils';
+import { EnumConnectionStatus } from 'src/app/models/common/enum';
 import { IUser } from 'src/app/models/common/user';
 import Swal from 'sweetalert2';
 
@@ -37,7 +38,7 @@ export class HomeComponent implements OnInit {
     {
       this.displayModal = true;
       
-      var arg = this.devicesService.GetListDevices();
+      var arg = this.devicesService.GetListDevices(EnumConnectionStatus.WaitingConnection);
       arg.subscribe(res =>{
         if(res.success)
         {

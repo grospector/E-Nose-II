@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IDevice } from 'src/app/api/models/device.model';
+import { IConnectResponse, IDevice } from 'src/app/api/models/device.model';
 import { DevicesService } from 'src/app/api/services/devices.service';
 import Swal from 'sweetalert2';
 import { Mode } from './testing';
@@ -53,7 +53,24 @@ export class TestingComponent implements OnInit {
   onClickCheckDeviceInit(){
     if(this.devicesService.IsConnected())
     {
-      this.mode = Mode.CheckInit;
+      this.devicesService.CommandTest().subscribe((res:IConnectResponse) => {
+        if(res?.success)
+        {
+          this.mode = Mode.CheckInit;
+        }
+        else{
+          Swal.fire({
+            title: `Error command_test`,
+            text: res.message,
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonText: 'OK'
+          }).then(
+            (result) => {
+            }
+          );
+        }
+      });
     }
     else{
       Swal.fire({

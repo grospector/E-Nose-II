@@ -1,11 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { UIChart } from 'primeng/chart';
 import { ICollectingData, ITestItem } from 'src/app/api/models/data.model';
-import { IDevice } from 'src/app/api/models/device.model';
+import { IConnectResponse, IDevice } from 'src/app/api/models/device.model';
 import { ISocketResponse } from 'src/app/api/models/socket.mode';
 import { SocketService } from 'src/app/api/services/socket.service';
 import { Socket } from 'ngx-socket-io';
 import { Observable, Subscription } from 'rxjs';
+import { DevicesService } from 'src/app/api/services/devices.service';
+import Swal from 'sweetalert2';
+import { EnumSocketCommand } from 'src/app/models/common/enum';
 
 @Component({
   selector: 'app-check-init',
@@ -13,6 +16,7 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./check-init.component.scss']
 })
 export class CheckInitComponent {
+  isShowChart: boolean = false;
 
   basicData: any = {
     labels: [new Date().toLocaleString()],
@@ -120,7 +124,7 @@ export class CheckInitComponent {
       intersect: false,
       callbacks: {
         label: function(tooltipItem:any) {
-          console.log("tooltipItem",tooltipItem);
+          //console.log("tooltipItem",tooltipItem);
           var label = tooltipItem.dataset.label || '';
           if (label) {
               label += ': ';
@@ -139,14 +143,16 @@ export class CheckInitComponent {
   collectingData!: Observable<ISocketResponse>;
 
 
-  constructor(private socketService:SocketService) { }
+  constructor(private socketService:SocketService,private devicesService:DevicesService) { }
 
   ngOnInit() : void {
-    this.socketService.getNewRes().subscribe((res:ISocketResponse) =>{
-      console.log("res",res);
+    this.isShowChart = true;
 
-      if(res?.data?.test_item)
+    this.socketService.getNewRes().subscribe((res:ISocketResponse) =>{
+      if(res.command == EnumSocketCommand.ShowTestData && res?.data?.test_item)
       {
+        console.log("res",res);
+  
         const data:ITestItem = res.data.test_item;
 
         this.basicData.labels.push(new Date().toLocaleString());

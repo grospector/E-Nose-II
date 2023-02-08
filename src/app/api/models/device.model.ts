@@ -1,15 +1,15 @@
 export interface IDevice{
-    id: Number,
-    name: string,
-    mac_serial_no: string,
-    status: string,
-    is_connecting: boolean,
-    is_active: boolean,
+    connecting_user_id: string,
     connecting_user_name: string,
     created_at: string,
+    id: Number,
+    is_active: boolean,
+    is_connecting: boolean,
+    mac_serial_no: string,
+    name: string,
+    status: string,
     updated_at: string,
     working_test_id: string,
-    connecting_user_id: string
 }
 
 export interface IListDevicesReponse{
@@ -21,4 +21,9 @@ export interface IListDevicesReponse{
 export interface IConnectResponse{
     success: boolean,
     message: string
+}
+
+export interface IGetDeviceDetailResponse{
+    device: IDevice,
+    success: boolean,
 }

@@ -14,28 +14,6 @@ export class DevicesService {
 
   constructor(private http:HttpClient) { }
 
-  GetListDevices(): Observable<IListDevicesReponse>{
-    const httpHeaders: HttpHeaders = new HttpHeaders({
-      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
-    });
-
-    
-    const params: HttpParams = new HttpParams()
-      .set("is_active",true)
-      .set("status",true)
-      .set("keyword",true)
-      .set("order_by",true)
-      .set("limit",true)
-      .set("offset",true);
-
-    return this.http.get<IListDevicesReponse>(
-      this.BaseUrl,
-      {
-        headers: httpHeaders
-      }
-    );
-  }
-
   Connect(deviceSerialNo:string): Observable<IConnectResponse>{
     const httpHeaders: HttpHeaders = new HttpHeaders({
       'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
@@ -65,5 +43,69 @@ export class DevicesService {
     else{
       return false;
     }
+  }
+
+  GetDeviceDetail(deviceId:number): Observable<IConnectResponse>{
+    const httpHeaders: HttpHeaders = new HttpHeaders({
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
+    });
+
+    return this.http.get<IConnectResponse>(
+      this.BaseUrl+"/"+deviceId,
+      {
+        headers: httpHeaders
+      }
+    );
+  }
+
+  GetListDevices(status:string): Observable<IListDevicesReponse>{
+    const httpHeaders: HttpHeaders = new HttpHeaders({
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
+    });
+    
+    // .set("keyword",true)
+    // .set("order_by",true)
+    // .set("limit",true)
+    // .set("offset",true)
+
+    const params: HttpParams = new HttpParams()
+      .set("is_active",true)
+      .set("status",status);
+
+    return this.http.get<IListDevicesReponse>(
+      this.BaseUrl,
+      {
+        params: params,
+        headers: httpHeaders
+      }
+    );
+  }
+
+  CommandTest(): Observable<IConnectResponse> {
+    const httpHeaders: HttpHeaders = new HttpHeaders({
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
+    });
+
+    return this.http.post<IConnectResponse>(
+      this.BaseUrl+"/command_test",
+      "",
+      {
+        headers: httpHeaders
+      }
+    );
+  }
+
+  CommandCleaning(): Observable<IConnectResponse> {
+    const httpHeaders: HttpHeaders = new HttpHeaders({
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
+    });
+
+    return this.http.post<IConnectResponse>(
+      this.BaseUrl+"/command_cleaning",
+      "",
+      {
+        headers: httpHeaders
+      }
+    );
   }
 }

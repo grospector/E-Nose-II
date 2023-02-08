@@ -6,6 +6,7 @@ import { ISocketResponse } from 'src/app/api/models/socket.mode';
 import { SocketService } from 'src/app/api/services/socket.service';
 import { Socket } from 'ngx-socket-io';
 import { Observable, Subscription } from 'rxjs';
+import { EnumSocketCommand } from 'src/app/models/common/enum';
 
 @Component({
   selector: 'app-collecting-data',
@@ -119,7 +120,7 @@ export class CollectingDataComponent {
       intersect: false,
       callbacks: {
         label: function(tooltipItem:any) {
-          console.log("tooltipItem",tooltipItem);
+          //console.log("tooltipItem",tooltipItem);
           var label = tooltipItem.dataset.label || '';
           if (label) {
               label += ': ';
@@ -142,10 +143,10 @@ export class CollectingDataComponent {
 
   ngOnInit() : void {
     this.socketService.getNewRes().subscribe((res:ISocketResponse) =>{
-      console.log("res",res);
-
-      if(res?.data?.test_item)
+      if(res.command == EnumSocketCommand.ShowCollectData && res?.data?.test_item)
       {
+        console.log("res",res);
+
         const data:ITestItem = res.data.test_item;
 
         this.basicData.labels.push(new Date().toLocaleString());

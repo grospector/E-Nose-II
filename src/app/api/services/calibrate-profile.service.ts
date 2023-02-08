@@ -1,59 +1,51 @@
-import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthUtils } from 'src/app/core/auth/auth.utils';
-import { Role } from 'src/app/models/common/role';
-import { IUser } from 'src/app/models/common/user';
 import { environment } from 'src/environments/environment';
 import { IConnectResponse } from '../models/device.model';
-import { IGetConnectedDeviceResponse, IListUsersReponse } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
-  BaseUrl:string = environment.apiUrl + "/users";
+export class CalibrateProfileService {
+  BaseUrl:string = environment.apiUrl + "/calibrate_profiles";
 
   constructor(private http:HttpClient) { }
 
-  GetListUsers(): Observable<IListUsersReponse>{
+  GetLastCalibrate(): Observable<IConnectResponse> {
     const httpHeaders: HttpHeaders = new HttpHeaders({
       'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
     });
-    
-    return this.http.get<IListUsersReponse>(
-      this.BaseUrl,
+
+    return this.http.get<IConnectResponse>(
+      this.BaseUrl+"/get_last_calibrate",
       {
         headers: httpHeaders
       }
     );
   }
 
-  GetConnectedDeviceDetail(): Observable<IGetConnectedDeviceResponse> {
+  StartCalibrate(): Observable<IConnectResponse> {
     const httpHeaders: HttpHeaders = new HttpHeaders({
       'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
     });
-    
-    return this.http.get<IGetConnectedDeviceResponse>(
-      this.BaseUrl+"/get_connected_device",
+
+    return this.http.post<IConnectResponse>(
+      this.BaseUrl+"/start_calibrate",
       {
         headers: httpHeaders
       }
     );
   }
 
-  ResetPassword(userId:number): Observable<any>{
+  EndCalibrate(): Observable<IConnectResponse> {
     const httpHeaders: HttpHeaders = new HttpHeaders({
       'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
     });
-    
-    const body = {
-      "target_user_id":userId
-    };
 
-    return this.http.post<any>(
-      this.BaseUrl + '/reset_password_admin',
-      body,
+    return this.http.post<IConnectResponse>(
+      this.BaseUrl+"/end_calibrate",
       {
         headers: httpHeaders
       }
