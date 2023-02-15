@@ -1,6 +1,63 @@
 <article class="card d-flex flex-column mx-auto"> 
-  <header class="d-flex justify-content-between">
-    Logo
+  <header class="d-flex justify-content-between flex-column">
+    <label>
+      Logo
+    </label>
+    <div class="d-flex justify-content-between">
+      <div class="d-flex flex-row justify-content-between">
+        <label class="" style="width:90px">
+          <h3>
+            ID Card :
+          </h3>
+        </label>
+        <div class="d-flex flex-row justify-content-between w-100">
+          <label>
+            <h4>
+              {{currentIDCard?.id_card}}
+            </h4>
+          </label>
+          <button style="width: 68px;" *ngIf="mode == Mode.Menu" (click)="onClickOpenModalIDCards()">
+            Select
+          </button>
+        </div>
+      </div>
+      <div>
+        <label style="width:60px">
+          <h3>
+            Name :
+          </h3>
+        </label>
+        <label>
+          <h4>
+            {{currentIDCard?.name}}
+          </h4>
+        </label>
+      </div>
+      <div>
+        <label>
+          <h3>
+            Device : 
+          </h3>
+        </label>
+        <label>
+          <h4>
+            {{currentDevice?.name}}
+          </h4>
+        </label>
+      </div>
+      <div class="calibrate-date" style="width: 310px;" (click)="onClickCalibrateDate()">
+        <label>
+          <h3>
+            Calibrate Date : 
+          </h3>
+        </label>
+        <label>
+          <h4>
+            {{lastCalibrateDate}}
+          </h4>
+        </label>
+      </div>
+    </div>
   </header>
   <main [ngSwitch]="mode">
     <div *ngSwitchCase="1" class="menu-check-init h-100">
@@ -9,7 +66,7 @@
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
         </button>
       </aside>
-      <app-check-init></app-check-init>
+      <app-check-init (modeEvent)="changeMode($event)"></app-check-init>
     </div>
     <div *ngSwitchCase="2" class="menu-calibration h-100">
       <aside class="position-absolute">
@@ -40,19 +97,31 @@
         </button>
       </aside>
       <div class="d-flex flex-row h-50">
-        <div class="w-100">
-          <div class="card w-100 h-100 text-center init justify-content-center h-100" (click)="onClickCheckDeviceInit()">
+        <div [ngSwitch]="currentStateCalibration" class="w-100">
+          <div *ngSwitchDefault class="card w-100 h-100 text-center init justify-content-center h-100" (click)="onClickCheckDeviceInit()">
+            <fa-icon class="" icon="list-check"></fa-icon>
+            <label>
+              CHECK DEVICE INIT
+            </label>
+          </div>
+          <div *ngSwitchCase="1" class="card w-100 h-100 text-center init justify-content-center h-100 disable">
             <fa-icon class="" icon="list-check"></fa-icon>
             <label>
               CHECK DEVICE INIT
             </label>
           </div>
         </div>
-        <div class="w-100">
-          <div class="card w-100 h-100 text-center calibate justify-content-center h-100" (click)="onClickCalibration()">
+        <div [ngSwitch]="currentStateCalibration" class="w-100">
+          <div *ngSwitchDefault class="card w-100 h-100 text-center calibate justify-content-center h-100" (click)="onClickCalibration()">
             <fa-icon class="fa-5x" icon="magnifying-glass-chart"></fa-icon>
             <label>
               CALIBRATION
+            </label>
+          </div>
+          <div *ngSwitchCase="1" class="card w-100 h-100 text-center calibate justify-content-center h-100" (click)="onClickCalibration()">
+            <fa-icon class="fa-5x" icon="magnifying-glass-chart"></fa-icon>
+            <label>
+              START CALIBRATION
             </label>
           </div>
         </div>
@@ -65,12 +134,15 @@
           </div>
         </div>
       </div>
-      <div class="h-50 d-flex align-items-center">
-        <div class="card w-100 h-100 text-center start-process justify-content-center h-100" (click)="onClickCollectingData()">
+      <div [ngSwitch]="currentStateCalibration" class="h-50 d-flex align-items-center">
+        <div *ngSwitchDefault class="card w-100 h-100 text-center start-process justify-content-center h-100" (click)="onClickCollectingData()">
           <fa-icon class="fa-10x" icon="flask-vial"></fa-icon>
           <label>
             START PROCESS COLLECTING DATA
           </label>
+        </div>
+        <div *ngSwitchCase="1" class="w-100 h-100 text-center justify-content-center h-100"> 
+
         </div>
       </div>
     </div>
@@ -79,3 +151,178 @@
     Footer
   </footer>
 </article>
+
+<p-dialog [(visible)]="displayModal" [modal]="true" [style]="{width:'800px'}" [baseZIndex]="-100"
+    [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="header">
+        <div class="text-center w-100">
+            <label>
+                <h2>
+                    Select ID Card
+                </h2>
+            </label>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="body">
+        <div class="flex-column">
+          <div class="d-flex flex-column">
+            <label>
+              <h3>
+                ID Card
+              </h3>
+            </label>
+            <input [(ngModel)]="keywordSearchIDCard" (keyup)="GetListIDCards()"/>
+          </div>
+          <div class="id-cards">
+            <div *ngFor="let idCard of IDCards" class="card p-3 mb-2">
+              <div class="d-flex flex-row w-100 py-2 px-3">
+                <div class="d-flex flex-column">
+                  <label class="d-flex align-items-left">
+                    <h4 class="">
+                        {{idCard?.name}}
+                    </h4>
+                  </label>
+                  <label class="d-flex align-items-left">
+                    <h5 class="">
+                        ID Card : {{idCard?.id_card}}
+                    </h5>
+                  </label>
+                </div>
+                  <div class="ms-auto my-auto">
+                      <button pButton pRipple type="button" label="Select" class="p-button-raised btn-primary" (click)="onClickSelectIDCard(idCard.id)"></button>
+                      <!-- <button pButton pRipple type="button" label="Other" class="p-button-raised"></button> -->
+                  </div>
+              </div>
+            </div>
+            <div *ngIf="IsDialogLoading" class="h-100 pt-3">
+                <label class="d-flex align-items-center loading h-100">
+                    <h4 class="m-auto">
+                        Loading . . .
+                    </h4>
+                </label>
+            </div>
+            
+            <div *ngIf="!IsDialogLoading && IDCards.length < 1" class="pt-3">
+              <label class="d-flex align-items-center loading">
+                  <h4 class="m-auto">
+                    Nothing
+                  </h4>
+              </label>
+          </div>
+          </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="h-100 d-flex align-items-center justify-content-center">
+        <button (click)="onClickCreateIDCard()">
+          Create ID Card
+        </button>
+      </div>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="displayModalCalibrate" [modal]="true" [style]="{width:'1200px'}" [baseZIndex]="-100"
+    [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="header">
+        <div class="text-center w-100">
+            <label>
+                <h2>
+                    ผลการ Calibrate ล่าสุด
+                </h2>
+            </label>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="body">
+      <label>
+        <h3>
+          Parameter Device
+        </h3>
+      </label>
+      <div class="d-flex flex-row calibrate-detail">
+        <p-chart type="bar" [data]="basicData" [options]="basicOptions" width="900px" height="calc(100%)"></p-chart>
+        <div class="px-3 pt-4">
+          <div>
+            <label>
+              <h4>
+                Date : {{CalibrateDetailFormatDate(lastCalibrateProfile?.calibrate_profile?.created_at || "")}}
+              </h4>
+            </label>
+            <br>
+            <label>
+              <h4>
+                Time : {{CalibrateDetailFormatTime(lastCalibrateProfile?.calibrate_profile?.created_at || "")}}
+              </h4>
+            </label>
+          </div>
+
+          <div class="pt-3">
+            <label>
+              <h4>
+                Avg Gas1 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_1}}
+              </h4>
+            </label>
+            <br>
+            <label>
+              <h4>
+                Avg Gas2 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_2}}
+              </h4>
+            </label>
+            <br>
+            <label>
+              <h4>
+                Avg Gas3 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_3}}
+              </h4>
+            </label>
+            <br>
+            <label>
+              <h4>
+                Avg Gas4 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_4}}
+              </h4>
+            </label>
+            <br>
+            <label>
+              <h4>
+                Avg Gas5 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_5}}
+              </h4>
+            </label>
+            <br>
+            <label>
+              <h4>
+                Avg Gas6 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_6}}
+              </h4>
+            </label>
+            <br>
+            <label>
+              <h4>
+                Avg Gas7 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_7}}
+              </h4>
+            </label>
+          </div>
+
+          <div class="pt-5">
+            <label>
+              <h4>
+                Avg Temp : {{lastCalibrateProfile?.calibrate_profile?.avg_temp}}
+              </h4>
+            </label>
+            <br>
+            <label>
+              <h4>
+                Avg Pressure : {{lastCalibrateProfile?.calibrate_profile?.avg_pressure}} 
+              </h4>
+            </label>
+          </div>
+  
+          <div class="pt-3">
+            <label>
+              <h4>
+                Total Item : {{lastCalibrateProfile?.calibrate_profile?.count_calibrate_items}}
+              </h4>
+            </label>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+    </ng-template>
+</p-dialog>

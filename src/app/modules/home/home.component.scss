@@ -158,6 +158,7 @@ div>.card-module{
         }  
         .p-dialog .p-dialog-body,.p-dialog-content {
             min-height: 400px;
+            padding:0px calc(1.5rem + 32px) 2rem calc(1.5rem) !important;
             background-color: #F2E7DC !important;
         }  
         .p-dialog label.loading{

@@ -42,6 +42,8 @@ import { CollectingDataComponent } from './shared/collecting-data/collecting-dat
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
 import { CheckInitComponent } from './shared/check-init/check-init.component';
+import { CalibrationComponent } from './shared/calibration/calibration.component';
+import { CleaningComponent } from './shared/cleaning/cleaning.component';
 
 
 const config: SocketIoConfig = {
@@ -71,7 +73,9 @@ const config: SocketIoConfig = {
     TestReportComponent,
     DeviceModalComponent,
     CollectingDataComponent,
-    CheckInitComponent
+    CheckInitComponent,
+    CalibrationComponent,
+    CleaningComponent,
   ],
   imports: [
     BrowserModule,

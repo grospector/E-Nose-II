@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { UIChart } from 'primeng/chart';
 import { ICollectingData, ITestItem } from 'src/app/api/models/data.model';
 import { IConnectResponse, IDevice } from 'src/app/api/models/device.model';
@@ -9,6 +9,8 @@ import { Observable, Subscription } from 'rxjs';
 import { DevicesService } from 'src/app/api/services/devices.service';
 import Swal from 'sweetalert2';
 import { EnumSocketCommand } from 'src/app/models/common/enum';
+import { TestsService } from 'src/app/api/services/tests.service';
+import { Mode } from 'src/app/modules/testing/testing';
 
 @Component({
   selector: 'app-check-init',
@@ -16,6 +18,8 @@ import { EnumSocketCommand } from 'src/app/models/common/enum';
   styleUrls: ['./check-init.component.scss']
 })
 export class CheckInitComponent {
+  @Output() modeEvent = new EventEmitter<Mode>();
+
   isShowChart: boolean = false;
 
   basicData: any = {
@@ -116,7 +120,7 @@ export class CheckInitComponent {
             },
             beginAtZero: true,
             min: 0,
-            max: 100,
+            max: 3000,
         }
     },
     interaction: {
@@ -149,10 +153,10 @@ export class CheckInitComponent {
     this.isShowChart = true;
 
     this.socketService.getNewRes().subscribe((res:ISocketResponse) =>{
+      console.log("res",res);
+
       if(res.command == EnumSocketCommand.ShowTestData && res?.data?.test_item)
       {
-        console.log("res",res);
-  
         const data:ITestItem = res.data.test_item;
 
         this.basicData.labels.push(new Date().toLocaleString());
@@ -204,6 +208,37 @@ export class CheckInitComponent {
       }
 
       this.basicData = {...this.basicData};
+    })
+  }
+
+  onClickStopTesting() : void{
+    this.devicesService.CommandStopTest().subscribe((res:IConnectResponse) => {
+      if(res.success)
+      {
+        Swal.fire({
+          title: `Test Process`,
+          text: `Test is stopped`,
+          icon: 'info',
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+          }
+        );
+        //this.modeEvent.emit(Mode.Menu);
+      }
+      else
+      {
+        Swal.fire({
+          title: `Error device can't stop`,
+          text: res.message,
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+          }
+        );
+      }
     })
   }
 }

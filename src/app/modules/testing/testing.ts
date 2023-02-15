@@ -5,3 +5,8 @@ export enum Mode {
     Cleaning = 3,
     CollectingData = 4
 }
+
+export enum StateCalibration{
+    PreCalibratation = 0,
+    StartCalibration = 1
+}

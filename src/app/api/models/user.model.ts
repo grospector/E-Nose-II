@@ -11,5 +11,6 @@ export interface IGetConnectedDeviceResponse{
     case: string,
     success: boolean,
     device : IDevice,
-    test: string
+    test: string,
+    message: string
 }

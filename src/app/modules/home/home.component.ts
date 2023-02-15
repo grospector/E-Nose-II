@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IDevice } from 'src/app/api/models/device.model';
+import { IGetConnectedDeviceResponse } from 'src/app/api/models/user.model';
 import { DevicesService } from 'src/app/api/services/devices.service';
 import { UsersService } from 'src/app/api/services/users.service';
 import { AuthService } from 'src/app/core/auth/auth.service';
@@ -24,13 +25,25 @@ export class HomeComponent implements OnInit {
 
   constructor(private router: Router
               ,private authService:AuthService
-              ,private devicesService:DevicesService) { }
+              ,private devicesService:DevicesService
+              ,private usersService:UsersService) { }
 
   ngOnInit(): void {
     this.CurrentUser = AuthUtils.GetCurrentUser();
-    this.CurrentDevice = AuthUtils.GetCurrentDevice();
     console.log("CurrentUser",this.CurrentUser);
-    console.log("CurrentDevice",this.CurrentDevice);
+
+    this.usersService.GetConnectedDeviceDetail().subscribe((res:IGetConnectedDeviceResponse) => {
+      if(res?.success)
+      {
+        AuthUtils.SetCurrentDevice(res.device);
+
+        this.CurrentDevice = AuthUtils.GetCurrentDevice();
+        console.log("CurrentDevice",this.CurrentDevice);
+      }
+      else{
+        
+      }
+    });
   }
 
   onClickSwitch(): void{

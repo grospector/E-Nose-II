@@ -95,6 +95,21 @@ export class DevicesService {
     );
   }
 
+  
+  CommandStopTest(): Observable<IConnectResponse> {
+    const httpHeaders: HttpHeaders = new HttpHeaders({
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
+    });
+
+    return this.http.post<IConnectResponse>(
+      this.BaseUrl+"/command_stop_test",
+      "",
+      {
+        headers: httpHeaders
+      }
+    );
+  }
+
   CommandCleaning(): Observable<IConnectResponse> {
     const httpHeaders: HttpHeaders = new HttpHeaders({
       'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",

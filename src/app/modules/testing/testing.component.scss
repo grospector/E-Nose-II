@@ -9,7 +9,29 @@ article{
 }
 
 header{
-  height: 5%;
+  //height: 5%;
+}
+header>div>div{
+ width: calc(100% / 4);
+ padding:5px;
+}
+header>div>div:first-child{
+  padding-left:40px;
+}
+header>div>div:last-child{
+  padding-right:40px;
+}
+header label h3{
+  font-size: 1rem;
+}
+header label h4{
+  font-size: 1rem;
+  font-weight: 400;
+  margin-left: 5px;
+  color:gray;
+}
+header .calibrate-date label:hover{
+  cursor : pointer !important;
 }
 
 main{
@@ -167,4 +189,65 @@ main .menu-collecting-data aside button{
 
 footer{
   height: 5%;
+}
+
+.disable{
+  background-color: rgb(128, 128, 128) !important;
+  border-color: rgb(73, 73, 73) !important;
+  opacity: 0.3 !important;
+}
+.disable:hover{
+  cursor: default;
+}
+
+:host {
+  ::ng-deep{
+    .p-dialog{
+        border-radius: 20px !important;
+        //background-color: rgba(0, 0, 0, 0.5) !important;
+    }
+    .p-dialog .p-dialog-header {
+        border-radius: 20px 20px 0px 0px !important;
+        background-color: #F2E7DC !important;
+    }  
+    .p-dialog .p-dialog-header .p-dialog-header-icon{
+        color:#0D0D0D !important;
+    }
+    .p-dialog .p-dialog-header .p-dialog-header-icon:hover{
+        color:#0D0D0D !important;
+        background-color: #F2E7DC !important;
+        border:2px solid #0D0D0D !important;
+    }
+    .p-dialog .p-dialog-header label{
+        color: #0D0D0D !important;
+    }  
+    .p-dialog .p-dialog-body,.p-dialog-content {
+        overflow-y: hidden;
+        background-color: #F2E7DC !important;
+    }  
+
+    .p-dialog label.loading{
+      color: #0D0D0D !important;
+    }
+    .p-dialog .p-dialog-footer {
+        border-radius: 0px 0px 20px 20px !important;
+        background-color: #F2E7DC !important;
+    }  
+
+    .p-dialog .p-dialog-body,.p-dialog-content .calibrate-detail {
+      min-height: 550px;
+      background-color: #F2E7DC !important;
+    }  
+      
+    .calibrate-detail h4{
+      font-size: 1rem;
+    }
+
+    .id-cards{
+      min-height: calc(400px);
+      max-height: calc(400px);
+      overflow-y: auto;
+      margin-top:1rem;
+    }
+  }
 }

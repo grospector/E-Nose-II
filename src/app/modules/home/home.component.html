@@ -170,6 +170,11 @@
                     </div>
                 </div>
             </div>
+            <label *ngIf="Devices.length < 1" class="d-flex align-items-center loading h-100">
+                <h4 class="m-auto"  style="color:gray">
+                    Nothing
+                </h4>
+            </label>
         </div>
     </ng-template>
     <ng-template pTemplate="footer">
