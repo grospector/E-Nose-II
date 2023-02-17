@@ -4,6 +4,7 @@ import { IDevice } from "src/app/api/models/device.model";
 import { ISession, ILoginReponse } from "src/app/models/common/login";
 import { Role } from "src/app/models/common/role";
 import { IUser } from "src/app/models/common/user";
+import { StateCalibration } from "src/app/modules/testing/testing";
 
 export class AuthUtils
 {
@@ -122,5 +123,32 @@ export class AuthUtils
         updated_at: idCard.updated_at,
       }
     }
+  }
+
+  static ClearStateClibration(){
+    localStorage.setItem("StateCalibration","");
+  }
+
+  static SetCurrentStateCalibration(state:StateCalibration){
+    localStorage.setItem("StateCalibration",state.toString());
+  }
+
+  static GetCurrentStateCalibration() : StateCalibration{
+    const stateCalibration = (localStorage.getItem("StateCalibration") || StateCalibration.PreCalibratation) as StateCalibration;
+
+    return stateCalibration
+  }
+
+  static ClearStateStatus(){
+    localStorage.setItem("StateStatus","READY");
+  }
+
+  static SetCurrentStateStatus(state:string){
+    localStorage.setItem("StateStatus",state);
+  }
+
+  static GetCurrentStateStatus() : string{
+    const state = localStorage.getItem("StateStatus") || "READY";
+    return state
   }
 }

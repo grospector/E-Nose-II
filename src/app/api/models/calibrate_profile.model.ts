@@ -16,9 +16,24 @@ export interface ICalibrateProfile{
     avg_gas_5:number,
     avg_gas_6:number,
     avg_gas_7:number,
-    avg_gas_8:number,
     count_calibrate_items:number,
     created_at:string,
     device_id:number,
+    updated_at:string,
+}
+
+export interface IShowCollectCalibrateProfile{
+    calibrate_profile_id:number,
+    created_at:string,
+    gas_1:number,
+    gas_2:number,
+    gas_3:number,
+    gas_4:number,
+    gas_5:number,
+    gas_6:number,
+    gas_7:number,
+    id:number,
+    pressure:number,
+    temp:number,
     updated_at:string,
 }

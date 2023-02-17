@@ -44,6 +44,7 @@ import { environment } from 'src/environments/environment';
 import { CheckInitComponent } from './shared/check-init/check-init.component';
 import { CalibrationComponent } from './shared/calibration/calibration.component';
 import { CleaningComponent } from './shared/cleaning/cleaning.component';
+import { LoaddingScreenComponent } from './shared/loadding-screen/loadding-screen.component';
 
 
 const config: SocketIoConfig = {
@@ -76,6 +77,7 @@ const config: SocketIoConfig = {
     CheckInitComponent,
     CalibrationComponent,
     CleaningComponent,
+    LoaddingScreenComponent,
   ],
   imports: [
     BrowserModule,

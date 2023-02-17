@@ -34,6 +34,8 @@ export class AuthService {
   login(username: string, password: string): Observable<ILoginReponse>{
       return this.http.post<any>(`${environment.apiUrl}/users/login`, { username, password })
           .pipe(map(user => {
+              localStorage.clear();
+              
               // store user details and jwt token in local storage to keep user logged in between page refreshes
               const userString = JSON.stringify(user);
               localStorage.setItem('user', userString);

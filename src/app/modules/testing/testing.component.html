@@ -13,7 +13,7 @@
         <div class="d-flex flex-row justify-content-between w-100">
           <label>
             <h4>
-              {{currentIDCard?.id_card}}
+              {{currentIDCard.id_card}}
             </h4>
           </label>
           <button style="width: 68px;" *ngIf="mode == Mode.Menu" (click)="onClickOpenModalIDCards()">
@@ -29,7 +29,7 @@
         </label>
         <label>
           <h4>
-            {{currentIDCard?.name}}
+            {{currentIDCard == null ? '' : currentIDCard.name}}
           </h4>
         </label>
       </div>
@@ -41,7 +41,7 @@
         </label>
         <label>
           <h4>
-            {{currentDevice?.name}}
+            {{currentDevice == null ? '' : currentDevice.name}}
           </h4>
         </label>
       </div>
@@ -66,7 +66,9 @@
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
         </button>
       </aside>
-      <app-check-init (modeEvent)="changeMode($event)"></app-check-init>
+      <app-check-init (modeEvent)="changeMode($event)"
+                      (footerMessageEvent)="changeFooterMessage($event)">
+      </app-check-init>
     </div>
     <div *ngSwitchCase="2" class="menu-calibration h-100">
       <aside class="position-absolute">
@@ -74,6 +76,9 @@
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
         </button>
       </aside>
+      <app-calibration [calibrate_profile]="lastCalibrateProfile.calibrate_profile"
+                        (footerMessageEvent)="changeFooterMessage($event)">
+      </app-calibration>
     </div>
     <div *ngSwitchCase="3" class="menu-cleaning h-100">
       <aside class="position-absolute">
@@ -118,7 +123,7 @@
               CALIBRATION
             </label>
           </div>
-          <div *ngSwitchCase="1" class="card w-100 h-100 text-center calibate justify-content-center h-100" (click)="onClickCalibration()">
+          <div *ngSwitchCase="1" class="card w-100 h-100 text-center calibate justify-content-center h-100" (click)="onClickStartCalibration()">
             <fa-icon class="fa-5x" icon="magnifying-glass-chart"></fa-icon>
             <label>
               START CALIBRATION
@@ -147,8 +152,10 @@
       </div>
     </div>
   </main>
-  <footer class="d-flex">
-    Footer
+  <footer class="d-flex justify-content-center text-center">
+    <div>
+      {{footerMessage}}
+    </div>
   </footer>
 </article>
 
@@ -239,18 +246,18 @@
         </h3>
       </label>
       <div class="d-flex flex-row calibrate-detail">
-        <p-chart type="bar" [data]="basicData" [options]="basicOptions" width="900px" height="calc(100%)"></p-chart>
+        <p-chart type="bar" [data]="basicData" [options]="basicOptions" width="942px" height="calc(100%)"></p-chart>
         <div class="px-3 pt-4">
           <div>
             <label>
               <h4>
-                Date : {{CalibrateDetailFormatDate(lastCalibrateProfile?.calibrate_profile?.created_at || "")}}
+                Date : {{CalibrateDetailFormatDate(lastCalibrateProfile.calibrate_profile.created_at || "")}}
               </h4>
             </label>
             <br>
             <label>
               <h4>
-                Time : {{CalibrateDetailFormatTime(lastCalibrateProfile?.calibrate_profile?.created_at || "")}}
+                Time : {{CalibrateDetailFormatTime(lastCalibrateProfile.calibrate_profile.created_at || "")}}
               </h4>
             </label>
           </div>
@@ -258,43 +265,43 @@
           <div class="pt-3">
             <label>
               <h4>
-                Avg Gas1 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_1}}
+                Avg Gas1 : {{lastCalibrateProfile.calibrate_profile.avg_gas_1}}
               </h4>
             </label>
             <br>
             <label>
               <h4>
-                Avg Gas2 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_2}}
+                Avg Gas2 : {{lastCalibrateProfile.calibrate_profile.avg_gas_2}}
               </h4>
             </label>
             <br>
             <label>
               <h4>
-                Avg Gas3 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_3}}
+                Avg Gas3 : {{lastCalibrateProfile.calibrate_profile.avg_gas_3}}
               </h4>
             </label>
             <br>
             <label>
               <h4>
-                Avg Gas4 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_4}}
+                Avg Gas4 : {{lastCalibrateProfile.calibrate_profile.avg_gas_4}}
               </h4>
             </label>
             <br>
             <label>
               <h4>
-                Avg Gas5 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_5}}
+                Avg Gas5 : {{lastCalibrateProfile.calibrate_profile.avg_gas_5}}
               </h4>
             </label>
             <br>
             <label>
               <h4>
-                Avg Gas6 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_6}}
+                Avg Gas6 : {{lastCalibrateProfile.calibrate_profile.avg_gas_6}}
               </h4>
             </label>
             <br>
             <label>
               <h4>
-                Avg Gas7 : {{lastCalibrateProfile?.calibrate_profile?.avg_gas_7}}
+                Avg Gas7 : {{lastCalibrateProfile.calibrate_profile.avg_gas_7}}
               </h4>
             </label>
           </div>
@@ -302,13 +309,13 @@
           <div class="pt-5">
             <label>
               <h4>
-                Avg Temp : {{lastCalibrateProfile?.calibrate_profile?.avg_temp}}
+                Avg Temp : {{lastCalibrateProfile.calibrate_profile.avg_temp}}
               </h4>
             </label>
             <br>
             <label>
               <h4>
-                Avg Pressure : {{lastCalibrateProfile?.calibrate_profile?.avg_pressure}} 
+                Avg Pressure : {{lastCalibrateProfile.calibrate_profile.avg_pressure}} 
               </h4>
             </label>
           </div>
@@ -316,7 +323,7 @@
           <div class="pt-3">
             <label>
               <h4>
-                Total Item : {{lastCalibrateProfile?.calibrate_profile?.count_calibrate_items}}
+                Total Item : {{lastCalibrateProfile.calibrate_profile.count_calibrate_items}}
               </h4>
             </label>
           </div>
@@ -326,3 +333,14 @@
     <ng-template pTemplate="footer">
     </ng-template>
 </p-dialog>
+
+<!-- <p-dialog [(visible)]="displayModalLoadding" [modal]="true" [style]="{width:'100%'}" [baseZIndex]="-100"
+    [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="header">
+    </ng-template>
+    <ng-template pTemplate="body">
+    </ng-template>
+    <ng-template pTemplate="footer">
+    </ng-template>
+</p-dialog> -->
+<app-loadding-screen *ngIf="displayModalLoadding"></app-loadding-screen>

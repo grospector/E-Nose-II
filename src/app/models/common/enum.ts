@@ -9,5 +9,6 @@ export enum EnumConnectionStatus{
 
 export enum EnumSocketCommand{
     ShowTestData = "show_test_data",
-    ShowCollectData = "show_collect_data"
+    ShowCollectData = "show_collect_data",
+    ShowCollectCalibrateData = "show_collect_calibrate_data"
 }

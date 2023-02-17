@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { State } from 'nats.ws/lib/nats-base-client/parser';
 import { ICalibrateProfile, IGetLastCalibrateDetailResponse } from 'src/app/api/models/calibrate_profile.model';
 import { ICaseDetail, IGetListCasesResponse } from 'src/app/api/models/case.model';
 import { IConnectResponse, IDevice } from 'src/app/api/models/device.model';
@@ -28,6 +30,7 @@ export class TestingComponent implements OnInit {
   mode:Mode = Mode.Menu;
   displayModal:boolean = false;
   displayModalCalibrate:boolean = false;
+  displayModalLoadding:boolean = false;
 
   IsDialogLoading:boolean = true;
   IDCards:ICaseDetail[] = [];
@@ -36,7 +39,9 @@ export class TestingComponent implements OnInit {
   currentDevice!:IDevice;
   lastCalibrateDate:string = "";
   lastCalibrateProfile!:IGetLastCalibrateDetailResponse;
-  currentStateCalibration:StateCalibration = StateCalibration.PreCalibratation;
+  currentStateCalibration!:StateCalibration;
+
+  footerMessage:string = "READY";
 
   basicData: any = {
     labels: ["Avg Gas 1","Avg Gas 2","Avg Gas 3","Avg Gas 4","Avg Gas 5","Avg Gas 6","Avg Gas 7"],
@@ -73,7 +78,6 @@ export class TestingComponent implements OnInit {
       },
       title: {
         display: false,
-        text: 'Custom Chart Title'
       } 
     },
     scales: {
@@ -115,9 +119,9 @@ export class TestingComponent implements OnInit {
 
       }
     },
-    clip: {left: false, top: false, right: 1000, bottom: false},
-    pointBorderWidth:5,
-    pointHoverBorderWidth:10
+    //clip: {left: false, top: false, right: 1000, bottom: false},
+    //pointBorderWidth:5,
+    //pointHoverBorderWidth:10
   };
 
   constructor(private router:Router
@@ -127,9 +131,15 @@ export class TestingComponent implements OnInit {
               ,private calibrateProfileService:CalibrateProfileService) { }
 
   ngOnInit() : void {
+    this.CheckStateStatus();
     this.CheckConnectedDevice();
     this.CheckIDCard();
     this.CheckCalibrateProfile();
+    this.CheckStateCalibrate();
+  }
+
+  CheckStateStatus() : void{
+    this.footerMessage = AuthUtils.GetCurrentStateStatus();
   }
 
   async CheckConnectedDevice(): Promise<IGetConnectedDeviceResponse>{
@@ -229,6 +239,10 @@ export class TestingComponent implements OnInit {
     }
   }
 
+  CheckStateCalibrate() : void{
+    this.currentStateCalibration = AuthUtils.GetCurrentStateCalibration();
+  }
+
   startDragging(e:any, flag:any, el:any) {
     this.mouseDown = true;
     this.startX = e.pageX - el.offsetLeft;
@@ -252,6 +266,11 @@ export class TestingComponent implements OnInit {
     this.mode = mode;
   }
 
+  changeFooterMessage(message:string){
+    this.footerMessage = message;
+    AuthUtils.SetCurrentStateStatus(this.footerMessage);
+  }
+
   onClickCheckDeviceInit(){
     if(this.devicesService.IsConnected())
     {
@@ -259,6 +278,8 @@ export class TestingComponent implements OnInit {
         if(res?.success)
         {
           this.mode = Mode.CheckInit;
+
+          this.changeFooterMessage("TEST");
         }
         else{
           Swal.fire({
@@ -290,24 +311,63 @@ export class TestingComponent implements OnInit {
 
   
   onClickCalibration(){
-    if(this.devicesService.IsConnected())
-    {
-      this.mode = Mode.Calibration;
-    }
-    else{
-      Swal.fire({
-        title: `Error device is't connected`,
-        text: '',
-        icon: 'error',
-        showCancelButton: true,
-        confirmButtonText: 'OK'
-      }).then(
-        (result) => {
+    this.displayModalLoadding = true;
+
+    this.calibrateProfileService.PreStartCalibrate().subscribe((res:IConnectResponse) =>{
+      
+      let timer: ReturnType<typeof setTimeout> = setTimeout(() => { 
+        clearTimeout(timer);
+        
+        if(res?.success)
+        {
+          this.displayModalLoadding = false;
+          this.currentStateCalibration = StateCalibration.StartCalibration;
+          AuthUtils.SetCurrentStateCalibration(this.currentStateCalibration);
+
+          this.changeFooterMessage("PRE-CALIBATE");
         }
-      );
-    }
+        else{
+          this.displayModalLoadding = false;
+
+          Swal.fire({
+            title: `Error!!! Pre Start Calibrate`,
+            text: "",
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonText: 'OK'
+          }).then(
+            (result) => {
+            }
+          );
+        }
+     },5*1000);
+    });
   }
 
+  onClickStartCalibration(){
+    this.mode = Mode.Calibration;
+
+    this.calibrateProfileService.StartCalibrate().subscribe((res:IGetLastCalibrateDetailResponse) =>{
+      if(res?.success){
+        this.mode = Mode.Calibration;
+
+        this.lastCalibrateProfile = res;
+        this.lastCalibrateDate = ToolUtils.FormatDate(this.lastCalibrateProfile?.calibrate_profile?.created_at);
+      }
+      else{
+        Swal.fire({
+          title: `Error!!! Start Calibrate`,
+          text: "",
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+          }
+        );
+      }
+    });
+  }
   
   onClickCleaning(){
     if(this.devicesService.IsConnected())
@@ -352,7 +412,19 @@ export class TestingComponent implements OnInit {
   }
 
   onClickBack(): void{
-    this.mode = Mode.Menu;
+    switch(this.mode){
+      case Mode.Calibration:
+        this.mode = Mode.Menu;
+        this.changeFooterMessage("PRE-CALIBRATE");
+        break;
+      case Mode.CheckInit:
+      case Mode.Cleaning:
+      case Mode.CollectingData:
+      default:
+        this.mode = Mode.Menu;
+        this.changeFooterMessage("READY");
+        break;
+    }
   }
 
   onClickOpenModalIDCards(): void{

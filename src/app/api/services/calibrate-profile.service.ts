@@ -27,13 +27,42 @@ export class CalibrateProfileService {
     );
   }
 
-  StartCalibrate(): Observable<IConnectResponse> {
+  PreStartCalibrate(): Observable<IConnectResponse> {
     const httpHeaders: HttpHeaders = new HttpHeaders({
       'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
     });
 
     return this.http.post<IConnectResponse>(
+      this.BaseUrl+"/pre_start_calibrate",
+      "",
+      {
+        headers: httpHeaders
+      }
+    );
+  }
+  
+  StartCalibrate(): Observable<IGetLastCalibrateDetailResponse> {
+    const httpHeaders: HttpHeaders = new HttpHeaders({
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
+    });
+
+    return this.http.post<IGetLastCalibrateDetailResponse>(
       this.BaseUrl+"/start_calibrate",
+      "",
+      {
+        headers: httpHeaders
+      }
+    );
+  }
+
+  StopCalibrate(): Observable<IConnectResponse> {
+    const httpHeaders: HttpHeaders = new HttpHeaders({
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
+    });
+
+    return this.http.post<IConnectResponse>(
+      this.BaseUrl+"/stop_calibrate",
+      "",
       {
         headers: httpHeaders
       }

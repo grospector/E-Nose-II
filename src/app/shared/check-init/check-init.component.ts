@@ -1,15 +1,12 @@
 import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
-import { UIChart } from 'primeng/chart';
 import { ICollectingData, ITestItem } from 'src/app/api/models/data.model';
 import { IConnectResponse, IDevice } from 'src/app/api/models/device.model';
 import { ISocketResponse } from 'src/app/api/models/socket.mode';
 import { SocketService } from 'src/app/api/services/socket.service';
-import { Socket } from 'ngx-socket-io';
 import { Observable, Subscription } from 'rxjs';
 import { DevicesService } from 'src/app/api/services/devices.service';
 import Swal from 'sweetalert2';
 import { EnumSocketCommand } from 'src/app/models/common/enum';
-import { TestsService } from 'src/app/api/services/tests.service';
 import { Mode } from 'src/app/modules/testing/testing';
 
 @Component({
@@ -19,6 +16,7 @@ import { Mode } from 'src/app/modules/testing/testing';
 })
 export class CheckInitComponent {
   @Output() modeEvent = new EventEmitter<Mode>();
+  @Output() footerMessageEvent = new EventEmitter<string>();
 
   isShowChart: boolean = false;
 
@@ -152,6 +150,8 @@ export class CheckInitComponent {
   ngOnInit() : void {
     this.isShowChart = true;
 
+    this.footerMessageEvent.emit("TEST");
+
     this.socketService.getNewRes().subscribe((res:ISocketResponse) =>{
       console.log("res",res);
 
@@ -215,6 +215,8 @@ export class CheckInitComponent {
     this.devicesService.CommandStopTest().subscribe((res:IConnectResponse) => {
       if(res.success)
       {
+        this.footerMessageEvent.emit("STOP");
+
         Swal.fire({
           title: `Test Process`,
           text: `Test is stopped`,

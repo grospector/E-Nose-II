@@ -151,6 +151,9 @@ main .menu-collecting-data aside button{
 .calibate:hover{
   cursor: pointer;
 }
+.calibate label:hover{
+  cursor: pointer;
+}
 .calibate fa-icon{
   filter: drop-shadow(3px 3px 2px rgb(13, 13, 13,0.5));
 }
@@ -165,6 +168,9 @@ main .menu-collecting-data aside button{
   filter: drop-shadow(3px 3px 2px rgb(13, 13, 13,0.5));
 }
 .cleaning:hover{
+  cursor: pointer;
+} 
+.cleaning label:hover{
   cursor: pointer;
 }
 
@@ -184,6 +190,9 @@ main .menu-collecting-data aside button{
   filter: drop-shadow(3px 3px 2px rgb(13, 13, 13,0.5));
 }
 .start-process:hover{
+  cursor: pointer;
+}
+.start-process label:hover{
   cursor: pointer;
 }
 
