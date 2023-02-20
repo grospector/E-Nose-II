@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import { IAvgCalibrateProfile, ICalibrateItem, IGetLastCalibrateDetailResponse, IShowCollectCalibrateProfile } from 'src/app/api/models/calibrate_profile.model';
 import { EnumCalibrateStatus } from './calibration';
 import { AuthUtils } from 'src/app/core/auth/auth.utils';
+import { ToolUtils } from 'src/app/core/common/tool.utils';
 
 @Component({
   selector: 'app-calibration',
@@ -177,7 +178,7 @@ export class CalibrationComponent {
 
         const time:Date = new Date();
         
-        this.basicData.labels.push(time.toLocaleString());
+        this.basicData.labels.push(ToolUtils.FormatTime(time.toString()));
         this.calibrate_time = time.getTime() - this.startCalibrateTime.getTime() == 0 ? 1 : time.getTime() - this.startCalibrateTime.getTime()
 
         const pressure = this.basicData.datasets.find((x:any) => x.label == 'Pressure').data;

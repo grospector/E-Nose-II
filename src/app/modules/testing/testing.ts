@@ -6,7 +6,8 @@ export enum Mode {
     Cleaning = 4,
     CollectingData = 5,
     StartPreProcessing = 6,
-    EndPreProcessing = 7
+    EndPreProcessing = 7,
+    Finished = 8
 }
 
 export enum StateCalibration{

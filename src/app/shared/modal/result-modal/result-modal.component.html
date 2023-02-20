@@ -6,10 +6,8 @@
             </h2>
         </label>
     </header>
-    <main>j
-        <div>
-            <img src="{{imgSrcUrl}}"/>
-        </div>
+    <main>
+        <qrcode [qrdata]="url" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
     </main>
     <footer>
         <label>
@@ -25,3 +23,5 @@
         <input [value]="url"/>
     </footer>
 </article>
+
+<p-dialog></p-dialog>

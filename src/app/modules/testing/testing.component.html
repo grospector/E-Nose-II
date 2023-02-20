@@ -116,13 +116,19 @@
       </div>
     </div> -->
     <div *ngSwitchCase="Mode.CollectingData" class="menu-collecting-data h-100">
-      <app-collecting-data [isProcess]="isProcess"></app-collecting-data>
+      <aside *ngIf="isFinished" class="position-absolute">
+        <button (click)="onClickBack()">
+          <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
+        </button>
+      </aside>
+      <app-collecting-data (isFinishedEvent)="ChangeFinished($event)"></app-collecting-data>
     </div>
     <div *ngSwitchCase="Mode.StartPreProcessing" class="menu-collecting-data h-100">
       <app-start-pre-processing></app-start-pre-processing>
     </div>
     <div *ngSwitchCase="Mode.EndPreProcessing" class="menu-collecting-data h-100">
-      <app-end-pre-processing (modeEvent)="changeMode($event)"></app-end-pre-processing>
+      <app-end-pre-processing (modeEvent)="changeMode($event)">
+      </app-end-pre-processing>
     </div>
     <div *ngSwitchDefault class="d-flex flex-column menu-testing h-100">
       <aside class="position-absolute">
@@ -260,13 +266,13 @@
 <p-dialog [(visible)]="displayModalCalibrate" [modal]="true" [style]="{width:'1200px'}" [baseZIndex]="-100"
     [draggable]="false" [resizable]="false">
     <ng-template pTemplate="header">
-        <div class="text-center w-100">
-            <label>
-                <h2>
-                    ผลการ Calibrate ล่าสุด
-                </h2>
-            </label>
-        </div>
+      <div class="text-center w-100">
+          <label>
+              <h2>
+                  ผลการ Calibrate ล่าสุด
+              </h2>
+          </label>
+      </div>
     </ng-template>
     <ng-template pTemplate="body">
       <label>
@@ -280,13 +286,13 @@
           <div>
             <label>
               <h4>
-                Date : {{CalibrateDetailFormatDate(lastCalibrateProfile.calibrate_profile.created_at || "")}}
+                Date : {{FormatDate(lastCalibrateProfile.calibrate_profile.created_at || "")}}
               </h4>
             </label>
             <br>
             <label>
               <h4>
-                Time : {{CalibrateDetailFormatTime(lastCalibrateProfile.calibrate_profile.created_at || "")}}
+                Time : {{FormatTime(lastCalibrateProfile.calibrate_profile.created_at || "")}}
               </h4>
             </label>
           </div>
@@ -372,6 +378,7 @@
     <ng-template pTemplate="footer">
     </ng-template>
 </p-dialog> -->
+
 <app-loadding-screen *ngIf="displayModalStopTest" [message]="'STOP TEST'"></app-loadding-screen>
 <app-loadding-screen *ngIf="displayModalPreCalibration" [message]="'PRE CALIBATE'"></app-loadding-screen>
 <app-loadding-screen *ngIf="displayModalCleaning" [message]="'CLEANING'"></app-loadding-screen>

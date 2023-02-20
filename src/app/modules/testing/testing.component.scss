@@ -272,5 +272,59 @@ footer{
       overflow-y: auto;
       margin-top:1rem;
     }
+
+    .dialog-result .p-dialog{
+      border: 2px solid #0D0D0D;
+    }
+    .dialog-result .p-dialog .p-dialog-header{
+      border-radius: 20px 20px 0px 0px !important;
+      background-color: #EDEDED !important;
+    }  
+    .p-dialog .p-dialog-header .p-dialog-header-icon:hover{
+        color:#0D0D0D !important;
+        background-color: #EDEDED !important;
+        border:2px solid #0D0D0D !important;
+    }
+    .dialog-result .p-dialog .p-dialog-body,.dialog-result .p-dialog-content {
+        overflow-y: hidden;
+        background-color: #EDEDED !important;
+    }  
+    .dialog-result .p-dialog .p-dialog-footer {
+        border-radius: 0px 0px 20px 20px !important;
+        background-color: #EDEDED !important;
+    }  
+    .dialog-result h3{
+      font-size: 1.1rem;
+    }
+    .dialog-result h4{
+      font-size: 1rem;
+      font-weight: 400;
+      color: gray;
+    }
+    .dialog-result h5{
+      margin-top:5px;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: gray;
+    }
+  }
+
+  .color-white{
+    background-color: #EDEDED
+  }
+
+  .input-clipboard{
+    border-radius: 5px 0px 0px 5px;
+    border: 1px solid #9FABBD;
+  }
+  .button-clipboard{
+    background: #EAEAEA;
+    border-radius: 0px 5px 5px 0px;
+    border: 1px solid #9FABBD;
+
+    color:#9FABBD;
+  }
+  .button-clipboard:hover{
+    cursor: pointer;
   }
 }

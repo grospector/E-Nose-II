@@ -20,7 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUsersGear, faFlaskVial , faHandSparkles , faHouse , 
         faCircleChevronLeft , faListCheck, faMagnifyingGlassChart ,
-        faHouseChimney , faFolderPlus , faGears, faChalkboardUser, faFileWaveform } from '@fortawesome/free-solid-svg-icons';
+        faHouseChimney , faFolderPlus , faGears, faChalkboardUser, faFileWaveform, faClipboard } from '@fortawesome/free-solid-svg-icons';
 
 import { FooterModulesComponent } from './shared/footer-modules/footer-modules.component';
 import { AccountSettingComponent } from './modules/account-setting/account-setting.component';
@@ -36,6 +36,8 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChartModule } from 'primeng/chart';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { TooltipModule } from 'primeng/tooltip';
+
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { AuthService } from './core/auth/auth.service';
 import { DeviceModalComponent } from './shared/modal/device-modal/device-modal.component';
@@ -49,6 +51,7 @@ import { LoaddingScreenComponent } from './shared/loadding-screen/loadding-scree
 import { StartPreProcessingComponent } from './shared/start-pre-processing/start-pre-processing.component';
 import { EndPreProcessingComponent } from './shared/end-pre-processing/end-pre-processing.component';
 import { ResultModalComponent } from './shared/modal/result-modal/result-modal.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 const config: SocketIoConfig = {
@@ -102,6 +105,7 @@ const config: SocketIoConfig = {
     CheckboxModule,
     ChartModule,
     ProgressBarModule,
+    QRCodeModule,
 		SocketIoModule.forRoot(config), 
   ],
   providers: [
@@ -129,5 +133,6 @@ export class AppModule {
     library.addIcons(faGears);
     library.addIcons(faChalkboardUser);
     library.addIcons(faFileWaveform);
+    library.addIcons(faClipboard);
   }
  }

@@ -5,11 +5,12 @@ import { IConnectResponse, IDevice } from 'src/app/api/models/device.model';
 import { ISocketResponse } from 'src/app/api/models/socket.mode';
 import { SocketService } from 'src/app/api/services/socket.service';
 import { Socket } from 'ngx-socket-io';
-import { Observable, Subscription } from 'rxjs';
 import { EnumSocketCommand } from 'src/app/models/common/enum';
 import { Mode } from 'src/app/modules/testing/testing';
 import { TestsService } from 'src/app/api/services/tests.service';
 import Swal from 'sweetalert2';
+import { Observable } from 'rxjs';
+import { ToolUtils } from 'src/app/core/common/tool.utils';
 
 @Component({
   selector: 'app-collecting-data',
@@ -17,10 +18,18 @@ import Swal from 'sweetalert2';
   styleUrls: ['./collecting-data.component.scss']
 })
 export class CollectingDataComponent {
-  @Input() isProcess:boolean = true;
-  @Output() modeEvent = new EventEmitter<Mode>;
+  //@Input() isProcess:boolean = true;
+  isProcess:boolean = true;
+  @Output() modeEvent = new EventEmitter<Mode>();
+  @Output() testIdEvent = new EventEmitter<string>();
+  @Output() isFinishedEvent = new EventEmitter<boolean>();
 
-  testId : number = 0;
+  isFinished:boolean = false;
+  displayModalResult:boolean = false;
+
+  url:string = ToolUtils.FormatUrl(document.location.protocol,document.location.hostname,document.location.port,"");
+  testId:number = 0;
+  isCopiedToClipboard:boolean = false;
 
   basicData: any = {
     labels: [],
@@ -158,7 +167,7 @@ export class CollectingDataComponent {
 
         const data:ITestItem = res.data.test_item;
 
-        this.basicData.labels.push(new Date().toLocaleString());
+        this.basicData.labels.push(ToolUtils.FormatTime(new Date().toString()));
 
         const pressure = this.basicData.datasets.find((x:any) => x.label == 'Pressure').data;
         const temp = this.basicData.datasets.find((x:any) => x.label == 'Temp').data;
@@ -172,6 +181,9 @@ export class CollectingDataComponent {
 
         this.testId = res.data.test_item.test_id;
 
+        const routeUrl = "result?id="+this.testId.toString();
+        this.url = ToolUtils.FormatUrl(document.location.protocol,document.location.hostname,document.location.port,routeUrl);
+        
         if(this.basicData.labels.length <= 30)
         {
           pressure.push(data?.pressure);
@@ -237,7 +249,8 @@ export class CollectingDataComponent {
     this.testsService.EndTest(this.testId).subscribe((res:IConnectResponse) => {
       if(res.success)
       {
-        
+        this.displayModalResult = true;
+        this.isFinishedEvent.emit(true);
       }
       else{
         Swal.fire({
@@ -252,6 +265,31 @@ export class CollectingDataComponent {
         );
       }
     });
+  }
+
+  onClickShowResult() :void{
+    this.displayModalResult = true;
+  }
+
+  onClickClipboard() : void{
+    document.addEventListener('copy', (e: ClipboardEvent) => {
+      if(e.clipboardData)
+      {
+        e.clipboardData.setData('text/plain', (this.url));
+        e.preventDefault();
+        //document.removeEventListener('copy', null);
+
+        this.isCopiedToClipboard = true;
+
+        let timer: ReturnType<typeof setTimeout> = setTimeout(() => { 
+          clearTimeout(timer);
+
+          this.isCopiedToClipboard = false;
+         }, 5*1000);
+
+      }
+    });
+    document.execCommand('copy');
   }
 
   public get Mode(): typeof Mode {

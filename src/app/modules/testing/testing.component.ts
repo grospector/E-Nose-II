@@ -39,6 +39,7 @@ export class TestingComponent implements OnInit {
   displayModalCalibrate:boolean = false;
   displayModalPreCalibration:boolean = false;
   displayModalCleaning:boolean = false;
+  displayModalResult:boolean = false;
 
   waitToMenu:boolean = false;
 
@@ -52,6 +53,7 @@ export class TestingComponent implements OnInit {
   currentStateCalibration!:StateCalibration;
 
   isProcess:boolean = false;
+  isFinished:boolean = false;
 
   footerMessage:string = "";
 
@@ -551,7 +553,7 @@ export class TestingComponent implements OnInit {
   }
 
   onClickStartProcessCollectingData(){
-    if(AuthUtils.GetCurrentIDCard())
+    if(!AuthUtils.GetCurrentIDCard())
     {
       Swal.fire({
         title: `ID Card isn't selected`,
@@ -673,21 +675,19 @@ export class TestingComponent implements OnInit {
     }
   }
 
+  ChangeFinished(isFinished:boolean) : void{
+    this.isFinished = isFinished;
+  }
+
   public get Mode(): typeof Mode {
     return Mode; 
   }
 
-  public CalibrateDetailFormatDate(date:string){
-    const datepipe: DatePipe = new DatePipe('en-US')
-    let formattedDate = datepipe.transform(date, "dd/MM/yyyy")
-
-    return formattedDate;
+  public FormatDate(date:string){
+    return ToolUtils.FormatDate(date);
   }
 
-  public CalibrateDetailFormatTime(date:string){
-    const datepipe: DatePipe = new DatePipe('en-US')
-    let formattedTime = datepipe.transform(date, "hh:mm")
-
-    return formattedTime;
+  public FormatTime(date:string){
+    return ToolUtils.FormatTime(date);
   }
 }

@@ -1,16 +1,72 @@
 <p-chart type="line" [data]="basicData" [options]="basicOptions" width="100%" height="500px"></p-chart>
 
-<div *ngIf="isProcess" class="card text-center justify-content-center" (click)="onClickStopCollectingData()">
-    <label>
-        <h1>
-            STOP COLLECTING DATA
-        </h1>
-    </label>
+<div *ngIf="!isFinished">
+    <div *ngIf="isProcess" class="card text-center justify-content-center" (click)="onClickStopCollectingData()">
+        <label>
+            <h1>
+                STOP COLLECTING DATA
+            </h1>
+        </label>
+    </div>
+    <div *ngIf="!isProcess" class="card text-center justify-content-center" (click)="onClickFinishCollectingData()">
+        <label>
+            <h1>
+                FINISH PROCESS
+            </h1>
+        </label>
+    </div>
 </div>
-<div *ngIf="!isProcess" class="card text-center justify-content-center" (click)="onClickFinishCollectingData()">
-    <label>
-        <h1>
-            FINISH PROCESS
-        </h1>
-    </label>
+<div *ngIf="isFinished">
+    <div class="card text-center justify-content-center" (click)="onClickShowResult()">
+        <label>
+            <h1>
+                SHOW RESULT
+            </h1>
+        </label>
+    </div>
 </div>
+
+
+<p-dialog [(visible)]="displayModalResult" [modal]="true" [style]="{width:'500px'}" [baseZIndex]="-100"
+    [draggable]="false" [resizable]="false" class="dialog-result">
+    <ng-template pTemplate="header">
+      <div class="text-center w-100">
+          <label>
+              <h2>
+                  ผลการทดสอบ
+              </h2>
+          </label>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="body">
+      <div class="text-center">
+        <qrcode colorLight="#EDEDED" [qrdata]="url" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="d-flex flex-column text-left px-3 pb-3 text-start">
+        <label>
+          <h3>
+              กรุณาแสกน QR Code เพื่อดูผลการวิเคราะห์ความเสี่ยง
+          </h3>
+        </label>
+        <label>
+          <h4>
+              หรือคัดลอกลิงค์ด้านล่างเพื่อดูผล
+          </h4>
+        </label>
+        
+        <div class="p-inputgroup">
+          <input class="input-clipboard w-100" [value]="url" readonly/>
+          <div class="button-clipboard text-center" style="width:80px" (click)="onClickClipboard()">
+            <fa-icon class="fa-2x" icon="clipboard"></fa-icon>
+          </div>
+        </div>
+        <label *ngIf="isCopiedToClipboard">
+          <h5>
+              Url is copied to clipboard.
+          </h5>
+        </label>
+      </div>
+    </ng-template>
+</p-dialog>

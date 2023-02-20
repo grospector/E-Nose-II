@@ -3,11 +3,12 @@ import { ICollectingData, ITestItem } from 'src/app/api/models/data.model';
 import { IConnectResponse, IDevice } from 'src/app/api/models/device.model';
 import { ISocketResponse } from 'src/app/api/models/socket.mode';
 import { SocketService } from 'src/app/api/services/socket.service';
-import { Observable, Subscription } from 'rxjs';
 import { DevicesService } from 'src/app/api/services/devices.service';
 import Swal from 'sweetalert2';
 import { EnumSocketCommand } from 'src/app/models/common/enum';
 import { Mode } from 'src/app/modules/testing/testing';
+import { Observable } from 'rxjs';
+import { ToolUtils } from 'src/app/core/common/tool.utils';
 
 @Component({
   selector: 'app-check-init',
@@ -157,7 +158,7 @@ export class CheckInitComponent {
       {
         const data:ITestItem = res.data.test_item;
 
-        this.basicData.labels.push(new Date().toLocaleString());
+        this.basicData.labels.push(ToolUtils.FormatTime(new Date().toString()));
 
         const pressure = this.basicData.datasets.find((x:any) => x.label == 'Pressure').data;
         const temp = this.basicData.datasets.find((x:any) => x.label == 'Temp').data;
