@@ -1,10 +1,10 @@
 export interface IGetLastCalibrateDetailResponse{
     success:boolean,
     message:string,
-    calibrate_profile:ICalibrateProfile,
+    calibrate_profile:IAvgCalibrateProfile,
 }
 
-export interface ICalibrateProfile{
+export interface IAvgCalibrateProfile{
     id:number,
     name:string,
     avg_pressure:number,
@@ -22,7 +22,7 @@ export interface ICalibrateProfile{
     updated_at:string,
 }
 
-export interface IShowCollectCalibrateProfile{
+export interface ICalibrateItem{
     calibrate_profile_id:number,
     created_at:string,
     gas_1:number,
@@ -36,4 +36,8 @@ export interface IShowCollectCalibrateProfile{
     pressure:number,
     temp:number,
     updated_at:string,
+}
+
+export interface IShowCollectCalibrateProfile{
+    calibrate_item:ICalibrateItem
 }

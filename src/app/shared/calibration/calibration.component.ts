@@ -10,8 +10,9 @@ import { EnumSocketCommand } from 'src/app/models/common/enum';
 import { Mode } from 'src/app/modules/testing/testing';
 import { CalibrateProfileService } from 'src/app/api/services/calibrate-profile.service';
 import { DatePipe } from '@angular/common';
-import { ICalibrateProfile, IGetLastCalibrateDetailResponse, IShowCollectCalibrateProfile } from 'src/app/api/models/calibrate_profile.model';
+import { IAvgCalibrateProfile, ICalibrateItem, IGetLastCalibrateDetailResponse, IShowCollectCalibrateProfile } from 'src/app/api/models/calibrate_profile.model';
 import { EnumCalibrateStatus } from './calibration';
+import { AuthUtils } from 'src/app/core/auth/auth.utils';
 
 @Component({
   selector: 'app-calibration',
@@ -19,74 +20,78 @@ import { EnumCalibrateStatus } from './calibration';
   styleUrls: ['./calibration.component.scss']
 })
 export class CalibrationComponent {
-  @Input() calibrate_profile!:ICalibrateProfile;
+  calibrate_item!:ICalibrateItem;
   @Output() modeEvent = new EventEmitter<Mode>();
   @Output() footerMessageEvent = new EventEmitter<string>();
+  @Output() tempFooterMessageEvent = new EventEmitter<string>();
 
   isShowChart: boolean = false;
   calibrateStatus:EnumCalibrateStatus = EnumCalibrateStatus.Calibrate
 
+  calibrate_time: number = 0;
+  startCalibrateTime!: Date; 
+
   basicData: any = {
-    labels: [new Date().toLocaleString()],
+    labels: [],
     datasets: [
       {
         label: 'Pressure',
-        data: [0],
+        data: [],
         hidden: true,
         borderColor: '#e3342f',
       },
       {
         label: 'Temp',
-        data: [0],
+        data: [],
         hidden: true,
         borderColor: '#f6993f',
       },
       {
         type: 'line',
         label: 'Gas 1',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#ffed4a',
         tension: 0
       },
       {
         label: 'Gas 2',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#38c172',
         tension: 0
       },
       {
         label: 'Gas 3',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#4dc0b5',
         tension: 0
       },
       {
         label: 'Gas 4',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#3490dc',
         tension: 0
       },
       {
         label: 'Gas 5',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#6574cd',
         tension: 0
       },
       {
         label: 'Gas 6',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#9561e2',
         tension: 0
       },
       {
         label: 'Gas 7',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#f66d9b',
         tension: 0
@@ -124,7 +129,7 @@ export class CalibrationComponent {
             },
             beginAtZero: true,
             min: 0,
-            max: 3000,
+            //max: 3000,
         }
     },
     interaction: {
@@ -150,6 +155,7 @@ export class CalibrationComponent {
 
   collectingData!: Observable<ISocketResponse>;
 
+  timer!: ReturnType<typeof setTimeout>;
 
   constructor(private socketService:SocketService
               ,private devicesService:DevicesService
@@ -157,15 +163,22 @@ export class CalibrationComponent {
 
   ngOnInit() : void {
     this.isShowChart = true;
-
+    
     this.socketService.getCalibrateRes().subscribe((res:ICalibrateSocketResponse) =>{
-      console.log("res",res);
+      //console.log("res",res);
 
       if(res.command == EnumSocketCommand.ShowCollectCalibrateData && res?.data)
       {
-        const data:IShowCollectCalibrateProfile = res.data;
+        if(this.calibrate_time == 0)
+          this.startCalibrateTime = new Date();
 
-        this.basicData.labels.push(new Date().toLocaleString());
+        this.calibrate_item = res?.data?.calibrate_item;
+        const data:ICalibrateItem = this.calibrate_item;
+
+        const time:Date = new Date();
+        
+        this.basicData.labels.push(time.toLocaleString());
+        this.calibrate_time = time.getTime() - this.startCalibrateTime.getTime() == 0 ? 1 : time.getTime() - this.startCalibrateTime.getTime()
 
         const pressure = this.basicData.datasets.find((x:any) => x.label == 'Pressure').data;
         const temp = this.basicData.datasets.find((x:any) => x.label == 'Temp').data;
@@ -218,21 +231,26 @@ export class CalibrationComponent {
   }
 
   onClickStopCalibration() : void{
+    //test
+    // this.calibrateStatus = EnumCalibrateStatus.Finish;
+    // this.tempFooterMessageEvent.emit("STOP");
+
+
     this.calibrateProfileService.StopCalibrate().subscribe((res:IConnectResponse) => {
       if(res.success)
       {        
+        clearTimeout(this.timer);
         this.calibrateStatus = EnumCalibrateStatus.Finish;
-        this.footerMessageEvent.emit("STOP");
 
-        Swal.fire({
-          title: `Test Process`,
-          text: `Test is stopped`,
-          icon: 'info',
-          confirmButtonText: 'OK'
-        }).then(
-          (result) => {
-          }
-        );
+        // Swal.fire({
+        //   title: `Test Process`,
+        //   text: `Test is stopped`,
+        //   icon: 'info',
+        //   confirmButtonText: 'OK'
+        // }).then(
+        //   (result) => {
+        //   }
+        // );
         //this.modeEvent.emit(Mode.Menu);
       }
       else
@@ -248,7 +266,49 @@ export class CalibrationComponent {
           }
         );
       }
-    })
+    });
+  }
+
+  onClickFinishProcess():void{
+    //test
+    // AuthUtils.ClearStateStatus();
+    // AuthUtils.ClearStateClibration();
+
+    // this.modeEvent.emit(Mode.Cleaning);
+
+    this.calibrateProfileService.EndCalibrate().subscribe((res:IConnectResponse) => {
+      if(res.success)
+      {        
+        AuthUtils.ClearStateStatus();
+        AuthUtils.ClearStateClibration();
+    
+        this.modeEvent.emit(Mode.Cleaning);
+
+        // Swal.fire({
+        //   title: `Test Process`,
+        //   text: `Test is stopped`,
+        //   icon: 'info',
+        //   confirmButtonText: 'OK'
+        // }).then(
+        //   (result) => {
+        //   }
+        // );
+        //this.modeEvent.emit(Mode.Menu);
+      }
+      else
+      {
+        Swal.fire({
+          title: `Error device can't stop`,
+          text: res.message,
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+          }
+        );
+      }
+    });
   }
 
   public get CalibrateStatus(): typeof EnumCalibrateStatus{

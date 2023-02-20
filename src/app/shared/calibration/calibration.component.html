@@ -10,18 +10,18 @@
             </h3>
         </label>
         <div class="d-flex flex-row calibrate-detail">
-            <p-chart *ngIf="isShowChart" type="bar" [data]="basicData" [options]="basicOptions" width="880px" height="calc(100%)"></p-chart>
-            <div *ngIf="isShowChart" class="px-3 pt-4">
+            <p-chart *ngIf="isShowChart" type="line" [data]="basicData" [options]="basicOptions" width="880px" height="450px"></p-chart>
+            <div *ngIf="isShowChart && calibrate_item" class="px-3 pt-4">
                 <div>
                     <label>
                         <h4>
-                        Date : {{CalibrateDetailFormatDate(calibrate_profile.created_at || "")}}
+                        Date : {{CalibrateDetailFormatDate(calibrate_item.created_at || "")}}
                         </h4>
                     </label>
                     <br>
                     <label>
                         <h4>
-                        Time : {{CalibrateDetailFormatTime(calibrate_profile.created_at || "")}}
+                        Time : {{CalibrateDetailFormatTime(calibrate_item.created_at || "")}}
                         </h4>
                     </label>
                 </div>
@@ -29,43 +29,43 @@
                 <div class="pt-3">
                     <label>
                         <h4>
-                        Avg Gas1 : {{calibrate_profile.avg_gas_1}}
+                            Gas 1 : {{calibrate_item.gas_1 || ""}}
                         </h4>
                     </label>
                     <br>
                     <label>
                         <h4>
-                        Avg Gas2 : {{calibrate_profile.avg_gas_2}}
+                            Gas 2 : {{calibrate_item.gas_2}}
                         </h4>
                     </label>
                     <br>
                     <label>
                         <h4>
-                        Avg Gas3 : {{calibrate_profile.avg_gas_3}}
+                            Gas 3 : {{calibrate_item.gas_3}}
                         </h4>
                     </label>
                     <br>
                     <label>
                         <h4>
-                        Avg Gas4 : {{calibrate_profile.avg_gas_4}}
+                            Gas 4 : {{calibrate_item.gas_4}}
                         </h4>
                     </label>
                     <br>
                     <label>
                         <h4>
-                        Avg Gas5 : {{calibrate_profile.avg_gas_5}}
+                            Gas 5 : {{calibrate_item.gas_5}}
                         </h4>
                     </label>
                     <br>
                     <label>
                         <h4>
-                        Avg Gas6 : {{calibrate_profile.avg_gas_6}}
+                            Gas 6 : {{calibrate_item.gas_6}}
                         </h4>
                     </label>
                     <br>
                     <label>
                         <h4>
-                        Avg Gas7 : {{calibrate_profile.avg_gas_7}}
+                            Gas 7 : {{calibrate_item.gas_7}}
                         </h4>
                     </label>
                 </div>
@@ -73,13 +73,13 @@
                  <div class="pt-5">
                     <label>
                         <h4>
-                        Avg Temp : {{calibrate_profile.avg_temp}}
+                            Temp : {{calibrate_item.temp}}
                         </h4>
                     </label>
                     <br>
                     <label>
                         <h4>
-                        Avg Pressure : {{calibrate_profile.avg_pressure}} 
+                            Pressure : {{calibrate_item.pressure}} 
                         </h4>
                     </label>
                 </div>
@@ -87,7 +87,7 @@
                 <div class="pt-3">
                 <label>
                         <h4>
-                        Total Item : {{calibrate_profile.count_calibrate_items}}
+                        Time : {{(calibrate_time/1000).toFixed()}} Seconds
                         </h4>
                     </label>
                 </div>
@@ -95,14 +95,14 @@
         </div>
     </div>
     <div *ngIf="isShowChart">
-        <div *ngIf="CalibrateStatus.Calibrate" class="card text-center justify-content-center" (click)="onClickStopCalibration()">
+        <div *ngIf="calibrateStatus == CalibrateStatus.Calibrate" class="card text-center justify-content-center" (click)="onClickStopCalibration()">
             <label>
                 <h1>
                     STOP CALIBRATION PARAMETER
                 </h1>
             </label>
         </div>
-        <div *ngIf="CalibrateStatus.Finish" class="card text-center justify-content-center" (click)="onClickStopCalibration()">
+        <div *ngIf="calibrateStatus == CalibrateStatus.Finish" class="card text-center justify-content-center" (click)="onClickFinishProcess()">
             <label>
                 <h1>
                     FINISH PROCESS

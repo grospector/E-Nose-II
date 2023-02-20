@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthUtils } from 'src/app/core/auth/auth.utils';
 import { environment } from 'src/environments/environment';
 import { IConnectResponse } from '../models/device.model';
-import { ITestDetailResponse } from '../models/test.model';
+import { IStartPreTestRequest, ITestDetailResponse } from '../models/test.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +14,14 @@ export class TestsService {
 
   constructor(private http:HttpClient) { }
   
-  StartPreTest(): Observable<IConnectResponse> {
+  StartPreTest(body:IStartPreTestRequest): Observable<IConnectResponse> {
     const httpHeaders: HttpHeaders = new HttpHeaders({
       'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
     });
 
     return this.http.post<IConnectResponse>(
       this.BaseUrl+"/start_pre_test",
+      body,
       {
         headers: httpHeaders
       }
@@ -34,6 +35,7 @@ export class TestsService {
 
     return this.http.post<IConnectResponse>(
       this.BaseUrl+"/start_collecting",
+      "",
       {
         headers: httpHeaders
       }

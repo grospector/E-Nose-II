@@ -151,4 +151,17 @@ export class AuthUtils
     const state = localStorage.getItem("StateStatus") || "READY";
     return state
   }
+
+  static ClearTest(){
+    localStorage.setItem("Test","READY");
+  }
+
+  static SetCurrentTest(test:number){
+    localStorage.setItem("Test",test.toString());
+  }
+
+  static GetCurrentTest() : number{
+    const test = Number.parseInt(localStorage.getItem("Test") || "");
+    return test
+  }
 }

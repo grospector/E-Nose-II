@@ -1,7 +1,13 @@
-import { ICalibrateProfile } from "./calibrate_profile.model";
+import { ICalibrateItem } from "./calibrate_profile.model";
+
+export interface IStartPreTestRequest{
+    case_id:number,
+    name:"",
+    note:""
+}
 
 export interface ITestDetailResponse{
-    calibrate_profile:ICalibrateProfile,
+    calibrate_profile:ICalibrateItem,
     calibrate_profile_id:number,
     case_id:number,
     case_name:number,

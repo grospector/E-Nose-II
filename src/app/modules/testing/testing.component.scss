@@ -119,6 +119,20 @@ main .menu-cleaning aside button{
   background-color: #A9D9D0;
   color:#0D0D0D;
 }
+
+main .menu-cleaning>div>div{
+  margin-right:10px;
+}
+main .menu-cleaning>div>div:first-child{
+  margin-left:40px;
+}
+main .menu-cleaning>div>div:last-child{
+  margin-right:40px;
+}
+main .menu-cleaning:last-child{
+  margin-right:0px;
+}
+
 main .menu-collecting-data aside button{
   opacity: 0.7 !important;
   background-color: #A9D9D0;

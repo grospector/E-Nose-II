@@ -21,66 +21,66 @@ export class CheckInitComponent {
   isShowChart: boolean = false;
 
   basicData: any = {
-    labels: [new Date().toLocaleString()],
+    labels: [],
     datasets: [
       {
         label: 'Pressure',
-        data: [0],
+        data: [],
         hidden: true,
         borderColor: '#e3342f',
       },
       {
         label: 'Temp',
-        data: [0],
+        data: [],
         hidden: true,
         borderColor: '#f6993f',
       },
       {
         type: 'line',
         label: 'Gas 1',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#ffed4a',
         tension: 0
       },
       {
         label: 'Gas 2',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#38c172',
         tension: 0
       },
       {
         label: 'Gas 3',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#4dc0b5',
         tension: 0
       },
       {
         label: 'Gas 4',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#3490dc',
         tension: 0
       },
       {
         label: 'Gas 5',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#6574cd',
         tension: 0
       },
       {
         label: 'Gas 6',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#9561e2',
         tension: 0
       },
       {
         label: 'Gas 7',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#f66d9b',
         tension: 0
@@ -118,7 +118,7 @@ export class CheckInitComponent {
             },
             beginAtZero: true,
             min: 0,
-            max: 3000,
+            //max: 1500,
         }
     },
     interaction: {
@@ -149,8 +149,6 @@ export class CheckInitComponent {
 
   ngOnInit() : void {
     this.isShowChart = true;
-
-    this.footerMessageEvent.emit("TEST");
 
     this.socketService.getNewRes().subscribe((res:ISocketResponse) =>{
       console.log("res",res);
@@ -215,17 +213,17 @@ export class CheckInitComponent {
     this.devicesService.CommandStopTest().subscribe((res:IConnectResponse) => {
       if(res.success)
       {
-        this.footerMessageEvent.emit("STOP");
+        this.modeEvent.emit(Mode.StopTest);
 
-        Swal.fire({
-          title: `Test Process`,
-          text: `Test is stopped`,
-          icon: 'info',
-          confirmButtonText: 'OK'
-        }).then(
-          (result) => {
-          }
-        );
+        // Swal.fire({
+        //   title: `Test Process`,
+        //   text: `Test is stopped`,
+        //   icon: 'info',
+        //   confirmButtonText: 'OK'
+        // }).then(
+        //   (result) => {
+        //   }
+        // );
         //this.modeEvent.emit(Mode.Menu);
       }
       else

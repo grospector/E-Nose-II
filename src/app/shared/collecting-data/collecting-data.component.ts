@@ -1,12 +1,15 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { UIChart } from 'primeng/chart';
 import { ICollectingData, ITestItem } from 'src/app/api/models/data.model';
-import { IDevice } from 'src/app/api/models/device.model';
+import { IConnectResponse, IDevice } from 'src/app/api/models/device.model';
 import { ISocketResponse } from 'src/app/api/models/socket.mode';
 import { SocketService } from 'src/app/api/services/socket.service';
 import { Socket } from 'ngx-socket-io';
 import { Observable, Subscription } from 'rxjs';
 import { EnumSocketCommand } from 'src/app/models/common/enum';
+import { Mode } from 'src/app/modules/testing/testing';
+import { TestsService } from 'src/app/api/services/tests.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-collecting-data',
@@ -14,67 +17,72 @@ import { EnumSocketCommand } from 'src/app/models/common/enum';
   styleUrls: ['./collecting-data.component.scss']
 })
 export class CollectingDataComponent {
+  @Input() isProcess:boolean = true;
+  @Output() modeEvent = new EventEmitter<Mode>;
+
+  testId : number = 0;
+
   basicData: any = {
-    labels: [new Date().toLocaleString()],
+    labels: [],
     datasets: [
       {
         label: 'Pressure',
-        data: [0],
+        data: [],
         hidden: true,
         borderColor: '#e3342f',
       },
       {
         label: 'Temp',
-        data: [0],
+        data: [],
         hidden: true,
         borderColor: '#f6993f',
       },
       {
         type: 'line',
         label: 'Gas 1',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#ffed4a',
         tension: 0
       },
       {
         label: 'Gas 2',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#38c172',
         tension: 0
       },
       {
         label: 'Gas 3',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#4dc0b5',
         tension: 0
       },
       {
         label: 'Gas 4',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#3490dc',
         tension: 0
       },
       {
         label: 'Gas 5',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#6574cd',
         tension: 0
       },
       {
         label: 'Gas 6',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#9561e2',
         tension: 0
       },
       {
         label: 'Gas 7',
-        data: [0],
+        data: [],
         fill: false,
         borderColor: '#f66d9b',
         tension: 0
@@ -112,7 +120,7 @@ export class CollectingDataComponent {
             },
             beginAtZero: true,
             min: 0,
-            max: 100,
+            //max: 100,
         }
     },
     interaction: {
@@ -139,7 +147,8 @@ export class CollectingDataComponent {
   collectingData!: Observable<ISocketResponse>;
 
 
-  constructor(private socketService:SocketService) { }
+  constructor(private socketService:SocketService
+              ,private testsService:TestsService) { }
 
   ngOnInit() : void {
     this.socketService.getNewRes().subscribe((res:ISocketResponse) =>{
@@ -160,6 +169,8 @@ export class CollectingDataComponent {
         const gas_5 = this.basicData.datasets.find((x:any) => x.label == 'Gas 5').data;
         const gas_6 = this.basicData.datasets.find((x:any) => x.label == 'Gas 6').data;
         const gas_7 = this.basicData.datasets.find((x:any) => x.label == 'Gas 7').data;
+
+        this.testId = res.data.test_item.test_id;
 
         if(this.basicData.labels.length <= 30)
         {
@@ -199,5 +210,51 @@ export class CollectingDataComponent {
 
       this.basicData = {...this.basicData};
     })
+  }
+
+  onClickStopCollectingData() : void{
+    this.testsService.StopTest(this.testId).subscribe((res:IConnectResponse) => {
+      if(res.success)
+      {
+        this.isProcess = false;
+      }
+      else{
+        Swal.fire({
+          title: `Error device can't stop collecting data`,
+          text: res.message,
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+          }
+        );
+      }
+    });
+  }
+
+  onClickFinishCollectingData() : void{
+    this.testsService.EndTest(this.testId).subscribe((res:IConnectResponse) => {
+      if(res.success)
+      {
+        
+      }
+      else{
+        Swal.fire({
+          title: `Error device can't finish collecting data`,
+          text: res.message,
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+          }
+        );
+      }
+    });
+  }
+
+  public get Mode(): typeof Mode {
+    return Mode; 
   }
 }

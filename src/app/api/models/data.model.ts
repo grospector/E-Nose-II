@@ -1,15 +1,22 @@
+import { EnumConnectionStatus } from "src/app/models/common/enum";
+
 export interface ICollectingData{
     test_item:ITestItem;
 }
 
 export interface ITestItem{
-    pressure: Number,
-    temp: Number,
-    gas_1: Number,
-    gas_2: Number,
-    gas_3: Number,
-    gas_4: Number,
-    gas_5: Number,
-    gas_6: Number,
-    gas_7: Number
+    pressure: number,
+    temp: number,
+    gas_1: number,
+    gas_2: number,
+    gas_3: number,
+    gas_4: number,
+    gas_5: number,
+    gas_6: number,
+    gas_7: number,
+    test_id: number
+}
+
+export interface IStatus{
+    status:EnumConnectionStatus
 }

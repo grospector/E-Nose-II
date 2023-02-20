@@ -35,6 +35,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChartModule } from 'primeng/chart';
+import { ProgressBarModule } from 'primeng/progressbar';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { AuthService } from './core/auth/auth.service';
 import { DeviceModalComponent } from './shared/modal/device-modal/device-modal.component';
@@ -45,6 +46,9 @@ import { CheckInitComponent } from './shared/check-init/check-init.component';
 import { CalibrationComponent } from './shared/calibration/calibration.component';
 import { CleaningComponent } from './shared/cleaning/cleaning.component';
 import { LoaddingScreenComponent } from './shared/loadding-screen/loadding-screen.component';
+import { StartPreProcessingComponent } from './shared/start-pre-processing/start-pre-processing.component';
+import { EndPreProcessingComponent } from './shared/end-pre-processing/end-pre-processing.component';
+import { ResultModalComponent } from './shared/modal/result-modal/result-modal.component';
 
 
 const config: SocketIoConfig = {
@@ -78,6 +82,9 @@ const config: SocketIoConfig = {
     CalibrationComponent,
     CleaningComponent,
     LoaddingScreenComponent,
+    StartPreProcessingComponent,
+    EndPreProcessingComponent,
+    ResultModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,6 +101,7 @@ const config: SocketIoConfig = {
     ButtonModule,
     CheckboxModule,
     ChartModule,
+    ProgressBarModule,
 		SocketIoModule.forRoot(config), 
   ],
   providers: [

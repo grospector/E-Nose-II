@@ -76,6 +76,7 @@ export class CalibrateProfileService {
 
     return this.http.post<IConnectResponse>(
       this.BaseUrl+"/end_calibrate",
+      "",
       {
         headers: httpHeaders
       }

@@ -60,40 +60,69 @@
     </div>
   </header>
   <main [ngSwitch]="mode">
-    <div *ngSwitchCase="1" class="menu-check-init h-100">
-      <aside class="position-absolute">
+    <div *ngSwitchCase="Mode.CheckInit" class="menu-check-init h-100">
+      <!-- <aside class="position-absolute">
         <button (click)="onClickBack()">
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
         </button>
-      </aside>
+      </aside> -->
       <app-check-init (modeEvent)="changeMode($event)"
                       (footerMessageEvent)="changeFooterMessage($event)">
       </app-check-init>
     </div>
-    <div *ngSwitchCase="2" class="menu-calibration h-100">
+    <div *ngSwitchCase="Mode.Calibration" class="menu-calibration h-100">
       <aside class="position-absolute">
         <button (click)="onClickBack()">
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
         </button>
       </aside>
-      <app-calibration [calibrate_profile]="lastCalibrateProfile.calibrate_profile"
-                        (footerMessageEvent)="changeFooterMessage($event)">
+      <app-calibration (modeEvent)="changeMode($event)"
+                        (footerMessageEvent)="changeFooterMessage($event)"
+                        (tempFooterMessageEvent)="changeTempFooterMessage($event)">
       </app-calibration>
     </div>
-    <div *ngSwitchCase="3" class="menu-cleaning h-100">
+    <!-- <div *ngSwitchCase="Mode.Cleaning" class="menu-cleaning h-100">
       <aside class="position-absolute">
         <button (click)="onClickBack()">
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
         </button>
       </aside>
+      
+      <div class="d-flex flex-row h-50">
+        <div class="w-100">
+          <div class="card w-100 h-100 text-center init justify-content-center h-100 disable">
+            <fa-icon class="fa-5x" icon="list-check"></fa-icon>
+            <label>
+              CHECK DEVICE INIT
+            </label>
+          </div>
+        </div>
+        <div class="w-100">
+          <div class="card w-100 h-100 text-center init justify-content-center h-100 disable">
+            <fa-icon class="fa-5x" icon="magnifying-glass-chart"></fa-icon>
+            <label>
+              CALIBRATION
+            </label>
+          </div>
+        </div>
+        <div class="w-100">
+          <div class="card w-100 h-100 text-center cleaning justify-content-center h-100" (click)="onClickCleaning()">
+            <fa-icon class="fa-5x" icon="hand-sparkles"></fa-icon>
+            <label>
+              CLEANING
+            </label>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div *ngSwitchCase="Mode.CollectingData" class="menu-collecting-data h-100">
+      <app-collecting-data [isProcess]="isProcess"></app-collecting-data>
     </div>
-    <div *ngSwitchCase="4" class="menu-collecting-data h-100">
-      <aside class="position-absolute">
-        <button (click)="onClickBack()">
-          <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
-        </button>
-      </aside>
-      <app-collecting-data></app-collecting-data>
+    <div *ngSwitchCase="Mode.StartPreProcessing" class="menu-collecting-data h-100">
+      <app-start-pre-processing></app-start-pre-processing>
+    </div>
+    <div *ngSwitchCase="Mode.EndPreProcessing" class="menu-collecting-data h-100">
+      <app-end-pre-processing (modeEvent)="changeMode($event)"></app-end-pre-processing>
     </div>
     <div *ngSwitchDefault class="d-flex flex-column menu-testing h-100">
       <aside class="position-absolute">
@@ -104,13 +133,13 @@
       <div class="d-flex flex-row h-50">
         <div [ngSwitch]="currentStateCalibration" class="w-100">
           <div *ngSwitchDefault class="card w-100 h-100 text-center init justify-content-center h-100" (click)="onClickCheckDeviceInit()">
-            <fa-icon class="" icon="list-check"></fa-icon>
+            <fa-icon class="fa-5x" icon="list-check"></fa-icon>
             <label>
               CHECK DEVICE INIT
             </label>
           </div>
           <div *ngSwitchCase="1" class="card w-100 h-100 text-center init justify-content-center h-100 disable">
-            <fa-icon class="" icon="list-check"></fa-icon>
+            <fa-icon class="fa-5x" icon="list-check"></fa-icon>
             <label>
               CHECK DEVICE INIT
             </label>
@@ -140,7 +169,7 @@
         </div>
       </div>
       <div [ngSwitch]="currentStateCalibration" class="h-50 d-flex align-items-center">
-        <div *ngSwitchDefault class="card w-100 h-100 text-center start-process justify-content-center h-100" (click)="onClickCollectingData()">
+        <div *ngSwitchDefault class="card w-100 h-100 text-center start-process justify-content-center h-100" (click)="onClickStartProcessCollectingData()">
           <fa-icon class="fa-10x" icon="flask-vial"></fa-icon>
           <label>
             START PROCESS COLLECTING DATA
@@ -343,4 +372,6 @@
     <ng-template pTemplate="footer">
     </ng-template>
 </p-dialog> -->
-<app-loadding-screen *ngIf="displayModalLoadding"></app-loadding-screen>
+<app-loadding-screen *ngIf="displayModalStopTest" [message]="'STOP TEST'"></app-loadding-screen>
+<app-loadding-screen *ngIf="displayModalPreCalibration" [message]="'PRE CALIBATE'"></app-loadding-screen>
+<app-loadding-screen *ngIf="displayModalCleaning" [message]="'CLEANING'"></app-loadding-screen>

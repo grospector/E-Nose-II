@@ -13,8 +13,12 @@
             <div class="loading"></div>
             </div>
 
+            <p class="spinner-countdown">
+                {{countdown > 0 ? countdown : ''}}
+            </p>
+
             <p class="spinner-message" *ngIf="message && message !== ''">
-            {{message}}
+                {{message}}
             </p>
         </div>
     </div>
