@@ -101,6 +101,7 @@ export class CalibrationComponent {
   };
 
   basicOptions:any = {
+    responsive: true,
     animation: {
         duration: 0
     },
@@ -112,26 +113,26 @@ export class CalibrationComponent {
         }
     },
     scales: {
-        x: {
-            ticks: {
-                color: '#495057'
-            },
-            grid: {
-                color: '#495057'
-            }
-        },
-        y: {
-            ticks: {
-                color: '#495057',
-            },
-            grid: {
-                drawOnChartArea: false,
-                color: '#495057'
-            },
-            beginAtZero: true,
-            min: 0,
-            //max: 3000,
-        }
+      x: {
+          ticks: {
+              color: '#495057'
+          },
+          grid: {
+              color: '#cdcdcd'
+          }
+      },
+      y: {
+          ticks: {
+              color: '#495057',
+          },
+          grid: {
+              drawOnChartArea: true,
+              color: '#cdcdcd'
+          },
+          beginAtZero: true,
+          min: 0,
+          //max: 3000,
+      }
     },
     interaction: {
       mode: 'index',

@@ -100,7 +100,7 @@ export class TestingComponent implements OnInit {
                 color: '#495057'
             },
             grid: {
-                color: '#495057'
+                color: '#cdcdcd'
             }
         },
         y: {
@@ -108,8 +108,8 @@ export class TestingComponent implements OnInit {
                 color: '#495057',
             },
             grid: {
-                drawOnChartArea: false,
-                color: '#495057'
+                drawOnChartArea: true,
+                color: '#cdcdcd'
             },
             beginAtZero: true,
             min: 0,
@@ -325,7 +325,7 @@ export class TestingComponent implements OnInit {
       if(res?.success)
       {
         this.lastCalibrateProfile = res;
-        this.lastCalibrateDate = ToolUtils.FormatDate(this.lastCalibrateProfile?.calibrate_profile.created_at);
+        this.lastCalibrateDate = ToolUtils.FormatFullDate(this.lastCalibrateProfile?.calibrate_profile.created_at);
 
         const data:IAvgCalibrateProfile = res.calibrate_profile;
 

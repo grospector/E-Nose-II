@@ -22,7 +22,7 @@ export class ToolUtils
     public static FormatTime(date:string) : string
     {
         const datepipe: DatePipe = new DatePipe('en-US')
-        let formattedDate = datepipe.transform(date, "hh:mm")
+        let formattedDate = datepipe.transform(date, "hh:mm:ss")
 
         return formattedDate || "-";
     }
