@@ -44,7 +44,7 @@ main > .card{
 }
 
 .test-report {
-    height: 65vh;
+    height: calc(65vh - 10vh);
     max-height: calc(500px - 85px);
 }
 
