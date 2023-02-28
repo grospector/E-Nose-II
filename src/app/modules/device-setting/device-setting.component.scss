@@ -12,9 +12,9 @@ main{
 }
 
 main .card{
-    border-radius: 0px 25px 25px 0px;
+    border-radius: 25px 25px 25px 25px;
     min-width:100%;
-    height:calc(100vh - 95px);
+    height:calc(100vh - 95px - 85px);
     background-color: #e2d7cb;
     padding:15px 30px;
     border:0px;

@@ -4,9 +4,9 @@
     </header>
     <main>
         <div class="d-flex flex-row p-3 h-100">
-            <aside>
+            <!-- <aside>
                 <app-aside-bar-modules [module]="5"></app-aside-bar-modules>
-            </aside>
+            </aside> -->
             <div class="d-flex flex-column justify-content-between w-100">
                 <div class="card">
                     <div>
@@ -15,7 +15,7 @@
                             <input type="text" placeholder="Search" pInputText/>
                         </span> -->
                         <p-table #dt1 [value]="users" dataKey="id" 
-                            [scrollable]="true" scrollHeight="calc((100vh - 16px - 80px - 60px - 75px - 60px)/1)"
+                            [scrollable]="true" scrollHeight="calc((100vh - 16px - 80px - 60px - 75px - 60px - 80px)/1)"
                             [rows]="10" [showCurrentPageReport]="true"
                             [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-users p-datatable-gridlines"
                             [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
@@ -118,6 +118,6 @@
     </main>
     <footer>
         <!-- account-setting -->
-        <!-- <app-footer-modules [module]="5"></app-footer-modules> -->
+        <app-footer-modules [module]="5"></app-footer-modules>
     </footer>
 </div>
