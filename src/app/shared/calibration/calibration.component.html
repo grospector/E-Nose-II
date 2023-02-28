@@ -10,8 +10,8 @@
             </h3>
         </label>
         <div class="d-flex flex-row calibrate-detail">
-            <p-chart *ngIf="isShowChart" type="line" [data]="basicData" [options]="basicOptions" width="880px" height="450px"></p-chart>
-            <div *ngIf="isShowChart && calibrate_item" class="px-3 pt-4">
+            <p-chart *ngIf="isShowChart" type="line" [data]="basicData" [options]="basicOptions" width="740px" height="340px"></p-chart>
+            <div *ngIf="isShowChart && calibrate_item" class="px-3">
                 <div>
                     <label>
                         <h4>
@@ -26,7 +26,7 @@
                     </label>
                 </div>
     
-                <div class="pt-3">
+                <div class="pt-2">
                     <label>
                         <h4>
                             Gas 1 : {{calibrate_item.gas_1 || ""}}
@@ -70,7 +70,7 @@
                     </label>
                 </div>
     
-                 <div class="pt-5">
+                 <div class="pt-2">
                     <label>
                         <h4>
                             Temp : {{calibrate_item.temp}}
@@ -84,8 +84,8 @@
                     </label>
                 </div>
     
-                <div class="pt-3">
-                <label>
+                <div class="pt-2">
+                    <label>
                         <h4>
                         Time : {{(calibrate_time/1000).toFixed()}} Seconds
                         </h4>
@@ -94,7 +94,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="isShowChart">
+    <div *ngIf="isShowChart" class="pt-2">
         <div *ngIf="calibrateStatus == CalibrateStatus.Calibrate" class="card text-center justify-content-center" (click)="onClickStopCalibration()">
             <label>
                 <h1>

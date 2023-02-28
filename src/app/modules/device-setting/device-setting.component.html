@@ -3,19 +3,39 @@
         <app-header-modules [title]="'Device Setting'"></app-header-modules>
     </header>
     <main>
-        <div class="d-flex flex-column justify-content-between">
-            <article class="card">
-                <header>
-                    <h3></h3>
-                </header>
-                <main>
+        <div class="d-flex flex-row p-3 h-100">
+            <aside>
+                <app-aside-bar-modules [module]="4"></app-aside-bar-modules>
+            </aside>
+            <div class="d-flex flex-column justify-content-between w-100">
+                <article class="card">
+                    <header>
+                        <h3></h3>
+                    </header>
+                    <main>
 
-                </main>
-            </article>
+                    </main>
+                </article>
+            </div>
         </div>
+        <!-- <div class="d-flex flex-row p-3 h-100">
+            <aside>
+                <app-aside-bar-modules [module]="4"></app-aside-bar-modules>
+            </aside>
+            <div class="d-flex flex-column justify-content-between">
+                <article class="card">
+                    <header>
+                        <h3></h3>
+                    </header>
+                    <main>
+
+                    </main>
+                </article>
+            </div>
+        </div> -->
     </main>
     <footer>
         <!-- account-setting -->
-        <app-footer-modules [module]="4"></app-footer-modules>
+        <!-- <app-footer-modules [module]="4"></app-footer-modules> -->
     </footer>
 </div>

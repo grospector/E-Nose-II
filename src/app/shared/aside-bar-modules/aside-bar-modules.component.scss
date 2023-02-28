@@ -1,0 +1,61 @@
+.aside-bar{
+    background-color: #F2E7DC;
+    height: 100%;
+    padding:10px;
+    border-radius: 25px 0px 0px 25px;
+}
+
+.min-aside-bar{
+    min-width: 200px;
+}
+
+.aside-bar-sitcky{
+    position:sticky;
+    top:80px;
+}
+
+.active{
+    border:2px solid black;
+    background-color: #EDCDAD;
+}
+div > div{
+    //padding-right:10px !important;
+    border-width: 2px;
+}
+
+div > div.active{
+    padding-right:4px !important;
+}
+
+div > div:hover{
+    cursor: pointer;
+}
+div > div > label:hover{
+    cursor: pointer;
+}
+
+
+fa-icon{
+    font-size: 1.2rem;
+    width: 2rem;
+    height: 2rem;
+    padding:5px;
+}
+
+label{
+    margin: auto 0px;
+    padding:0px 5px;
+    //padding-right:20px;
+}
+
+label h2{
+    font-size: 1rem;
+    margin-bottom: 0px;
+}
+
+.collapse-btn{
+    //margin-top: calc(100vh - 80px - 200px);
+    position: sticky;
+    //bottom: 10px;
+    //right: 10px;
+}

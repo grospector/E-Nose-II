@@ -1,10 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthUtils } from 'src/app/core/auth/auth.utils';
 import { environment } from 'src/environments/environment';
 import { IConnectResponse } from '../models/device.model';
-import { IStartPreTestRequest, ITestDetailResponse } from '../models/test.model';
+import { IStartPreTestRequest, ITestDetailResponse, ITestsGetListResponse } from '../models/test.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,27 @@ export class TestsService {
 
   constructor(private http:HttpClient) { }
   
+  GetListTests(): Observable<ITestsGetListResponse> {
+    const httpHeaders: HttpHeaders = new HttpHeaders({
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
+    });
+
+    const params: HttpParams = new HttpParams()
+      // .set("keyword","")
+      // .set("case_id","")
+      // .set("device_id","")
+      // .set("start_date","")
+      // .set("end_date","");
+      
+    return this.http.get<ITestsGetListResponse>(
+      this.BaseUrl,
+      {
+        headers: httpHeaders,
+        params: params
+      }
+    );
+  }
+
   StartPreTest(body:IStartPreTestRequest): Observable<IConnectResponse> {
     const httpHeaders: HttpHeaders = new HttpHeaders({
       'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",

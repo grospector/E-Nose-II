@@ -1,17 +1,34 @@
+<aside class="position-absolute">
+    <div class="logo">
+        <img src="/assets/icons/logo2@3x.png"/>
+        <div class="title">
+            <label>
+                <h1>
+                    E-Nose II
+                </h1>
+            </label>
+            <label>
+                <h2>
+                    Project Smart Sensor with AI
+                </h2>
+            </label>
+        </div>
+    </div>
+</aside>
 <div class="container d-flex flex-column">
-    <div class="p-5"> 
+    <div class="pb-5"> 
         <!-- position-absolute top-25px start-50 translate-middle-x -->
         <div class="card card-device">
             <div class="d-flex flex-row">
                 <div class="d-flex flex-column">
                     <div class="d-flex align-items-center h-100">
                         <label class="">
-                            Username : {{CurrentUser.username}}
+                            Username : {{CurrentUser ? CurrentUser.username: '-'}}
                         </label>
                     </div>
                     <div class="d-flex align-items-center h-100 pt-2">
                         <label class="">
-                            Device : {{CurrentDevice.name}}
+                            Device : {{CurrentDevice ? CurrentDevice.name:'-'}}
                         </label>
                     </div>
                 </div>
@@ -44,94 +61,59 @@
             </div> -->
         </div>
     </div>
-    <div #elemt class="d-flex justify-content-between w-100 card-container">
+    <div #elemt class="d-flex justify-content-between w-100 card-container p-3">
         <article class="card card-module module-process" (click)="onClickMobule('testing')">
             <header>
-                Header
             </header>
             <main>
-                <article>
-                    <header class="text-end">
-                        <label>
-                            <h5>
-                                START TESTING
-                            </h5>
-                        </label>
-                    </header>
-                    <main class="">
-                        <label>
-                            - Create Case
-                        </label>
-                        <br>
-                        <label> 
-                            - Enter a sample
-                        </label>
-                        <br>
-                        <label>
-                            - Analyze Data
-                        </label>
-                    </main>
-                </article>
             </main>
+            <footer class="text-end">
+                <label>
+                    <h5>
+                        START TESTING
+                    </h5>
+                </label>
+            </footer>
         </article>
-        <article class="card card-module module-dashboard" (click)="onClickMobule('dashboard')">
+        <article class="card card-module module-dashboard" (click)="onClickMobule('test-report')">
             <header>
-                Header
             </header>
             <main>
-                <article>
-                    <header class="text-end">
-                        <label>
-                            <h5>
-                                GO TO DASHBOARD
-                            </h5>
-                        </label>
-                    </header>
-                    <main>
-                    </main>
-                </article>
             </main>
+            <footer class="text-end">
+                <label>
+                    <h5>                                
+                        GO TO DASHBOARD
+                    </h5>
+                </label>
+            </footer>
         </article>
-        <article class="card card-module module-guide" (click)="onClickMobule('guide')">
+        <article class="card card-module module-guide" (click)="onClickQuickGuide()">
             <header>
-                Header
             </header>
             <main>
-                <article>
-                    <header class="text-end">
-                        <label>
-                            <h5>
-                                QUICK GUIDE
-                            </h5>
-                        </label>
-                    </header>
-                    <main class="text-end">
-                        <label>
-                            Explore our powerful 
-                            documentation
-                        </label>
-                    </main>
-                </article>
             </main>
+            <footer class="text-end">
+                <label>
+                    <h5>               
+                        QUICK GUIDE
+                    </h5>
+                </label>
+            </footer>
         </article>
         <!-- (click)="onClickMobule('my-account')" -->
         <article class="card card-module module-account">
             <header>
-                Header
             </header>
             <main>
-                <article>
-                    <header class="text-end">
-                        <label>
-                            <h5>
-                                MY ACCOUNT
-                            </h5>
-                        </label>
-                    </header>
-                    <main>
-                    </main>
-                </article>
             </main>
+            <footer class="text-end">
+                <label>
+                    <h5>               
+                        MY ACCOUNT
+                    </h5>
+                </label>
+            </footer>
         </article>
     </div>
     <app-footer></app-footer>
@@ -176,6 +158,31 @@
                 </h4>
             </label>
         </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="displayModalQuickGuide" [modal]="true" [style]="{width:'1200px',height:'600px'}" [baseZIndex]="-100"
+[draggable]="false" [resizable]="false">
+    <ng-template pTemplate="header">
+        <div class="text-center w-100">
+            <label>
+                <h3>
+                    QUICK GUIDE
+                </h3>
+            </label>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="body">
+        <p-carousel [value]="quickGuides" styleClass="custom-carousel" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="0" [responsiveOptions]="responsiveOptions">>
+            <ng-template let-guide pTemplate="item">
+                <div class="h-100 w-100">
+                    <img src=""/>
+                    {{guide}}
+                </div>
+            </ng-template>
+        </p-carousel>
     </ng-template>
     <ng-template pTemplate="footer">
     </ng-template>

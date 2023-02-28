@@ -6,27 +6,21 @@
     padding:0px;
 }
 
-main{
+.container > main{
     margin-top: 60px;
-    height: calc(100vh - 60px);
     width: 100%;
+    min-width:100%;
+}
+
+.text-header h4{
+    font-weight: 600 !important;
+    color : gray !important;
 }
 
 main .card{
-    border-radius: 25px;
-    height: calc((100vh - 120px - 110px)/3);
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: #F2E7DC;
-    border-color: #0D0D0D;
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
-    padding:15px 30px;
-}
-main .card:first-child{
-    margin-top: 20px;
-}
-main .card:last-child{
-    margin-bottom: 20px;
+    background-color: #e2d7cb;
+    padding: 30px 30px;
+    border:0px;
 }
 main .card header h3{
     font-size: 1.5rem;
@@ -36,9 +30,146 @@ main .card header h4{
     font-weight: lighter;
 }
 
+main > .card{
+    height:calc(100vh - 95px);
+}
+
+.dashboard-card{
+    height: calc(100vh - 95px);
+    border-radius: 0px 25px 25px 0px;
+}
+
+.dashboard-card main > div > div{
+    //width: 50%;
+}
+
+.test-report {
+    height: 65vh;
+    max-height: 500px;
+}
+
+.test-report-card{
+    border-radius: 15px !important;
+    padding: 30px 30px !important;
+    box-shadow: 2px 5px 10px rgb(0 0 0 / 15%);
+}
+
+.test-report-card.history-test{
+    color:rgba(242,252,254,255);
+    background-color: red !important;
+    background-image:
+        linear-gradient(
+        140deg, 
+        rgba(178,216,237,255) 0%, 
+        rgba(113,150,238,255) 50%, 
+        rgba(69,117,228,255) 52%, 
+        rgba(110,153,231,255) 70%,
+        rgba(178,216,237,255) 100%
+        );
+}
+.test-report-card.history-case{
+    color:rgba(242,252,254,255);
+    background-color: red !important;
+    background-image:
+        linear-gradient(
+        140deg, 
+        rgba(176,222,238,255) 0%, 
+        rgba(112,207,241,255) 50%, 
+        rgba(35,181,227,255) 52%, 
+        rgba(98,198,232,255) 70%,
+        rgba(171,218,236,255) 100%
+        );
+}
+.test-report-card.date-test{
+    color:rgba(242,252,254,255);
+    background-color: red !important;
+    background-image:
+        linear-gradient(
+        140deg, 
+        rgba(223,178,235,255) 0%, 
+        rgba(164,113,234,255) 50%, 
+        rgba(139,72,227,255) 52%, 
+        rgba(174,116,229,255) 70%,
+        rgba(223,174,239,255) 100%
+        );
+}
+
+.test-report-card h4{
+    font-size: 1rem;
+}
+.test-report-card h5{
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.test-conclude-report-card {
+    margin-left:30px;
+    background-color: rgb(255, 255, 255,0.8) !important;
+    border-radius: 15px;
+    padding: 30px 30px !important;
+    box-shadow: 2px 5px 10px rgb(0 0 0 / 15%);
+}
+
+.test-conclude-report-card header h3{
+    font-size:1.3rem !important;
+    font-weight: 700;
+    margin-bottom: 0px;
+}
+.test-conclude-report-card header h4{
+    font-size:1.2rem !important;
+    font-weight: 400;
+    color:gray;
+    margin-bottom: 0px;
+}
+
+.risk-row{
+    display: flex;
+    flex-direction: row;
+    height: calc(100% / 6);
+    padding:10px 0px;
+    border-bottom:0.5px dashed gray;
+    justify-content:space-between;
+}
+.risk-row:last-child{
+    border-bottom:0px;
+}
+.risk-row h5{
+    font-size:1.2rem !important;
+    font-weight: 600;
+    margin-bottom:0px !important;
+}
+.risk-row h6{
+    font-size:1rem !important;
+    font-weight: 500;
+    margin-bottom:0px !important;
+    color:gray;
+}
+
+.risk-left-panel{
+    display: flex;
+    flex-direction: column;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
+.risk-right-panel{
+    display: flex;
+    flex-direction: row;
+    min-width: 155px;
+}
+
+.risk-row > div{
+    //width:50%;
+}
+
+.progressbar-lv5{
+    background-color: 'azure';
+    border-radius: '25px;';
+}
+
 @media (min-width: 1200px)
 {
     .container {
-        padding: 0px 10vw;
+        //padding: 0px 10vw;
     }
 }

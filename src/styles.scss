@@ -6,8 +6,8 @@
 body,
 html {
   height: 100%;
-  background-color: #A9D9D0 !important;
-  overflow-y: auto;
+  background: rgb(184,246,233);
+  background: radial-gradient(circle, rgba(184,246,233,1) 0%, rgba(169,217,208,1) 40%, rgba(111,213,205,1) 100%);
   overflow-x: auto;
 }
 
@@ -18,8 +18,8 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-track {
     background-color: rgba(49, 49, 49, 0.25);
     border-radius: 100px;
-    margin-top: 70px;
-    margin-bottom: 80px;
+    margin-top: 100px;
+    margin-bottom: 40px;
 }
 
 body::-webkit-scrollbar-thumb {

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,7 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUsersGear, faFlaskVial , faHandSparkles , faHouse , 
         faCircleChevronLeft , faListCheck, faMagnifyingGlassChart ,
-        faHouseChimney , faFolderPlus , faGears, faChalkboardUser, faFileWaveform, faClipboard } from '@fortawesome/free-solid-svg-icons';
+        faHouseChimney , faFolderPlus , faGears, faChalkboardUser, faFileWaveform, faClipboard, faAnglesRight, faAnglesLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { FooterModulesComponent } from './shared/footer-modules/footer-modules.component';
 import { AccountSettingComponent } from './modules/account-setting/account-setting.component';
@@ -37,6 +37,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ChartModule } from 'primeng/chart';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { TooltipModule } from 'primeng/tooltip';
+import { SplitterModule } from 'primeng/splitter';
+import { CarouselModule } from 'primeng/carousel';
 
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { AuthService } from './core/auth/auth.service';
@@ -50,8 +52,11 @@ import { CleaningComponent } from './shared/cleaning/cleaning.component';
 import { LoaddingScreenComponent } from './shared/loadding-screen/loadding-screen.component';
 import { StartPreProcessingComponent } from './shared/start-pre-processing/start-pre-processing.component';
 import { EndPreProcessingComponent } from './shared/end-pre-processing/end-pre-processing.component';
-import { ResultModalComponent } from './shared/modal/result-modal/result-modal.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { ResultComponent } from './modules/result/result.component';
+import { AsideBarComponent } from './shared/aside-bar/aside-bar.component';
+import { AsideBarModulesComponent } from './shared/aside-bar-modules/aside-bar-modules.component';
 
 
 const config: SocketIoConfig = {
@@ -87,7 +92,9 @@ const config: SocketIoConfig = {
     LoaddingScreenComponent,
     StartPreProcessingComponent,
     EndPreProcessingComponent,
-    ResultModalComponent,
+    ResultComponent,
+    AsideBarComponent,
+    AsideBarModulesComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,7 +113,15 @@ const config: SocketIoConfig = {
     ChartModule,
     ProgressBarModule,
     QRCodeModule,
-		SocketIoModule.forRoot(config), 
+    SplitterModule,
+    CarouselModule,
+		SocketIoModule.forRoot(config),
+  ServiceWorkerModule.register('ngsw-worker.js', {
+    enabled: !isDevMode(),
+    // Register the ServiceWorker as soon as the application is stable
+    // or after 30 seconds (whichever comes first).
+    registrationStrategy: 'registerWhenStable:30000'
+  }), 
   ],
   providers: [
     AuthGuard,
@@ -134,5 +149,7 @@ export class AppModule {
     library.addIcons(faChalkboardUser);
     library.addIcons(faFileWaveform);
     library.addIcons(faClipboard);
+    library.addIcons(faAnglesRight);
+    library.addIcons(faAnglesLeft);
   }
  }

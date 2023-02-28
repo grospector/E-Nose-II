@@ -21,12 +21,34 @@ export class HomeComponent implements OnInit {
   CurrentDevice!:IDevice;
 
   displayModal!: boolean;
+  displayModalQuickGuide!: boolean;
   IsDialogLoading: boolean = true;
+
+  responsiveOptions:any[] = [
+    {
+      breakpoint: '1024px',
+      numVisible: 3,
+      numScroll: 3
+    },
+    {
+        breakpoint: '768px',
+        numVisible: 3,
+        numScroll: 3
+    },
+    {
+        breakpoint: '560px',
+        numVisible: 3,
+        numScroll: 3
+    }
+  ];
+  quickGuides:string[] = ["test1","test2","test3"];
 
   constructor(private router: Router
               ,private authService:AuthService
               ,private devicesService:DevicesService
-              ,private usersService:UsersService) { }
+              ,private usersService:UsersService) {
+
+  }
 
   ngOnInit(): void {
     this.CurrentUser = AuthUtils.GetCurrentUser();
@@ -103,5 +125,9 @@ export class HomeComponent implements OnInit {
 
   onClickMobule(module:string): void{
     this.router.navigateByUrl('/'+module);
+  }
+
+  onClickQuickGuide(): void{
+    this.displayModalQuickGuide = true;
   }
 }

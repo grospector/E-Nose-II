@@ -8,20 +8,16 @@
 
 main{
     margin-top: 60px;
-    height: calc(100vh);
     width: 100%;
 }
 
 main .card{
-    margin-top: 20px;
-    border-radius: 25px;
-    height: calc((100vh - 120px - 70px)/1);
-    //margin-top: 10px;
-    //margin-bottom: 10px;
-    background-color: #F2E7DC !important;
-    border-color: #0D0D0D !important;
-    //box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
-    padding:15px 30px;
+    border-radius: 0px 25px 25px 0px;
+    min-width:100%;
+    height:calc(100vh - 95px);
+    background-color: #e2d7cb;
+    padding:30px;
+    border:0px;
 }
 
 main .card header h3{
@@ -37,7 +33,7 @@ main .card header h4{
 }
 
 tbody, td, tfoot, th, thead, tr{
-    background-color: #F2E7DC !important;
+    background-color: #e2d7cb !important;
 }
 td,th{
     text-align: left !important;
@@ -48,6 +44,31 @@ td,th{
 @media (min-width: 1200px)
 {
     .container {
-        padding: 0px 10vw;
+        //padding: 0px 10vw;
+    }
+}
+
+:host {
+    ::ng-deep{
+        .p-datatable-scrollable-table>.p-datatable-thead{
+            background-color: #e2d7cb !important;
+            top:-1px;
+        }
+        .p-datatable-header {
+            border: 1px solid #0D0D0D !important;
+        }
+        .p-datatable, .p-datatable .p-datatable-header, .p-datatable-thead, .p-datatable .p-datatable-thead > tr > th
+        {
+            //border: 0px solid #0D0D0D !important;
+            background-color: #e2d7cb !important;
+        }
+        .p-datatable-thead
+        {
+            border-top:0px;
+        }
+        .p-datatable.p-datatable-gridlines .p-paginator-bottom{
+            background-color: #e2d7cb !important;
+            border: 1px solid #0D0D0D !important;
+        }
     }
 }

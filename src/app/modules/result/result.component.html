@@ -1,0 +1,70 @@
+<div class="result {{levelScoreClass}}"> 
+    <div class="container h-100">
+        <div class="text-caption d-flex flex-row">
+            <label>
+                <h5>
+                    พบว่าท่านมีความเสี่ยงอยู่ในระดับ
+                </h5>
+            </label>
+        </div>
+
+        <div class="text-result-detail card d-flex flex-column text-center p-3 w-100">
+            <label class="text-result {{levelTextScoreClass}}">
+                <h1>
+                    {{textLevel}}
+                </h1>
+            </label>
+            <div class="text-recommend d-flex flex-column">
+                <label>
+                    <h5>
+                        คำแนะนำ
+                    </h5>
+                </label>
+                <label>
+                    <h6>
+                        หมั่นล้างมือด้วยน้ำและสบู่
+                    </h6>
+                </label>
+            </div>
+        </div>
+    
+        <div class="test-detail card d-flex flex-column w-100">
+            <div class="d-flex flex-column">
+                <label>
+                    <h3>
+                        ชื่อผู้ทดสอบ
+                    </h3>
+                </label>
+                <label>
+                    <h4>
+                        {{testDetail.case_name}}
+                    </h4>
+                </label>
+            </div>
+            <div class="d-flex flex-column pt-3">
+                <label>
+                    <h3>
+                        เครื่องที่ทดสอบ
+                    </h3>
+                </label>
+                <label>
+                    <h4>
+                        {{testDetail.device_name}}
+                    </h4>
+                </label>
+            </div>
+            <div class="d-flex flex-column pt-3">
+                <label>
+                    <h3>
+                        ผู้ควบคุมการทดสอบ
+                    </h3>
+                </label>
+                <label>
+                    <h4>
+                        {{testDetail.user_name}}
+                    </h4>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

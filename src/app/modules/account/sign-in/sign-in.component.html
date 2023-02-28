@@ -1,25 +1,28 @@
-<div class="container">
-    <div class="card p-4" style="width: 400px">
-        <div class="card-body">
-          <form [formGroup]="loginForm">
-            <h5 class="card-title text-center">Sign In to E-Nose</h5>
-            <p class="card-text text-center">Project Sensor</p>
+<div class="d-flex flex-row container">
+  <div class="logo">
+    <img class="logo-img" src="/assets/icons/logo2@3x.png"/>
+  </div>
+  <div class="card p-4" style="width: 400px">
+    <div class="card-body">
+      <form [formGroup]="loginForm">
+        <h5 class="card-title text-center">Sign In to E-Nose</h5>
+        <!-- <p class="card-text text-center">Project Sensor</p> -->
 
-            <div class="mt-4 mb-2">
-              <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" formControlName="username" placeholder="" (keyup.enter)="login()">
-            </div>
-            <div class="mb-4">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" formControlName="password" placeholder="" (keyup.enter)="login()">
-            </div>
-
-            <div class="d-flex footer-btn">
-              <a class="btn btn-outline-primary">Reset Password</a>
-              <a class="btn btn-primary" (click)="login()">Continue</a>
-            </div>
-          </form>
+        <div class="mt-4 mb-2">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" formControlName="username" placeholder="" (keyup.enter)="login()">
         </div>
+        <div class="mb-4">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" formControlName="password" placeholder="" (keyup.enter)="login()">
+        </div>
+
+        <div class="d-flex footer-btn">
+          <a class="btn btn-outline-primary">Reset Password</a>
+          <a class="btn btn-primary" (click)="login()">Continue</a>
+        </div>
+      </form>
     </div>
-    <app-footer></app-footer>
+  </div>
+  <app-footer></app-footer>
 </div>

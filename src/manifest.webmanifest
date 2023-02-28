@@ -1,0 +1,17 @@
+{
+  "name": "E-NoseII",
+  "short_name": "E-NoseII",
+  "theme_color": "#A9D9D0",
+  "background_color": "#A9D9D0",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./",
+  "icons": [
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "303x367",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}

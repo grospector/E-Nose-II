@@ -27,7 +27,7 @@ export class ToolUtils
         return formattedDate || "-";
     }
 
-    public static FormatUrl(protocol:string,hostname:string,port:string,routeUrl:string) : string
+    public static FormatUrl(routeUrl:string) : string
     {
         return environment.webUrl + "/" + routeUrl;
         //return protocol + "//" + hostname + ":" + port + "/" + routeUrl;

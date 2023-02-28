@@ -1,0 +1,82 @@
+<div class="aside-bar d-flex flex-column justify-content-start {{isShowLabel ? 'min-aside-bar':''}}">
+    <div class="aside-bar-sitcky">
+        <div class="d-flex flex-row text-center p-1 {{module == 0 ? 'active' : ''}}"
+        (click)="onClickModule(0)">
+            <fa-icon class="" icon="house-chimney" style="padding-top: 1.5px;"></fa-icon>
+            <label class="{{isShowLabel ? '':'d-none'}}">
+                <h2>
+                    Home
+                </h2>
+            </label>
+        </div>
+        <div class="d-flex flex-row  text-center p-1 {{module == 1 ? 'active' : ''}}"
+            (click)="onClickModule(1)">
+            <!-- <i class="fa-solid fa-rectangle-history-circle-user"></i> -->
+            <fa-icon class="my-auto" icon="chalkboard-user" style="padding-top: 2.5px;padding-left: 2.5px;"></fa-icon>
+            <label class="{{isShowLabel ? '':'d-none'}}">
+                <h2>
+                    Dashboard
+                </h2>
+            </label>
+        </div>
+        <div class="d-flex flex-row text-center p-1 {{module == 2 ? 'active' : ''}}"
+            (click)="onClickModule(2)">            
+            <!-- <i class="fa-regular fa-chart-user"></i> -->
+            <fa-icon class="fa-2xl" icon="file-waveform" style="padding-top: 7px;"></fa-icon>
+            <label class="{{isShowLabel ? '':'d-none'}}">
+                <h2>
+                    Test Report
+                </h2>
+            </label>
+        </div>
+        <!-- <div class="d-flex flex-row text-center p-1 {{module == 3 ? 'active' : ''}}"
+            (click)="onClickModule(3)">
+            <fa-icon class="fa-2xl" icon="folder-plus"></fa-icon>
+            <label>
+                <h2>
+                    Case Management
+                </h2>
+            </label>
+        </div> -->
+        <div class="d-flex flex-row text-center p-1 {{module == 4 ? 'active' : ''}}"
+            (click)="onClickModule(4)">
+            <fa-icon class="fa-2xl" icon="gears" style="padding-top: 7px;"></fa-icon>
+            <label class="{{isShowLabel ? '':'d-none'}}">
+                <h2>
+                    Device Setting
+                </h2>
+            </label>
+        </div>
+        <div class="d-flex flex-row text-center p-1 {{module == 5 ? 'active' : ''}}"
+            (click)="onClickModule(5)">
+            <fa-icon class="fa-2xl" icon="users-gear" style="padding-top: 7px;"></fa-icon>
+            <label class="{{isShowLabel ? '':'d-none'}}">
+                <h2>
+                    Account Setting
+                </h2>
+            </label>
+        </div>
+
+        
+        <div class="collapse-btn">
+            <div *ngIf="isShowLabel" class="d-flex flex-row text-center p-1 justify-content-end"
+            (click)="onClickShowLabel()">
+            <fa-icon class="fa-2xl" icon="angles-left" style="padding-top: 7px;"></fa-icon>
+            <label class="{{isShowLabel ? '':'d-none'}}">
+                <h2>
+                    {{isShowLabel ? "Collapse":""}}
+                </h2>
+            </label>
+            </div>
+            <div *ngIf="!isShowLabel" class="d-flex flex-row text-center p-1 justify-content-end"
+                (click)="onClickShowLabel()">
+                <label class="{{isShowLabel ? '':'d-none'}}">
+                    <h2>
+                        {{!isShowLabel ? "Expand":""}}
+                    </h2>
+                </label>
+                <fa-icon class="fa-2xl" icon="angles-right" style="padding-top: 7px;"></fa-icon>
+            </div>
+        </div>                              
+    </div>
+</div>

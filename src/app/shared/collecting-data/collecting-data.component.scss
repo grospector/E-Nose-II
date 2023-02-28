@@ -2,3 +2,32 @@ p-chart{
     // padding:0px 30px;
     overflow-x:visible;
 }
+
+.collecting-container{
+    margin:auto 40px;
+}
+
+.container-label{
+    width: 260px;
+}
+.container-label div:first-child{
+    width: 110px;
+}
+.container-label div:last-child{
+    width: 150px;
+}
+
+.title label h1{
+    font-size: 2rem;
+    margin-bottom: 0px;
+}
+label h2{
+    font-size: 1.1rem;
+    margin-bottom: 0px;
+}
+label h3{
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-bottom: 0px;
+    color:gray;
+}

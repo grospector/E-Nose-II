@@ -164,4 +164,18 @@ export class AuthUtils
     const test = Number.parseInt(localStorage.getItem("Test") || "");
     return test
   }
+
+  
+  static ClearAsideBar(){
+    localStorage.setItem("aside","false");
+  }
+
+  static SetAsideBar(test:boolean){
+    localStorage.setItem("aside",`${test}`);
+  }
+
+  static GetAsideBar() : boolean{
+    const test = localStorage.getItem("aside")?.toLowerCase() == "true";
+    return test;
+  }
 }

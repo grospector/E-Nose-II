@@ -3,19 +3,172 @@
         <app-header-modules [title]="'Test Report'"></app-header-modules>
     </header>
     <main>
-        <div class="d-flex flex-column justify-content-between">
-            <article class="card">
-                <header>
-                    <h3></h3>
-                </header>
-                <main>
-
-                </main>
-            </article>
+        <div class="d-flex flex-row p-3 h-100">
+            <aside>
+                <app-aside-bar-modules [module]="2"></app-aside-bar-modules>
+            </aside>
+            <div class="d-flex flex-column justify-content-between w-100">
+                <div class="card">
+                    <div>
+                        <!-- <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input type="text" placeholder="Search" pInputText/>
+                        </span> -->
+                        <p-table #dt1 [value]="tests" dataKey="id" 
+                            [scrollable]="true" scrollHeight="calc((100vh - 16px - 80px - 60px - 75px - 60px)/1)"
+                            [rows]="10" [showCurrentPageReport]="true"
+                            [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-users p-datatable-gridlines"
+                            [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                            [globalFilterFields]="['id','username','name','email','role','isActive','action']">
+                            <ng-template pTemplate="caption">
+                                <div class="p-d-flex">
+                                    <span class="p-input-icon-left p-ml-auto">
+                                        <i class="pi pi-search"></i>
+                                        <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
+                                    </span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>
+                                        <div class="p-d-flex p-jc-between p-ai-center">
+                                            Id
+                                            <p-columnFilter type="text" field="id" display="menu"></p-columnFilter>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="p-d-flex p-jc-between p-ai-center">
+                                            Name
+                                            <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="p-d-flex p-jc-between p-ai-center">
+                                            Status
+                                            <p-columnFilter type="text" field="status" display="menu"></p-columnFilter>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="p-d-flex p-jc-between p-ai-center">
+                                            User
+                                            <p-columnFilter type="text" field="user" display="menu"></p-columnFilter>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="p-d-flex p-jc-between p-ai-center">
+                                            Device
+                                            <p-columnFilter type="text" field="device" display="menu"></p-columnFilter>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="p-d-flex p-jc-between p-ai-center">
+                                            Score
+                                            <p-columnFilter type="text" field="score" display="menu"></p-columnFilter>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="p-d-flex p-jc-between p-ai-center">
+                                            Created At
+                                            <p-columnFilter type="text" field="created_at" display="menu"></p-columnFilter>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="p-d-flex p-jc-between p-ai-center">
+                                            Action
+                                            <p-columnFilter type="text" field="action" display="menu"></p-columnFilter>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-test>
+                                <tr>
+                                    <td>
+                                        <label class="text-center">
+                                            {{test.id}}
+                                        </label>
+                                    </td>
+                                    <td>
+                                        {{test.name}}
+                                    </td>
+                                    <td>
+                                        {{test.status}}
+                                    </td>
+                                    <td>
+                                        {{test.user_name}}
+                                    </td>
+                                    <td>
+                                        {{test.device_name}}
+                                    </td>
+                                    <td>
+                                        {{test.score}}
+                                    </td>
+                                    <td>
+                                        {{FormatFullDate(test.created_at)}}
+                                    </td>
+                                    <td>
+                                        <div id="action" class="d-flex">
+                                            <button pButton pRipple type="button" label="View" class="p-button-raised" (click)="onClickView(test.id)"></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td colspan="7">No tests found.</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     <footer>
         <!-- account-setting -->
-        <app-footer-modules [module]="2"></app-footer-modules>
+        <!-- <app-footer-modules [module]="2"></app-footer-modules> -->
     </footer>
 </div>
+
+<p-dialog [(visible)]="displayModalResult" [modal]="true" [style]="{width:'500px'}" [baseZIndex]="100"
+[draggable]="false" [resizable]="false" class="dialog-result">
+    <ng-template pTemplate="header">
+    <div class="title text-center w-100">
+        <label>
+            <h1>
+                ผลการทดสอบ
+            </h1>
+        </label>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="body">
+    <div class="text-center">
+      <qrcode colorLight="#EDEDED" [qrdata]="testResultUrl" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="d-flex flex-column text-left px-3 pb-3 text-start">
+      <label>
+        <h3>
+            กรุณาแสกน QR Code เพื่อดูผลการวิเคราะห์ความเสี่ยง
+        </h3>
+      </label>
+      <label>
+        <h4>
+            หรือคัดลอกลิงค์ด้านล่างเพื่อดูผล
+        </h4>
+      </label>
+      
+      <div class="p-inputgroup">
+        <input class="input-clipboard w-100" [value]="testResultUrl" readonly/>
+        <div class="button-clipboard text-center" style="width:80px" (click)="onClickClipboard()">
+          <fa-icon class="fa-2x" icon="clipboard"></fa-icon>
+        </div>
+      </div>
+      <label *ngIf="isCopiedToClipboard">
+        <h5>
+            Url is copied to clipboard.
+        </h5>
+      </label>
+    </div>
+  </ng-template>
+</p-dialog>

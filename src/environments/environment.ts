@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apiUrl: "https://api-enose.at44.co.th",
   socketUrl: "https://socket2.at44.co.th",
-  webUrl: "http://localhost:4200"
+  webUrl: "https://e-noseii.web.app"
 };
 
 /*

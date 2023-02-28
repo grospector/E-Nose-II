@@ -1,3 +1,35 @@
+.logo{
+    display: flex;
+    flex-direction: row;
+    max-width: 300px;
+    max-height: 80px;
+    margin-left:50px;
+    margin-top:30px;
+}
+
+.logo img{
+    width: 70px;
+}
+
+.logo .title{
+    min-width: 230px;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: auto 15px;
+    justify-content: center;
+}
+.logo .title h1{
+    font-size: 1.5rem;
+    margin-bottom:0px;
+    color: #038C7F;
+}
+.logo .title h2{
+    font-size: 1rem;
+    margin-bottom:0px;
+    color: #fffbfb;
+}
+
 .container {
     display: flex;
     align-items: center;
@@ -8,7 +40,6 @@
 
 .card-container{
     overflow-x: scroll;
-    padding-bottom:85px;
 }
 
 .card-container::-webkit-scrollbar {
@@ -70,12 +101,11 @@ div>.card-module{
 
 .card-module{
     background: #FFFFFF;
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 5px 10px rgb(0 0 0 / 15%);
     border-radius: 15px;
-    width: calc(25% - 20px);
-    min-width: calc(300px - 20px);
-    max-width: calc(300px - 20px);
-    height: calc(100vh - 200px - 200px);
+    width: calc(25%);
+    height: calc(400px);
+    border-width: 0px;
 }
 .card-module:hover{
     cursor: pointer;
@@ -87,10 +117,15 @@ div>.card-module{
     cursor: pointer;
 }
 .card-module>header{
-    height: 60%;
+    //height: 60%;
 }
 .card-module>main{
-    height: 40%;
+    //height: 40%;
+    height: 100%;
+}
+.card-module>footer{
+    padding:0.5rem 1rem 0.2rem 0.5rem;
+    color:#027373;
 }
 
 .card-module>main>article>main{
@@ -98,42 +133,78 @@ div>.card-module{
 }
 
 .module-process{
-    background-color: #F2E7DC;
+    background-color: #e1d6cb;
     background-image: var(--bs-gradient);
-    padding:15px 25px;
+    //padding:15px 25px;
     opacity: 0.9;
 }
-.module-process:hover{
-    box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
+.module-process main{
+    background-image: url(/assets/photoes/start-test@3x.png);
+    background-image: url(/assets/photoes/start-test@3x.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    border-radius: 15px 15px 0px 0px;
 }
+// .module-process:hover{
+//     box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
+// }
 
 .module-dashboard{
-    background-color: #F2E7DC;
+    background-color: #e1d6cb;
     background-image: var(--bs-gradient);
-    padding:15px 25px;
+    //padding:15px 25px;
     opacity: 0.9;
 }
-.module-dashboard:hover{
-    box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
+.module-dashboard main{        
+    background: url(/assets/photoes/dashboard@3x.png) , linear-gradient(to bottom, #50b6f1, #2977b8);
+    background: url(/assets/photoes/dashboard@3x.webp) , linear-gradient(to bottom, #50b6f1, #2977b8);
+    background-size: 75% 65% , 100% 100%;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    border-radius: 15px 15px 0px 0px;
 }
+// .module-dashboard:hover{
+//     box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
+// }
 .module-guide{
-    background-color: #F2E7DC;
+    background-color: #e1d6cb;
     background-image: var(--bs-gradient);
-    padding:15px 25px;
+    //padding:15px 25px;
     opacity: 0.9;
 }
-.module-guide:hover{
-    box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
+.module-guide main{
+    background: url(/assets/photoes/asset1@3x.png);
+    background: url(/assets/photoes/asset1@3x.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: 30%;
+    background-position-y: center;
+    border-radius: 15px 15px 0px 0px;
 }
+// .module-guide:hover{
+//     box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
+// }
 .module-account{
-    background-color: #F2E7DC;
+    background-color: #e1d6cb;
     background-image: var(--bs-gradient);
-    padding:15px 25px;
+    //padding:15px 25px;
     opacity: 0.9;
 }
-.module-account:hover{
-    box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
+.module-account main{
+    background: url(/assets/photoes/acc@3x.png);
+    background: url(/assets/photoes/acc@3x.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: 30%;
+    background-position-y: center;
+    border-radius: 15px 15px 0px 0px;
 }
+// .module-account:hover{
+//     box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
+// }
 
 :host {
     ::ng-deep{
@@ -158,9 +229,25 @@ div>.card-module{
         }  
         .p-dialog .p-dialog-body,.p-dialog-content {
             min-height: 400px;
+            margin-top:-1px;
             padding:0px calc(1.5rem + 32px) 2rem calc(1.5rem) !important;
             background-color: #F2E7DC !important;
         }  
+        
+        .p-dialog-content::-webkit-scrollbar-track {
+            background-color: rgba(49, 49, 49, 0.25);
+            border-radius: 100px;
+            margin-top: 70px;
+            margin-bottom: 100px;
+        }
+        
+        .p-dialog-content::-webkit-scrollbar-thumb {
+            border: 5px solid transparent;
+            border-radius: 100px;
+            background-color: rgba(78, 78, 78, 0.8);
+            background-clip: content-box;
+        }
+
         .p-dialog label.loading{
             color: #0D0D0D !important;
         }
@@ -185,13 +272,30 @@ div>.card-module{
         .p-dialog .device button:last-child{
             margin-bottom: 0px !important;
         }
+
+
+        .p-carousel .p-carousel-content .p-carousel-prev, .p-carousel .p-carousel-content .p-carousel-next{
+            background-color: rgb(0, 0, 0,0.5);
+            color:white;
+        }
+        .p-carousel .p-carousel-content .p-carousel-prev:enabled:hover, .p-carousel .p-carousel-content .p-carousel-next:enabled:hover{
+            background-color: rgb(0, 0, 0,0.7) !important;
+            color:white !important;;
+        }
+        .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button{
+            background-color: rgba(0, 0, 0, 1) !important;
+        }
+
+        .p-carousel .p-carousel-indicators .p-carousel-indicator button{
+            background-color: rgb(0, 0, 0,0.5);
+        }
     }   
 }
 
 @media (min-width:1200px){
     .container {
-        //max-width: 1200px;
-        padding: 0px 10vw;
+        max-width: 1200px;
+        padding: 0px 100px;
     }
 
     .card-container::-webkit-scrollbar-track {
@@ -199,6 +303,6 @@ div>.card-module{
     }
 
     .card-module{
-        max-width: calc(25% - 2vw);
+        max-width: calc(25%);
     }
 }

@@ -24,66 +24,66 @@ export class CheckInitComponent {
   basicData: any = {
     labels: [],
     datasets: [
-      {
-        label: 'Pressure',
-        data: [],
-        hidden: true,
-        borderColor: '#e3342f',
-      },
-      {
-        label: 'Temp',
-        data: [],
-        hidden: true,
-        borderColor: '#f6993f',
-      },
+      // {
+      //   label: 'Pressure',
+      //   data: [],
+      //   hidden: true,
+      //   borderColor: '#e3342f',
+      // },
+      // {
+      //   label: 'Temp',
+      //   data: [],
+      //   hidden: true,
+      //   borderColor: '#f6993f',
+      // },
       {
         type: 'line',
         label: 'Gas 1',
         data: [],
         fill: false,
-        borderColor: '#ffed4a',
+        borderColor: 'rgba(255, 99, 132, 0.8)',
         tension: 0
       },
       {
         label: 'Gas 2',
         data: [],
         fill: false,
-        borderColor: '#38c172',
+        borderColor: 'rgba(255, 159, 64, 0.8)',
         tension: 0
       },
       {
         label: 'Gas 3',
         data: [],
         fill: false,
-        borderColor: '#4dc0b5',
+        borderColor: 'rgba(255, 205, 86, 0.8)',
         tension: 0
       },
       {
         label: 'Gas 4',
         data: [],
         fill: false,
-        borderColor: '#3490dc',
+        borderColor: 'rgba(75, 192, 192, 0.8)',
         tension: 0
       },
       {
         label: 'Gas 5',
         data: [],
         fill: false,
-        borderColor: '#6574cd',
+        borderColor: 'rgba(54, 162, 235, 0.8)',
         tension: 0
       },
       {
         label: 'Gas 6',
         data: [],
         fill: false,
-        borderColor: '#9561e2',
+        borderColor: 'rgba(153, 102, 255, 0.8)',
         tension: 0
       },
       {
         label: 'Gas 7',
         data: [],
         fill: false,
-        borderColor: '#f66d9b',
+        borderColor: 'rgba(201, 203, 207, 0.8)',
         tension: 0
       }
     ]
@@ -139,12 +139,14 @@ export class CheckInitComponent {
       }
     },
     clip: {left: false, top: false, right: 1000, bottom: false},
-    pointBorderWidth:5,
-    pointHoverBorderWidth:10
+    pointRadius: 1,
+    //pointBorderWidth:5,
+    //pointHoverBorderWidth:10
   };
 
   collectingData!: Observable<ISocketResponse>;
-
+  tempData:number = 0;
+  pressureData:number = 0;
 
   constructor(private socketService:SocketService,private devicesService:DevicesService) { }
 
@@ -160,8 +162,8 @@ export class CheckInitComponent {
 
         this.basicData.labels.push(ToolUtils.FormatTime(new Date().toString()));
 
-        const pressure = this.basicData.datasets.find((x:any) => x.label == 'Pressure').data;
-        const temp = this.basicData.datasets.find((x:any) => x.label == 'Temp').data;
+        //const pressure = this.basicData.datasets.find((x:any) => x.label == 'Pressure').data;
+        //const temp = this.basicData.datasets.find((x:any) => x.label == 'Temp').data;
         const gas_1 = this.basicData.datasets.find((x:any) => x.label == 'Gas 1').data;
         const gas_2 = this.basicData.datasets.find((x:any) => x.label == 'Gas 2').data;
         const gas_3 = this.basicData.datasets.find((x:any) => x.label == 'Gas 3').data;
@@ -170,10 +172,13 @@ export class CheckInitComponent {
         const gas_6 = this.basicData.datasets.find((x:any) => x.label == 'Gas 6').data;
         const gas_7 = this.basicData.datasets.find((x:any) => x.label == 'Gas 7').data;
 
+        this.tempData = data.temp;
+        this.pressureData = data.pressure;
+
         if(this.basicData.labels.length <= 30)
         {
-          pressure.push(data?.pressure);
-          temp.push(data?.temp);
+          //pressure.push(data?.pressure);
+          //temp.push(data?.temp);
           gas_1.push(data?.gas_1);
           gas_2.push(data?.gas_2);
           gas_3.push(data?.gas_3);
@@ -184,8 +189,8 @@ export class CheckInitComponent {
         }
         else{
           this.basicData.labels.splice(0,1);
-          pressure.splice(0,1);
-          temp.splice(0,1);
+          //pressure.splice(0,1);
+          //temp.splice(0,1);
           gas_1.splice(0,1);
           gas_2.splice(0,1);
           gas_3.splice(0,1);
@@ -194,8 +199,8 @@ export class CheckInitComponent {
           gas_6.splice(0,1);
           gas_7.splice(0,1);
 
-          pressure.push(data?.pressure);
-          temp.push(data?.temp);
+          //pressure.push(data?.pressure);
+          //temp.push(data?.temp);
           gas_1.push(data?.gas_1);
           gas_2.push(data?.gas_2);
           gas_3.push(data?.gas_3);
@@ -207,7 +212,7 @@ export class CheckInitComponent {
       }
 
       this.basicData = {...this.basicData};
-    })
+    });
   }
 
   onClickStopTesting() : void{

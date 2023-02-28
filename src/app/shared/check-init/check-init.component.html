@@ -1,12 +1,30 @@
 <div *ngIf="!isShowChart">
     Occur Error Please , try again.
 </div>
-<p-chart *ngIf="isShowChart" type="line" [data]="basicData" [options]="basicOptions" width="100%" height="calc( 100% - 60px)"></p-chart>
-<div *ngIf="isShowChart">
+<p-chart *ngIf="isShowChart" type="line" [data]="basicData" [options]="basicOptions" width="100%" height="calc(340px)"></p-chart>
+<div *ngIf="isShowChart" class="container-label d-flex flex-row justify-content-center pt-2 mx-auto">
+    <div class="d-flex flex-row">
+        <label>
+            <h2>Temp : </h2>
+        </label>
+        <label class="mx-1">
+            <h3>{{tempData}}</h3>
+        </label>
+    </div>
+    <div class="d-flex flex-row">
+        <label>
+            <h2>Pressure : </h2>
+        </label>
+        <label class="mx-1">
+            <h3>{{pressureData}}</h3>
+        </label>
+    </div>
+</div>
+<div *ngIf="isShowChart" class="pt-2">
     <div class="card text-center justify-content-center" (click)="onClickStopTesting()">
         <label>
             <h1>
-                Stop Testing
+                STOP TESTING
             </h1>
         </label>
     </div>

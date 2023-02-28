@@ -3,36 +3,248 @@
         <app-header-modules [title]="'Dashboard'"></app-header-modules>
     </header>
     <main>
-        <div class="d-flex flex-column justify-content-between">
-            <article class="card">
-                <header>
-                    <h3>Sales Progress</h3>
-                </header>
-                <main>
-
-                </main>
-            </article>
-            <article class="card">
-                <header>
-                    <h3>Trends</h3>
-                    <h4>Lastest trend</h4>
-                </header>
-                <main>
-                    
-                </main>
-            </article>
-            <article class="card">
-                <header>
-                    <h3>Activities</h3>
-                    <h4>890,344 Sales</h4>
-                </header>
-                <main>
-                    
-                </main>
-            </article>
+        <div class="d-flex flex-row p-3 h-100">
+            <aside>
+                <app-aside-bar-modules [module]="1"></app-aside-bar-modules>
+            </aside>
+            <div class="d-flex flex-column justify-content-between w-100">
+                <article class="card dashboard-card">
+                    <header class="text-header d-flex flex-column">
+                        <!-- <label>
+                            <h3>
+                                Dashboard
+                            </h3>
+                        </label> -->
+                        <label>
+                            <h4>
+                                วันที่ {{currentDate}}
+                            </h4>
+                        </label>
+                    </header>
+                    <main>
+                        <div class="d-flex flex-row">
+                            <div class="test-report d-flex flex-column justify-content-between mt-3 w-50">
+                                <div class="card test-report-card history-test">
+                                    <label>
+                                        <h5>                                            
+                                            {{resultReports ? resultReports.count_history_test : 0}}
+                                        </h5>
+                                    </label>
+                                    <label>
+                                        <h4>
+                                            จำนวนเคสทั้งหมด
+                                        </h4>
+                                    </label>
+                                </div>
+                                <div class="card test-report-card history-case">
+                                    <label>
+                                        <h5>
+                                            {{resultReports ? resultReports.count_history_case : 0}}
+                                        </h5>
+                                    </label>
+                                    <label>
+                                        <h4>
+                                            จำนวนการทดสอบทั้งหมด
+                                        </h4>
+                                    </label>
+                                </div>
+                                <div class="card test-report-card date-test">
+                                    <label>
+                                        <h5>                                            
+                                            {{resultReports ? resultReports.count_date_test : 0}}
+                                        </h5>
+                                    </label>
+                                    <label>
+                                        <h4>
+                                            จำนวนการทดสอบวันนี้
+                                        </h4>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="card test-conclude-report-card p-3 mt-3 w-50">
+                                <article>
+                                    <header class="d-flex flex-column">
+                                        <label>
+                                            <h3>
+                                                ผลสรุปความเสี่ยง
+                                            </h3>
+                                        </label>
+                                        <label>
+                                            <h4>
+                                                จำนวนความเสี่ยง
+                                            </h4>
+                                        </label>
+                                    </header>
+                                    <main class="d-flex flex-column mt-3">
+                                        <div class="risk-row">
+                                            <div class="risk-left-panel">
+                                                <label>
+                                                    <h5>
+                                                        ความเสี่ยง 5
+                                                    </h5>
+                                                </label>
+                                            </div>
+                                            <div class="risk-right-panel my-auto">
+                                                <p-progressBar mode="determinate" [style]="{width:'100px',height:'20px'}" [showValue]="false" [value]="groupScore5 ? groupScore5.percent : 0"></p-progressBar>
+                                                <label class="ms-3">
+                                                    <h6>
+                                                        {{groupScore5 ? groupScore5.percent : 0}}%
+                                                    </h6>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="risk-row">
+                                            <div class="risk-left-panel">
+                                                <label>
+                                                    <h5>
+                                                        ความเสี่ยง 4
+                                                    </h5>
+                                                </label>
+                                                <label>
+                                                    <h6>
+                                                        มีความเสี่ยงในระดับ สูงมาก
+                                                    </h6>
+                                                </label>
+                                            </div>
+                                            <div class="risk-right-panel my-auto">
+                                                <p-progressBar mode="determinate" [style]="{width:'100px',height:'20px'}" [showValue]="false" [value]="groupScore4 ? groupScore4.percent : 0"></p-progressBar>
+                                                <label class="ms-3">
+                                                    <h6>
+                                                        {{groupScore4 ? groupScore4.percent : 0}}%
+                                                    </h6>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="risk-row">
+                                            <div class="risk-left-panel">
+                                                <label>
+                                                    <h5>
+                                                        ความเสี่ยง 3
+                                                    </h5>
+                                                </label>
+                                                <label>
+                                                    <h6>
+                                                        มีความเสี่ยงในระดับ สูง
+                                                    </h6>
+                                                </label>
+                                            </div>
+                                            <div class="risk-right-panel my-auto">
+                                                <p-progressBar mode="determinate" [style]="{width:'100px',height:'20px'}" [showValue]="false" [value]="groupScore3 ? groupScore3.percent : 0"></p-progressBar>
+                                                <label class="ms-3">
+                                                    <h6>
+                                                        {{groupScore3 ? groupScore3.percent : 0}}%
+                                                    </h6>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="risk-row">
+                                            <div class="risk-left-panel">
+                                                <label>
+                                                    <h5>
+                                                        ความเสี่ยง 2
+                                                    </h5>
+                                                </label>
+                                                <label>
+                                                    <h6>
+                                                        มีความเสี่ยงในระดับ ปานกลาง
+                                                    </h6>
+                                                </label>
+                                            </div>
+                                            <div class="risk-right-panel my-auto">
+                                                <p-progressBar mode="determinate" [style]="{width:'100px',height:'20px'}" [showValue]="false" [value]="groupScore2 ? groupScore2.percent : 0"></p-progressBar>
+                                                <label class="ms-3">
+                                                    <h6>
+                                                        {{groupScore2 ? groupScore2.percent : 0}}%
+                                                    </h6>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="risk-row">
+                                            <div class="risk-left-panel">
+                                                <label>
+                                                    <h5>
+                                                        ความเสี่ยง 1
+                                                    </h5>
+                                                </label>
+                                                <label>
+                                                    <h6>
+                                                        มีความเสี่ยงในระดับ ต่ำ
+                                                    </h6>
+                                                </label>
+                                            </div>
+                                            <div class="risk-right-panel my-auto">
+                                                <p-progressBar mode="determinate" [style]="{width:'100px',height:'20px'}" [showValue]="false" [value]="groupScore1 ? groupScore1.percent : 0"></p-progressBar>
+                                                <label class="ms-3">
+                                                    <h6>
+                                                        {{groupScore1 ? groupScore1.percent : 0}}%
+                                                    </h6>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="risk-row">
+                                            <div class="risk-left-panel">
+                                                <label>
+                                                    <h5>
+                                                        ความเสี่ยง 0
+                                                    </h5>
+                                                </label>
+                                                <label>
+                                                    <h6>
+                                                        ไม่มีความเสี่ยง
+                                                    </h6>
+                                                </label>
+                                            </div>
+                                            <div class="risk-right-panel my-auto">
+                                                <p-progressBar mode="determinate" [style]="{width:'100px',height:'20px'}" [styleClass]="'progressbar-lv5'" [showValue]="false" [value]="groupScore0 ? groupScore0.percent : 0"></p-progressBar>
+                                                <label class="ms-3">
+                                                    <h6>
+                                                        {{groupScore0 ? groupScore0.percent : 0}}%
+                                                    </h6>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </main>
+                                </article>
+                            </div>
+                        </div>
+                    </main>
+                </article>
+            </div>
         </div>
+        <!-- <div class="d-flex flex-row p-3 h-100">
+            <aside>
+                <app-aside-bar-modules></app-aside-bar-modules>
+            </aside>
+            <div class="d-flex flex-column justify-content-between">
+                <article class="card">
+                    <header>
+                        <h3>Sales Progress</h3>
+                    </header>
+                    <main>
+    
+                    </main>
+                </article>
+                <article class="card">
+                    <header>
+                        <h3>Trends</h3>
+                        <h4>Lastest trend</h4>
+                    </header>
+                    <main>
+                        
+                    </main>
+                </article>
+                <article class="card">
+                    <header>
+                        <h3>Activities</h3>
+                        <h4>890,344 Sales</h4>
+                    </header>
+                    <main>
+                        
+                    </main>
+                </article>
+            </div>
+        </div> -->
     </main>
     <footer>
-        <app-footer-modules></app-footer-modules>
     </footer>
 </div>

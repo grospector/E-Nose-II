@@ -35,6 +35,7 @@ export class TestingComponent implements OnInit {
   isShowMenu:boolean = true;
   mode:Mode = Mode.Menu;
   displayModal:boolean = false;
+  displayModalCreateIDCard:boolean = false;
   displayModalStopTest:boolean = false;
   displayModalCalibrate:boolean = false;
   displayModalPreCalibration:boolean = false;
@@ -55,7 +56,12 @@ export class TestingComponent implements OnInit {
   isProcess:boolean = false;
   isFinished:boolean = false;
 
+  currentStatus:string = "";
   footerMessage:string = "";
+
+  inputIdCard:string = "";
+  inputName:string = "";
+  inputPhoneNumber:string = "";
 
   basicData: any = {
     labels: ["Avg Gas 1","Avg Gas 2","Avg Gas 3","Avg Gas 4","Avg Gas 5","Avg Gas 6","Avg Gas 7"],
@@ -83,6 +89,7 @@ export class TestingComponent implements OnInit {
     animation: {
         duration: 0
     },
+    responsive:true,
     plugins: {
       legend: {
           labels: {
@@ -189,6 +196,7 @@ export class TestingComponent implements OnInit {
         if(res?.command == EnumSocketCommand.ChangeStatus)
         {
           const status:EnumConnectionStatus = <EnumConnectionStatus>res.data.status;
+          this.currentStatus = res.data.status;
 
           switch(status)
           {
@@ -269,6 +277,7 @@ export class TestingComponent implements OnInit {
             break;
         }
 
+        this.currentStatus = res?.device?.status;
         this.changeFooterMessage(res?.device?.status);
 
         return <IGetConnectedDeviceResponse>{
@@ -395,10 +404,6 @@ export class TestingComponent implements OnInit {
   changeFooterMessage(message:string){
     this.footerMessage = message.toUpperCase();
     //AuthUtils.SetCurrentStateStatus(this.footerMessage);
-  }
-
-  changeTempFooterMessage(message:string){
-    this.footerMessage = message;
   }
 
   onClickCheckDeviceInit(){
@@ -614,10 +619,15 @@ export class TestingComponent implements OnInit {
     }
   }
 
-  onClickOpenModalIDCards(): void{
-    this.displayModal = true;
+  async onClickOpenModalIDCards(): Promise<void>{
+    await this.CheckConnectedDevice();
 
-    this.GetListIDCards();
+    if(this.currentStatus == "ready")
+    {
+      this.displayModal = true;
+
+      this.GetListIDCards();
+    }
   }
 
   GetListIDCards() : void{
@@ -629,7 +639,7 @@ export class TestingComponent implements OnInit {
         this.IsDialogLoading = false;
 
         this.IDCards = res.cases;
-        console.log("this.IDCards",this.IDCards);
+        //console.log("this.IDCards",this.IDCards);
       }
       else{
 
@@ -648,8 +658,26 @@ export class TestingComponent implements OnInit {
     });
   }
 
-  onClickSelectIDCard(id:number): void{
-    const selectedIDCard = <ICaseDetail>this.IDCards.find(x => x.id = id)
+  onClickSelectIDCard(idCard:string): void{
+    if(this.currentStatus != "ready")
+    {
+      Swal.fire({
+        title: `Warning device status don't ready`,
+        text: "Please , try again when device status is ready",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'OK'
+      }).then(
+        (result) => {
+        }
+      );
+
+      return;
+    }
+
+    const selectedIDCard:ICaseDetail = <ICaseDetail>this.IDCards.find((obj) => {
+      return obj.id_card === idCard
+    });
 
     if(selectedIDCard){
       this.currentIDCard = selectedIDCard
@@ -662,7 +690,8 @@ export class TestingComponent implements OnInit {
   }
 
   onClickCreateIDCard(): void{
-
+    this.displayModal = false;
+    this.displayModalCreateIDCard = true;
   }
 
   onClickCalibrateDate(): void{
@@ -677,6 +706,62 @@ export class TestingComponent implements OnInit {
 
   ChangeFinished(isFinished:boolean) : void{
     this.isFinished = isFinished;
+  }
+
+  createIDCard(): void{
+    if(this.inputIdCard == "" 
+      || this.inputName == ""
+      || this.inputPhoneNumber == "")
+    {
+      Swal.fire({
+        title: `Warning`,
+        text: "ID Card , Name or Phone number is empty.",
+        icon: 'warning',
+        confirmButtonText: 'OK'
+      }).then(
+        (result) => {
+        }
+      );
+
+      return;
+    }
+
+    const currentIDCard:ICaseDetail = <ICaseDetail> {
+      id_card : this.inputIdCard,
+      name : this.inputName,
+      phone_number : this.inputPhoneNumber
+    };
+
+    this.casesService.CreateCase(currentIDCard).subscribe((res:IConnectResponse) =>{
+      if(res?.success)
+      {
+        this.currentIDCard = currentIDCard;
+        AuthUtils.SetCurrentIDCard(currentIDCard);
+        
+        Swal.fire({
+          title: `ID Card : ${currentIDCard.id_card} is created`,
+          text: `Name : ${currentIDCard.name} , Phone Number : ${currentIDCard.phone_number} `,
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+            this.displayModalCreateIDCard = false;
+          }
+        );
+      }
+      else{
+        Swal.fire({
+          title: `Error Create ID Card`,
+          text: res?.message,
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+          }
+        );
+      }
+    });
   }
 
   public get Mode(): typeof Mode {

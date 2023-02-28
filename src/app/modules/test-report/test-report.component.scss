@@ -8,20 +8,16 @@
 
 main{
     margin-top: 60px;
-    //height: calc(100vh);
     width: 100%;
 }
 
 main .card{
-    border-radius: 25px;
-    //height: calc((100vh - 120px - 60px)/1);
-    height:200vh;
-    margin-top: 20px;
-    margin-bottom: calc(60px + 30px + 20px);
-    background-color: #F2E7DC;
-    border-color: #0D0D0D;
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15);
-    padding:15px 30px;
+    border-radius: 0px 25px 25px 0px;
+    min-width:100%;
+    height:calc(100vh - 95px);
+    background-color: #e2d7cb;
+    padding:30px;
+    border:0px;
 }
 main .card header h3{
     font-size: 1.5rem;
@@ -31,9 +27,68 @@ main .card header h4{
     font-weight: lighter;
 }
 
+tbody, td, tfoot, th, thead, tr{
+    background-color: #e2d7cb !important;
+}
+td,th{
+    text-align: left !important;
+    border: 1px solid #0D0D0D !important;
+    padding: 1rem 1rem !important;
+}
+
+:host {
+    ::ng-deep{
+      .p-dialog{
+          border-radius: 20px !important;
+          //background-color: rgba(0, 0, 0, 0.5) !important;
+      }
+      .dialog-result .p-dialog .p-dialog-header{
+        border-radius: 20px 20px 0px 0px !important;
+        background-color: #EDEDED !important;
+      }  
+      .p-dialog .p-dialog-header .p-dialog-header-icon:hover{
+          color:#0D0D0D !important;
+          background-color: #EDEDED !important;
+          border:2px solid #0D0D0D !important;
+      }
+      .dialog-result .p-dialog .p-dialog-body,.dialog-result .p-dialog-content {
+        margin-top:-1px;
+          overflow-y: hidden;
+          background-color: #EDEDED !important;
+      }  
+      .dialog-result .p-dialog .p-dialog-footer {
+          margin-top:-1px;
+          border-radius: 0px 0px 20px 20px !important;
+          background-color: #EDEDED !important;
+      }  
+
+      
+        .p-datatable-scrollable-table>.p-datatable-thead{
+            background-color: #e2d7cb !important;
+            top:-1px;
+        }
+        .p-datatable-header {
+            border: 1px solid #0D0D0D !important;
+        }
+        .p-datatable, .p-datatable .p-datatable-header, .p-datatable-thead, .p-datatable .p-datatable-thead > tr > th
+        {
+            //border: 0px solid #0D0D0D !important;
+            background-color: #e2d7cb !important;
+        }
+        .p-datatable-thead
+        {
+            border-top:0px;
+        }
+        .p-datatable.p-datatable-gridlines .p-paginator-bottom{
+            background-color: #e2d7cb !important;
+            border: 1px solid #0D0D0D !important;
+        }
+    }
+}
+
 @media (min-width: 1200px)
 {
     .container {
-        padding: 0px 10vw;
+        //padding: 0px 10vw;
     }
 }
