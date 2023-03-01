@@ -74,7 +74,14 @@ body{
 
 .test-detail{
     margin-top:3rem;
+    margin-top: auto;
+    margin-bottom: auto;
 }
+
+.text-result-detail {
+    margin-top: 9vh;
+}
+
 @media (orientation: portrait) {
     label h1{
         font-weight: 900;
@@ -227,6 +234,7 @@ body{
         }
     
         .test-detail{
+            margin-bottom: unset;
             margin-top:5vh;
             margin-left:5vh;
             height: calc(100vh - 80px);
@@ -237,6 +245,7 @@ body{
         label h1{
             font-weight: 900;
             font-size:1.7rem;
+            width: 100%;
         }
         label h3{
             font-weight: 600;
@@ -256,7 +265,11 @@ body{
         }
 
         .text-result{
-            padding:10vh;
+            display: flex;
+            padding: 10vh;
+            min-height: calc(100% - 60px);
+            align-items: center;
+            text-align: center;
         }
     }
 }
