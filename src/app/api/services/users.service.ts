@@ -59,4 +59,41 @@ export class UsersService {
       }
     );
   }
+
+  
+  Update(userId:number,name:string,userName:string,currentPassword:string,password:string,passwordConfirmation:string,isActive:boolean): Observable<any>{
+    const httpHeaders: HttpHeaders = new HttpHeaders({
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
+    });
+
+    const body =  {
+      "name":name,
+      "userName":userName,
+      "current_password":currentPassword,
+      "password":password,
+      "password_confirmation":passwordConfirmation,
+      "is_active":isActive
+    };
+    
+    return this.http.put<any>(
+      this.BaseUrl + '/' + userId,
+      body,
+      {
+        headers: httpHeaders
+      }
+    );
+  }
+
+  Delete(userId:number): Observable<any>{
+    const httpHeaders: HttpHeaders = new HttpHeaders({
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
+    });
+
+    return this.http.delete<any>(
+      this.BaseUrl + '/' + userId,
+      {
+        headers: httpHeaders
+      }
+    );
+  }
 }

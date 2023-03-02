@@ -15,10 +15,21 @@ export class DeviceSettingComponent implements OnInit {
   loading:boolean = true;
 
   devices:IDevice[] = [];
+  displayModalEditDevice:boolean = false;
+
+  editDeviceId:number = 0;
+  inputDeviceName:string = "";
+  inputDeviceMacSerialId:string = "";
+  cbDeviceIsActive:boolean = false;
 
   constructor(private devicesService:DevicesService) { }
 
   ngOnInit(): void {
+    this.getListDevices();
+  }
+
+  getListDevices():void{
+    this.loading = true;
     this.devicesService.GetListDevices("").subscribe((res:IListDevicesReponse) => {
       if(res?.success)
       {
@@ -46,24 +57,103 @@ export class DeviceSettingComponent implements OnInit {
     return currentUser.role;
   }
 
-  onClickReset(userId:number){
+  onClickEdit(deviceId:number){
     Swal.fire({
-      title: 'Reset',
-      text: 'Do you want to reset setting',
+      title: 'Do you want to edit',
+      text: `Device ID : ${deviceId}?`,
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Reset',
+      confirmButtonText: 'Edit',
       cancelButtonText: 'Cancel'
     }).then(
       (result) => {
         if(result.isConfirmed){
-          
+          this.displayModalEditDevice = true;
+
+          const device:IDevice = <IDevice>this.devices.find(d => d.id == deviceId);
+          this.editDeviceId = device.id;
+          this.inputDeviceName = device.name;
+          this.inputDeviceMacSerialId = device.mac_serial_no;
+          this.cbDeviceIsActive = device.is_active;
         }
       }
     );
   }
 
-  onClickDelete(userId:number){
+  editDevice() :void{
+    this.displayModalEditDevice = false;
+
+    this.devicesService.Update(this.editDeviceId,this.inputDeviceName,this.inputDeviceMacSerialId,this.cbDeviceIsActive).subscribe((res:any) => {
+      if(res?.success)
+      {
+        Swal.fire({
+          title: `Device ID : ${this.editDeviceId} is edited`,
+          text: res?.message,
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+            this.getListDevices();
+          }
+        );
+      }
+      else
+      {
+        Swal.fire({
+          title: `Error!!! ${this.editDeviceId} can't edit`,
+          text: res?.message,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+            this.getListDevices();
+          }
+        );
+      }
+    })
+  }
+
+  onClickDelete(deviceId:number){
+    Swal.fire({
+      title: 'Do you want to delete',
+      text: `Device ID : ${deviceId}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    }).then(
+      (result) => {
+        if(result.isConfirmed){
+          this.devicesService.Delete(deviceId).subscribe((res:any) => {
+            if(res?.success)
+            {
+              Swal.fire({
+                title: `Device ID : ${deviceId} is deleted`,
+                text: res?.message,
+                icon: 'success',
+                confirmButtonText: 'OK'
+              }).then(
+                (result) => {
+                  this.getListDevices();
+                }
+              );
+            }
+            else{
+              Swal.fire({
+                title: `Error!!! ${deviceId} can't delete`,
+                text: res?.message,
+                icon: 'error',
+                confirmButtonText: 'OK'
+              }).then(
+                (result) => {
+                  this.getListDevices();
+                }
+              );
+            }
+          });
+        }
+      }
+    );
   }
 
   

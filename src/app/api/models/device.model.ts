@@ -2,7 +2,7 @@ export interface IDevice{
     connecting_user_id: string,
     connecting_user_name: string,
     created_at: string,
-    id: Number,
+    id: number,
     is_active: boolean,
     is_connecting: boolean,
     mac_serial_no: string,

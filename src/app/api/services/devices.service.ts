@@ -123,4 +123,37 @@ export class DevicesService {
       }
     );
   }
+
+  Update(deviceId:number,name:string,mac_serial_no:string,isActive:boolean): Observable<any>{
+    const httpHeaders: HttpHeaders = new HttpHeaders({
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
+    });
+
+    const body =  {
+      "name":name,
+      "mac_serial_no":mac_serial_no,
+      "is_active":isActive
+    };
+    
+    return this.http.put<any>(
+      this.BaseUrl + '/' + deviceId,
+      body,
+      {
+        headers: httpHeaders
+      }
+    );
+  }
+  
+  Delete(deviceId:number): Observable<any>{
+    const httpHeaders: HttpHeaders = new HttpHeaders({
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
+    });
+
+    return this.http.delete<any>(
+      this.BaseUrl + '/' + deviceId,
+      {
+        headers: httpHeaders
+      }
+    );
+  }
 }

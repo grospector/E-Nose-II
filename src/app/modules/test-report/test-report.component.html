@@ -18,9 +18,11 @@
                         <p-table #dt1 [value]="tests" dataKey="id" 
                             [scrollable]="true" scrollHeight="calc((100vh - 16px - 80px - 60px - 75px - 60px - 80px)/1)"
                             [rows]="10" [showCurrentPageReport]="true"
+                            [totalRecords]="tests ? tests.length : 0"
                             [loading]="loading" styleClass="p-datatable-users p-datatable-gridlines"
                             [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                            [globalFilterFields]="['id','username','name','email','role','isActive','action']">
+                            [globalFilterFields]="['id','username','name','email','role','isActive','action']"
+                            [tableStyle]="{'min-hight': '500px'}">
                             <ng-template pTemplate="caption">
                                 <div class="p-d-flex">
                                     <span class="p-input-icon-left p-ml-auto">

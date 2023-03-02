@@ -25,6 +25,15 @@ export class AccountSettingComponent implements OnInit {
   loading: boolean = true;
 
   activityValues: number[] = [0, 100];
+
+  displayModalEditUser:boolean = false;
+  editUserId:number = 0;
+  inputName:string = "";
+  inputUserName:string = "";
+  inputCurrentPassword:string = "";
+  inputPassword:string = "";
+  inputPasswordConfirmation:string = "";
+  cbUserIsActive:boolean = false;
   
   constructor(private http: HttpClient,
               private usersService:UsersService) {}
@@ -52,6 +61,69 @@ export class AccountSettingComponent implements OnInit {
     });
   }
 
+  initEditUser(): void{
+    this.inputName = "";
+    this.inputCurrentPassword = "";
+    this.inputPassword = "";
+    this.inputPasswordConfirmation = "";
+  }
+
+  onClickEdit(userId:number){
+    Swal.fire({
+      title: 'Do you want to edit',
+      text: `User ID : ${userId}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Edit',
+      cancelButtonText: 'Cancel'
+    }).then(
+      (result) => {
+        if(result.isConfirmed){
+          this.initEditUser();
+          this.displayModalEditUser = true;
+
+          const user:IUser = <IUser>this.users.find(u => u.id == userId);
+          this.editUserId = user.id;
+          this.inputUserName = user.username;
+          this.cbUserIsActive = user.is_active;
+        }
+      }
+    );
+  }
+
+  editUser():void{
+    this.displayModalEditUser = false;
+
+    this.usersService.Update(this.editUserId,this.inputName,this.inputUserName,this.inputCurrentPassword,this.inputPassword,this.inputPasswordConfirmation,this.cbUserIsActive).subscribe((res:any) => {
+      if(res?.success)
+      {
+        Swal.fire({
+          title: `User ID : ${this.editUserId} is edited`,
+          text: res?.message,
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+            this.getListUsers();
+          }
+        );
+      }
+      else
+      {
+        Swal.fire({
+          title: `Error!!! ${this.editUserId} can't edit`,
+          text: res?.message,
+          icon: 'error',
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+            this.getListUsers();
+          }
+        );
+      }
+    })
+  }
+
   onClickReset(userId:number){
     Swal.fire({
       title: 'Reset Password',
@@ -74,15 +146,71 @@ export class AccountSettingComponent implements OnInit {
     arg.subscribe(res =>{
       if(res.success)
       {
-        
+        Swal.fire({
+          title: `User ID : ${userId} is reset`,
+          text: res?.message,
+          icon: 'success',
+          showCancelButton: true,
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+          }
+        );
       }
       else{
-        this.loading = false;
+        Swal.fire({
+          title: `Error!!! ${userId} can't reset`,
+          text: res?.message,
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+          }
+        );
       }
     });
   }
 
   onClickDelete(userId:number){
-    
+    Swal.fire({
+      title: 'Do you want to delete',
+      text: `User ID : ${userId}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    }).then(
+      (result) => {
+        if(result.isConfirmed){
+          this.usersService.Delete(userId).subscribe((res:any) => {
+            if(res?.success)
+            {
+              Swal.fire({
+                title: `User ID : ${userId} is deleted`,
+                text: res?.message,
+                icon: 'success',
+                showCancelButton: true
+              }).then(
+                (result) => {
+                  this.getListUsers();
+                }
+              );
+            }
+            else{
+              Swal.fire({
+                title: `Error!!! ${userId} can't delete`,
+                text: res?.message,
+                icon: 'error',
+                showCancelButton: true
+              }).then(
+                (result) => {
+                  this.getListUsers();
+                }
+              );
+            }
+          });
+        }
+      });
   }
 }

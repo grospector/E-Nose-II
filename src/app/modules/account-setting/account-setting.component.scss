@@ -21,7 +21,7 @@ main .card{
 }
 
 main .card header h3{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 main .card header h4{
     font-size: 1rem;
@@ -53,7 +53,7 @@ td,th{
         .p-paginator .p-paginator-pages .p-paginator-page.p-highlight{
           background: rgb(255, 255, 255,0.5);
         }
-        
+
         .p-datatable-scrollable-table>.p-datatable-thead{
             background-color: rgba(228, 255, 252, 1) !important;
             top:-1px;
@@ -102,5 +102,64 @@ td,th{
             border-radius: 10px;    
             box-shadow: 1px 4px 5px 1px rgb(0 0 0 / 15%);
         }
+
+        
+        .p-dialog{
+            border-radius: 20px !important;
+            //background-color: rgba(0, 0, 0, 0.5) !important;
+        }
+        .p-dialog .p-dialog-header {
+            border-radius: 20px 20px 0px 0px !important;
+            background-color: #F2E7DC !important;
+        }  
+        .p-dialog .p-dialog-header .p-dialog-header-icon{
+            color:#0D0D0D !important;
+        }
+        .p-dialog .p-dialog-header .p-dialog-header-icon:hover{
+            color:#0D0D0D !important;
+            background-color: #F2E7DC !important;
+            border:2px solid #0D0D0D !important;
+        }
+        .p-dialog .p-dialog-header label{
+            color: #0D0D0D !important;
+        }  
+        .p-dialog .p-dialog-body,.p-dialog-content {
+            margin-top: -1px;
+            overflow-y: hidden;
+            background-color: #F2E7DC !important;
+        }  
+        
+        // .p-dialog h3{
+        //     font-size:1.2rem !important;
+        // }  
+        // .p-dialog h4{
+        //     font-size:1rem !important;
+        // }  
+        .p-dialog-content::-webkit-scrollbar-track {
+            background-color: rgba(49, 49, 49, 0.25);
+            border-radius: 100px;
+            margin-top: 70px;
+            margin-bottom: 100px;
+        }
+        .p-dialog-content::-webkit-scrollbar-thumb {
+            border: 5px solid transparent;
+            border-radius: 100px;
+            background-color: rgba(78, 78, 78, 0.8);
+            background-clip: content-box;
+        }
+        
+        .p-dialog label.loading{
+            color: #0D0D0D !important;
+        }
+        .p-dialog .p-dialog-footer {
+            margin-top: -1px;
+            border-radius: 0px 0px 20px 20px !important;
+            background-color: #F2E7DC !important;
+        }  
+    
+        .p-dialog .p-dialog-body,.p-dialog-content .calibrate-detail {
+            //min-height: 550px;
+            background-color: #F2E7DC !important;
+        }  
     }
 }
