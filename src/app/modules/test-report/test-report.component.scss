@@ -15,7 +15,7 @@ main .card{
     border-radius: 25px 25px 25px 25px;
     min-width:100%;
     height:calc(100vh - 95px - 85px);
-    background-color: #e2d7cb;
+    background-color: rgba(228, 255, 252, 1);
     padding:30px;
     border:0px;
 }
@@ -28,11 +28,12 @@ main .card header h4{
 }
 
 tbody, td, tfoot, th, thead, tr{
-    background-color: #e2d7cb !important;
+    background-color: rgba(228, 255, 252, 1) !important;
+    border:0px !important;
 }
 td,th{
     text-align: left !important;
-    border: 1px solid #0D0D0D !important;
+    border: 0px !important;
     padding: 1rem 1rem !important;
 }
 
@@ -62,26 +63,49 @@ td,th{
           background-color: #EDEDED !important;
       }  
 
-      
+      .p-paginator .p-paginator-pages .p-paginator-page.p-highlight{
+        background: rgb(255, 255, 255,0.5);
+      }
+
+        .p-datatable-scrollable-table::-webkit-scrollbar-track {
+            background-color: rgba(49, 49, 49, 0.25);
+            border-radius: 100px;
+            margin-top: 100px;
+            margin-bottom: 40px;
+        }
+
+        .p-datatable-scrollable-table::-webkit-scrollbar-thumb {
+            border: 5px solid transparent;
+            border-radius: 100px;
+            background-color: rgba(78, 78, 78, 0.8);
+            background-clip: content-box;
+        }
+
         .p-datatable-scrollable-table>.p-datatable-thead{
-            background-color: #e2d7cb !important;
+            background-color: rgba(228, 255, 252, 1) !important;
             top:-1px;
         }
         .p-datatable-header {
-            border: 1px solid #0D0D0D !important;
+            border: 0px !important;
         }
         .p-datatable, .p-datatable .p-datatable-header, .p-datatable-thead, .p-datatable .p-datatable-thead > tr > th
         {
             //border: 0px solid #0D0D0D !important;
-            background-color: #e2d7cb !important;
+            background-color: rgba(228, 255, 252, 1) !important;
         }
         .p-datatable-thead
         {
             border-top:0px;
         }
         .p-datatable.p-datatable-gridlines .p-paginator-bottom{
-            background-color: #e2d7cb !important;
-            border: 1px solid #0D0D0D !important;
+            background-color: rgba(228, 255, 252, 1) !important;
+            border: 0px !important;
+        }
+
+        .p-inputtext{
+            border:0px;
+            border-radius: 10px;    
+            box-shadow: 1px 4px 5px 1px rgb(0 0 0 / 15%);
         }
     }
 }

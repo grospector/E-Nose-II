@@ -14,6 +14,7 @@ export interface IDevice{
 
 export interface IListDevicesReponse{
     success: boolean,
+    message: string,
     devices: IDevice[],
     count_total: number
 }

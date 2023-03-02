@@ -14,16 +14,17 @@
                             <i class="pi pi-search"></i>
                             <input type="text" placeholder="Search" pInputText/>
                         </span> -->
+                        <!-- [rowsPerPageOptions]="[10,25,50]" -->
                         <p-table #dt1 [value]="users" dataKey="id" 
                             [scrollable]="true" scrollHeight="calc((100vh - 16px - 80px - 60px - 75px - 60px - 80px)/1)"
                             [rows]="10" [showCurrentPageReport]="true"
-                            [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-users p-datatable-gridlines"
+                            [loading]="loading" styleClass="p-datatable-users p-datatable-gridlines"
                             [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                             [globalFilterFields]="['id','username','name','email','role','isActive','action']">
                             <ng-template pTemplate="caption">
                                 <div class="p-d-flex">
                                     <span class="p-input-icon-left p-ml-auto">
-                                        <i class="pi pi-search"></i>
+                                        <!-- <i class="pi pi-search"></i> -->
                                         <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
                                     </span>
                                 </div>
@@ -33,43 +34,43 @@
                                     <th>
                                         <div class="p-d-flex p-jc-between p-ai-center">
                                             Id
-                                            <p-columnFilter type="text" field="id" display="menu"></p-columnFilter>
+                                            <!-- <p-columnFilter type="text" field="id" display="menu"></p-columnFilter> -->
                                         </div>
                                     </th>
                                     <th>
                                         <div class="p-d-flex p-jc-between p-ai-center">
                                             Username
-                                            <p-columnFilter type="text" field="username" display="menu"></p-columnFilter>
+                                            <!-- <p-columnFilter type="text" field="username" display="menu"></p-columnFilter> -->
                                         </div>
                                     </th>
                                     <th>
                                         <div class="p-d-flex p-jc-between p-ai-center">
                                             Name
-                                            <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                                            <!-- <p-columnFilter type="text" field="name" display="menu"></p-columnFilter> -->
                                         </div>
                                     </th>
                                     <th>
                                         <div class="p-d-flex p-jc-between p-ai-center">
                                             Email
-                                            <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+                                            <!-- <p-columnFilter type="text" field="email" display="menu"></p-columnFilter> -->
                                         </div>
                                     </th>
                                     <th>
                                         <div class="p-d-flex p-jc-between p-ai-center">
                                             Role
-                                            <p-columnFilter type="text" field="role" display="menu"></p-columnFilter>
+                                            <!-- <p-columnFilter type="text" field="role" display="menu"></p-columnFilter> -->
                                         </div>
                                     </th>
                                     <th>
                                         <div class="p-d-flex p-jc-between p-ai-center">
                                             IsActive
-                                            <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter>
+                                            <!-- <p-columnFilter type="text" field="isActive" display="menu"></p-columnFilter> -->
                                         </div>
                                     </th>
                                     <th>
                                         <div class="p-d-flex p-jc-between p-ai-center">
                                             Action
-                                            <p-columnFilter type="text" field="action" display="menu"></p-columnFilter>
+                                            <!-- <p-columnFilter type="text" field="action" display="menu"></p-columnFilter> -->
                                         </div>
                                     </th>
                                 </tr>

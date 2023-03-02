@@ -15,10 +15,11 @@ main .card{
     border-radius: 25px 25px 25px 25px;
     min-width:100%;
     height:calc(100vh - 95px - 85px);
-    background-color: #e2d7cb;
-    padding:15px 30px;
+    background-color: rgba(228, 255, 252, 1);
+    padding:30px;
     border:0px;
 }
+
 main .card header h3{
     font-size: 1.5rem;
 }
@@ -27,9 +28,79 @@ main .card header h4{
     font-weight: lighter;
 }
 
+#action>button{
+    margin-right:10px;
+}
+
+tbody, td, tfoot, th, thead, tr{
+    background-color: rgba(228, 255, 252, 1) !important;
+}
+td,th{
+    text-align: left !important;
+    border: 0px !important;
+    padding: 1rem 1rem !important;
+}
+
 @media (min-width: 1200px)
 {
     .container {
         //padding: 0px 10vw;
+    }
+}
+
+:host {
+    ::ng-deep{
+        .p-paginator .p-paginator-pages .p-paginator-page.p-highlight{
+          background: rgb(255, 255, 255,0.5);
+        }
+        
+        .p-datatable-scrollable-table>.p-datatable-thead{
+            background-color: rgba(228, 255, 252, 1) !important;
+            top:-1px;
+        }
+        .p-datatable-header {
+            border: 1px solid #0D0D0D !important;
+        }
+        .p-datatable, .p-datatable .p-datatable-header, .p-datatable-thead, .p-datatable .p-datatable-thead > tr > th
+        {
+            //border: 0px solid #0D0D0D !important;
+            background-color: rgba(228, 255, 252, 1) !important;
+        }
+        .p-datatable-thead
+        {
+            border-top:0px;
+        }
+        .p-datatable.p-datatable-gridlines .p-paginator-bottom{
+            background-color: rgba(228, 255, 252, 1) !important;
+            border: 1px solid #0D0D0D !important;
+        }
+
+        
+        .p-datatable-scrollable-table>.p-datatable-thead{
+            background-color: rgba(228, 255, 252, 1) !important;
+            top:-1px;
+        }
+        .p-datatable-header {
+            border: 0px !important;
+        }
+        .p-datatable, .p-datatable .p-datatable-header, .p-datatable-thead, .p-datatable .p-datatable-thead > tr > th
+        {
+            //border: 0px solid #0D0D0D !important;
+            background-color: rgba(228, 255, 252, 1) !important;
+        }
+        .p-datatable-thead
+        {
+            border-top:0px;
+        }
+        .p-datatable.p-datatable-gridlines .p-paginator-bottom{
+            background-color: rgba(228, 255, 252, 1) !important;
+            border: 0px !important;
+        }
+
+        .p-inputtext{
+            border:0px;
+            border-radius: 10px;    
+            box-shadow: 1px 4px 5px 1px rgb(0 0 0 / 15%);
+        }
     }
 }
