@@ -146,6 +146,12 @@ div>.card-module{
     background-position-x: center;
     background-position-y: center;
     border-radius: 15px 15px 0px 0px;
+    
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 // .module-process:hover{
 //     box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
@@ -165,6 +171,12 @@ div>.card-module{
     background-position-x: center;
     background-position-y: center;
     border-radius: 15px 15px 0px 0px;
+    
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 // .module-dashboard:hover{
 //     box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
@@ -183,6 +195,12 @@ div>.card-module{
     background-position-x: 30%;
     background-position-y: center;
     border-radius: 15px 15px 0px 0px;
+    
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 // .module-guide:hover{
 //     box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
@@ -201,6 +219,12 @@ div>.card-module{
     background-position-x: 30%;
     background-position-y: center;
     border-radius: 15px 15px 0px 0px;
+    
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 // .module-account:hover{
 //     box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
@@ -252,6 +276,7 @@ div>.card-module{
             color: #0D0D0D !important;
         }
         .p-dialog .p-dialog-footer {
+            margin-top:-1px;
             border-radius: 0px 0px 20px 20px !important;
             background-color: #F2E7DC !important;
         }  
@@ -288,6 +313,19 @@ div>.card-module{
 
         .p-carousel .p-carousel-indicators .p-carousel-indicator button{
             background-color: rgb(0, 0, 0,0.5);
+        }
+
+        .p-carousel-content img{
+            height: 440px;
+        }
+
+        .quick-guide  .p-dialog .p-dialog-body, .quick-guide .p-dialog-content{
+            padding-bottom:0px !important;
+            padding-left:30px !important;
+            padding-right:30px !important;
+        }
+        .quick-guide .p-dialog .p-dialog-footer {
+            padding-bottom:0px;
         }
     }   
 }

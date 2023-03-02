@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IDevice } from 'src/app/api/models/device.model';
+import { IGuide } from 'src/app/api/models/guide.model';
 import { IGetConnectedDeviceResponse } from 'src/app/api/models/user.model';
 import { DevicesService } from 'src/app/api/services/devices.service';
 import { UsersService } from 'src/app/api/services/users.service';
@@ -41,7 +42,103 @@ export class HomeComponent implements OnInit {
         numScroll: 3
     }
   ];
-  quickGuides:string[] = ["test1","test2","test3"];
+  quickGuides:IGuide[] = [
+    {
+      webpUrl:"assets/guides/Step 1.webp",
+      jpgUrl:"assets/guides/Step 1.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step 2.webp",
+      jpgUrl:"assets/guides/Step 2.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step 3.webp",
+      jpgUrl:"assets/guides/Step 3.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step 4.webp",
+      jpgUrl:"assets/guides/Step 4.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step 5.webp",
+      jpgUrl:"assets/guides/Step 5.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step Stop Testing.webp",
+      jpgUrl:"assets/guides/Step Stop Testing.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step 6.webp",
+      jpgUrl:"assets/guides/Step 6.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step Pre Calibration.webp",
+      jpgUrl:"assets/guides/Step Pre Calibration.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step 7.webp",
+      jpgUrl:"assets/guides/Step 7.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step 8.webp",
+      jpgUrl:"assets/guides/Step 8.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step 9.webp",
+      jpgUrl:"assets/guides/Step 9.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step Calibration Cleaning.webp",
+      jpgUrl:"assets/guides/Step Calibration Cleaning.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step 10.webp",
+      jpgUrl:"assets/guides/Step 10.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/START PRE PROCESS.webp",
+      jpgUrl:"assets/guides/START PRE PROCESS.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step 11.webp",
+      jpgUrl:"assets/guides/Step 11.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step 12.webp",
+      jpgUrl:"assets/guides/Step 12.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step 13.webp",
+      jpgUrl:"assets/guides/Step 13.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/QR Code.webp",
+      jpgUrl:"assets/guides/QR Code.jpg",
+      alt:""
+    },
+    {
+      webpUrl:"assets/guides/Step Final Cleaning.webp",
+      jpgUrl:"assets/guides/Step Final Cleaning.jpg",
+      alt:""
+    }
+  ];
 
   constructor(private router: Router
               ,private authService:AuthService

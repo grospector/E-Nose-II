@@ -163,8 +163,8 @@
     </ng-template>
 </p-dialog>
 
-<p-dialog [(visible)]="displayModalQuickGuide" [modal]="true" [style]="{width:'1200px',height:'600px'}" [baseZIndex]="-100"
-[draggable]="false" [resizable]="false">
+<p-dialog [(visible)]="displayModalQuickGuide" [modal]="true" [style]="{width:'1000px',height:'600px'}" [baseZIndex]="-100"
+[draggable]="false" [resizable]="false" styleClass="quick-guide">
     <ng-template pTemplate="header">
         <div class="text-center w-100">
             <label>
@@ -175,11 +175,14 @@
         </div>
     </ng-template>
     <ng-template pTemplate="body">
-        <p-carousel [value]="quickGuides" styleClass="custom-carousel" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="0" [responsiveOptions]="responsiveOptions">>
+        <p-carousel [value]="quickGuides" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="0" [responsiveOptions]="responsiveOptions">>
             <ng-template let-guide pTemplate="item">
-                <div class="h-100 w-100">
-                    <img src=""/>
-                    {{guide}}
+                <div class="d-flex h-100 w-100">
+                    <picture class="mx-auto">
+                        <source srcset="../{{guide.webpUrl}}" type="image/webp">
+                        <source srcset="../{{guide.jpgUrl}}" type="image/jpeg"> 
+                        <img class="" src="../{{guide.webpUrl}}" alt="{{guide.alt}}" draggable="false"/>
+                    </picture>
                 </div>
             </ng-template>
         </p-carousel>
