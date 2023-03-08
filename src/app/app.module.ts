@@ -18,9 +18,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import { faUsersGear, faFlaskVial , faHandSparkles , faHouse , 
         faCircleChevronLeft , faListCheck, faMagnifyingGlassChart ,
-        faHouseChimney , faFolderPlus , faGears, faChalkboardUser, faFileWaveform, faClipboard, faAnglesRight, faAnglesLeft } from '@fortawesome/free-solid-svg-icons';
+        faHouseChimney , faFolderPlus , faGears, faChalkboardUser, faFileWaveform, faClipboard, faAnglesRight, faAnglesLeft, faHandPointer, fas } from '@fortawesome/free-solid-svg-icons';
+
+import { faHandPointer as farHandPointerl, far } from '@fortawesome/free-regular-svg-icons';
 
 import { FooterModulesComponent } from './shared/footer-modules/footer-modules.component';
 import { AccountSettingComponent } from './modules/account-setting/account-setting.component';
@@ -57,6 +60,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { ResultComponent } from './modules/result/result.component';
 import { AsideBarComponent } from './shared/aside-bar/aside-bar.component';
 import { AsideBarModulesComponent } from './shared/aside-bar-modules/aside-bar-modules.component';
+
+import { NgxsModule } from '@ngxs/store';
+import { StateMode } from './store/state-mode.store';
 
 
 const config: SocketIoConfig = {
@@ -116,12 +122,15 @@ const config: SocketIoConfig = {
     SplitterModule,
     CarouselModule,
 		SocketIoModule.forRoot(config),
-  ServiceWorkerModule.register('ngsw-worker.js', {
-    enabled: !isDevMode(),
-    // Register the ServiceWorker as soon as the application is stable
-    // or after 30 seconds (whichever comes first).
-    registrationStrategy: 'registerWhenStable:30000'
-  }), 
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }), 
+    NgxsModule.forRoot([StateMode], {
+      developmentMode: !environment.production
+    }),
   ],
   providers: [
     AuthGuard,
@@ -136,20 +145,23 @@ const config: SocketIoConfig = {
 })
 export class AppModule {
   constructor(library:FaIconLibrary){
-    library.addIcons(faUsersGear);
-    library.addIcons(faFlaskVial);
-    library.addIcons(faHandSparkles);
-    library.addIcons(faHouse);
-    library.addIcons(faCircleChevronLeft);
-    library.addIcons(faListCheck);
-    library.addIcons(faMagnifyingGlassChart);
-    library.addIcons(faHouseChimney);
-    library.addIcons(faFolderPlus);
-    library.addIcons(faGears);
-    library.addIcons(faChalkboardUser);
-    library.addIcons(faFileWaveform);
-    library.addIcons(faClipboard);
-    library.addIcons(faAnglesRight);
-    library.addIcons(faAnglesLeft);
+    // library.addIcons(faUsersGear);
+    // library.addIcons(faFlaskVial);
+    // library.addIcons(faHandSparkles);
+    // library.addIcons(faHouse);
+    // library.addIcons(faCircleChevronLeft);
+    // library.addIcons(faListCheck);
+    // library.addIcons(faMagnifyingGlassChart);
+    // library.addIcons(faHouseChimney);
+    // library.addIcons(faFolderPlus);
+    // library.addIcons(faGears);
+    // library.addIcons(faChalkboardUser);
+    // library.addIcons(faFileWaveform);
+    // library.addIcons(faClipboard);
+    // library.addIcons(faAnglesRight);
+    // library.addIcons(faAnglesLeft);
+    // library.addIcons(faHandPointer);
+    
+    library.addIconPacks(fas , far);
   }
  }

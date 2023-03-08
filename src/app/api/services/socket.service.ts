@@ -23,7 +23,7 @@ export class SocketService {
 
   deviceJson = localStorage.getItem("device");
   device:IDevice = <IDevice>JSON.parse(this.deviceJson ?? "")
-  socket = io(environment.socketUrl,{transports: ['websocket']}).emit('subscribe_nats', {"channel_name":`_e-nose_user_device_${this.device.mac_serial_no}`});
+  socket = io(environment.socketUrl,{transports: ['websocket']}).emit('subscribe_nats', {"channel_name":`_e-nose_user_device_${this.device?.mac_serial_no}`});
 
 	constructor() { }
 
@@ -31,7 +31,7 @@ export class SocketService {
     const deviceJson = localStorage.getItem("device");
     const device:IDevice = <IDevice>JSON.parse(deviceJson ?? "")
 
-    this.socket.on(`_e-nose_user_device_${device.mac_serial_no}`, (res:ISocketResponse) =>{
+    this.socket.on(`_e-nose_user_device_${device?.mac_serial_no}`, (res:ISocketResponse) =>{
       this.res$.next(res);
     });
 
@@ -43,7 +43,7 @@ export class SocketService {
     const deviceJson = localStorage.getItem("device");
     const device:IDevice = <IDevice>JSON.parse(deviceJson ?? "")
 
-    this.socket.on(`_e-nose_user_device_${device.mac_serial_no}`, (res:ICalibrateSocketResponse) =>{
+    this.socket.on(`_e-nose_user_device_${device?.mac_serial_no}`, (res:ICalibrateSocketResponse) =>{
       this.calibrateRes$.next(res);
     });
 
@@ -55,7 +55,7 @@ export class SocketService {
     const deviceJson = localStorage.getItem("device");
     const device:IDevice = <IDevice>JSON.parse(deviceJson ?? "")
 
-    this.socket.on(`_e-nose_user_device_${device.mac_serial_no}`, (res:IStatusSocketResponse) =>{
+    this.socket.on(`_e-nose_user_device_${device?.mac_serial_no}`, (res:IStatusSocketResponse) =>{
       this.statusRes$.next(res);
     });
 

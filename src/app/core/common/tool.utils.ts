@@ -27,6 +27,14 @@ export class ToolUtils
         return formattedDate || "-";
     }
 
+    public static FormatTimeMinute(date:string) : string
+    {
+        const datepipe: DatePipe = new DatePipe('en-US')
+        let formattedDate = datepipe.transform(date, "mm:ss")
+
+        return formattedDate || "-";
+    }
+
     public static FormatUrl(routeUrl:string) : string
     {
         return environment.webUrl + "/" + routeUrl;

@@ -2,12 +2,22 @@
   <header class="d-flex justify-content-between flex-column">
     <div class="d-flex justify-content-between">
       <div class="d-flex flex-row justify-content-between">
-        <label class="align-self-center" style="width:110px">
-          <h3>
-            ID Card :
-          </h3>
-        </label>
-        <div *ngIf="currentIDCard != null && currentIDCard?.id_card" class="d-flex flex-row justify-content-between w-100" (click)="onClickOpenModalIDCards()">
+        <div class="d-flex flex-row">
+          <label class="align-self-center" style="min-width:60px">
+            <h3>
+              ID Card
+            </h3>
+          </label>
+          <label style="min-width:10px">
+            <h3>
+              : 
+            </h3>
+          </label>
+        </div>
+        <div *ngIf="currentIDCard != null && currentIDCard?.id_card" class="d-flex flex-row justify-content-between w-100 {{currentIDCard != null && currentIDCard.id_card ? 'id-card-clickable':''}}" (click)="onClickOpenModalIDCards()">
+          <label *ngIf="this.connectingStatus == EnumConnectionStatus.Ready" style="min-width:15px">            
+            <fa-icon class="fa-x" [icon]="['far','hand-pointer']"></fa-icon>
+          </label>
           <label class="align-self-center">
             <h4>
               {{currentIDCard.id_card}}
@@ -21,7 +31,7 @@
         </div>
       </div>
       <div class="d-flex">
-        <label class="align-self-center" style="width:60px">
+        <label class="align-self-center" style="min-width:60px">
           <h3>
             Name :
           </h3>
@@ -33,7 +43,7 @@
         </label>
       </div>
       <div class="d-flex">
-        <label class="align-self-center">
+        <label class="align-self-center" style="min-width:60px">
           <h3>
             Device : 
           </h3>
@@ -65,11 +75,13 @@
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
         </button>
       </aside> -->
-      <app-check-init (modeEvent)="changeMode($event)">
+      <app-check-init [ConnectingStatus]="connectingStatus"
+                      (modeEvent)="changeMode($event)">
       </app-check-init>
     </div>
     <div *ngSwitchCase="Mode.Calibration" class="menu-calibration h-100">
-      <app-calibration (modeEvent)="changeMode($event)">
+      <app-calibration [ConnectingStatus]="connectingStatus"
+                        (modeEvent)="changeMode($event)">
       </app-calibration>
     </div>
     <div *ngSwitchCase="Mode.CollectingData" class="menu-collecting-data h-100">
@@ -78,44 +90,48 @@
           <fa-icon class="fa-5x" icon="circle-chevron-left"></fa-icon>
         </button>
       </aside> -->
-      <app-collecting-data (isFinishedEvent)="ChangeFinished($event)"></app-collecting-data>
+      <app-collecting-data [ConnectingStatus]="connectingStatus"
+                          (isFinishedEvent)="ChangeFinished($event)">
+      </app-collecting-data>
     </div>
     <div *ngSwitchCase="Mode.StartPreProcessing" class="menu-collecting-data h-100">
-      <app-start-pre-processing></app-start-pre-processing>
+      <app-start-pre-processing [ConnectingStatus]="connectingStatus">
+      </app-start-pre-processing>
     </div>
     <div *ngSwitchCase="Mode.EndPreProcessing" class="menu-collecting-data h-100">
-      <app-end-pre-processing (modeEvent)="changeMode($event)">
+      <app-end-pre-processing [ConnectingStatus]="connectingStatus"
+                              (modeEvent)="changeMode($event)">
       </app-end-pre-processing>
     </div>
     <div *ngSwitchDefault class="d-flex flex-column menu-testing h-100">
-      <aside *ngIf="currentStateCalibration == 0" class="position-absolute top-100 start-50 translate-middle">
+      <aside class="position-absolute top-100 start-50 translate-middle">
         <button (click)="onClickHome()">
           <fa-icon class="" icon="home"></fa-icon>
         </button>
       </aside>
       <div class="d-flex flex-row h-50">
-        <div [ngSwitch]="currentStateCalibration" class="w-100">
-          <div *ngSwitchDefault class="card w-100 h-100 text-center init justify-content-center h-100" (click)="onClickCheckDeviceInit()">
+        <div class="w-100">
+          <div *ngIf="!isStepPreCalibrate" class="card w-100 h-100 text-center init justify-content-center h-100" (click)="onClickCheckDeviceInit()">
             <fa-icon class="fa-5x" icon="list-check"></fa-icon>
             <label>
               CHECK DEVICE INIT
             </label>
           </div>
-          <div *ngSwitchCase="1" class="card w-100 h-100 text-center init justify-content-center h-100 disable">
+          <div *ngIf="isStepPreCalibrate" class="card w-100 h-100 text-center init justify-content-center h-100 disable">
             <fa-icon class="fa-5x" icon="list-check"></fa-icon>
             <label>
               CHECK DEVICE INIT
             </label>
           </div>
         </div>
-        <div [ngSwitch]="currentStateCalibration" class="w-100">
-          <div *ngSwitchDefault class="card w-100 h-100 text-center calibate justify-content-center h-100" (click)="onClickCalibration()">
+        <div class="w-100">
+          <div *ngIf="!isStepPreCalibrate" class="card w-100 h-100 text-center calibate justify-content-center h-100" (click)="onClickCalibration()">
             <fa-icon class="fa-5x" icon="magnifying-glass-chart"></fa-icon>
             <label>
               CALIBRATION
             </label>
           </div>
-          <div *ngSwitchCase="1" class="card w-100 h-100 text-center calibate justify-content-center h-100" (click)="onClickStartCalibration()">
+          <div *ngIf="isStepPreCalibrate" class="card w-100 h-100 text-center calibate justify-content-center h-100" (click)="onClickStartCalibration()">
             <fa-icon class="fa-5x" icon="magnifying-glass-chart"></fa-icon>
             <label>
               START CALIBRATION
@@ -131,7 +147,8 @@
           </div>
         </div>
       </div>
-      <div *ngIf="currentIDCard != null && currentIDCard?.id_card && currentStateCalibration == 0" class="h-50 d-flex align-items-center">
+      <!-- && currentStateCalibration == 0 -->
+      <div *ngIf="currentIDCard != null && currentIDCard?.id_card && !isStepPreCalibrate" class="h-50 d-flex align-items-center">
         <div class="card w-100 h-100 text-center start-process justify-content-center h-100" (click)="onClickStartProcessCollectingData()">
           <fa-icon class="fa-10x" icon="flask-vial"></fa-icon>
           <label>
@@ -139,7 +156,8 @@
           </label>
         </div>
       </div>
-      <div *ngIf="currentIDCard == null || !currentIDCard?.id_card || currentStateCalibration == 1" class="h-50 d-flex align-items-center">
+      <!-- || currentStateCalibration == 1 -->
+      <div *ngIf="currentIDCard == null || !currentIDCard?.id_card || isStepPreCalibrate" class="h-50 d-flex align-items-center">
         <div class="card w-100 h-100 text-center start-process justify-content-center h-100 disable">
           <fa-icon class="fa-10x" icon="flask-vial"></fa-icon>
           <label>
@@ -287,7 +305,7 @@
     </ng-template>
 </p-dialog>
 
-<p-dialog [(visible)]="displayModalCalibrate" [modal]="true" [style]="{width:'1200px'}" [baseZIndex]="-100"
+<p-dialog [(visible)]="displayModalCalibrate" [modal]="true" [style]="{width:'1100px'}" [baseZIndex]="-100"
     [draggable]="false" [resizable]="false">
     <ng-template pTemplate="header">
       <div class="text-center w-100">
@@ -305,8 +323,8 @@
         </h3>
       </label>
       <div class="d-flex flex-row calibrate-detail">
-        <p-chart type="bar" [data]="basicData" [options]="basicOptions" width="942px" height="calc(100%)"></p-chart>
-        <div class="px-3 pt-4">
+        <p-chart type="bar" [data]="basicData" [options]="basicOptions" width="100%" height="calc(100%)"></p-chart>
+        <div class="px-3 pt-4" style="min-width: 220px;">
           <div>
             <label>
               <h4>

@@ -17,21 +17,27 @@
                         <!-- option [rowsPerPageOptions]="[10,25,50]" -->
                         <p-table #dt1 [value]="devices" dataKey="id" 
                             [scrollable]="true" scrollHeight="calc((100vh - 16px - 80px - 60px - 75px - 60px - 80px)/1)"
-                            [rows]="10" [showCurrentPageReport]="true"
-                            [totalRecords]="devices ? devices.length : 0"
+                            [rows]="limitRow" [showCurrentPageReport]="true"
+                            [totalRecords]="totalRecords"  [lazy]='true' (onLazyLoad)='FetchListDevices($event.first)' 
                             [loading]="loading" styleClass="p-datatable-users p-datatable-gridlines"
                             [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                            [globalFilterFields]="['id','macSerialNo','name','status','isActive','updated_at','action']">
+                            [globalFilterFields]="['#','id','name','macSerialNo','status','isActive','updated_at','action']">
                             <ng-template pTemplate="caption">
                                 <div class="p-d-flex">
                                     <span class="p-input-icon-left p-ml-auto">
                                         <!-- <i class="pi pi-search"></i> -->
-                                        <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')" placeholder="Search ID Case" />
+                                        <!-- (input)="dt1.filterGlobal($any($event.target).value, 'contains')" -->
+                                        <input pInputText type="text" [(ngModel)]="inputSearch" (input)="FetchListDevices(0)" placeholder="Search Device" />
                                     </span>
                                 </div>
                             </ng-template>
                             <ng-template pTemplate="header">
                                 <tr>
+                                    <th>
+                                        <div class="p-d-flex p-jc-between p-ai-center">
+                                            #
+                                        </div>
+                                    </th>
                                     <th>
                                         <div class="p-d-flex p-jc-between p-ai-center">
                                             Id
@@ -76,8 +82,11 @@
                                     </th>
                                 </tr>
                             </ng-template>
-                            <ng-template pTemplate="body" let-device>
+                            <ng-template pTemplate="body" let-device let-rowIndex="rowIndex">
                                 <tr>
+                                    <td>
+                                        {{rowIndex+1}}
+                                    </td>
                                     <td>
                                         <label class="text-center">
                                             {{device.id}}

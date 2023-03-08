@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IConnectResponse } from 'src/app/api/models/device.model';
 import { TestsService } from 'src/app/api/services/tests.service';
+import { EnumConnectionStatus } from 'src/app/models/common/enum';
 import { Mode } from 'src/app/modules/testing/testing';
 import Swal from 'sweetalert2';
 
@@ -10,6 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./end-pre-processing.component.scss']
 })
 export class EndPreProcessingComponent {
+  @Input() ConnectingStatus:EnumConnectionStatus = EnumConnectionStatus.EndPreProcessing;
   @Output() modeEvent = new EventEmitter<Mode>()
 
   constructor(private testsService:TestsService) { }

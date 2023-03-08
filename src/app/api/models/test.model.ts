@@ -1,4 +1,4 @@
-import { ICalibrateItem } from "./calibrate_profile.model"
+import { ICalibrateItem } from "./calibrate_profile.model";
 
 export interface IStartPreTestRequest{
     case_id:number,
@@ -9,7 +9,8 @@ export interface IStartPreTestRequest{
 export interface ITestsGetListResponse{
     success:boolean,
     message:string,
-    tests:ITest[]
+    tests:ITest[],
+    count_total:number
 }
 
 export interface ITest{
@@ -80,5 +81,18 @@ export interface IDifCalibrate{
 }
 
 export interface IItem{
-
+    id: number,
+    pressure:number,
+    temp:number,
+    gas_1:number,
+    gas_2:number,
+    gas_3:number,
+    gas_4:number,
+    gas_5:number,
+    gas_6:number,
+    gas_7:number,
+    gas_8:number,
+    created_at: string,
+    updated_at: string,
+    test_id: number
 }

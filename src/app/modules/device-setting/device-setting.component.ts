@@ -22,19 +22,27 @@ export class DeviceSettingComponent implements OnInit {
   inputDeviceMacSerialId:string = "";
   cbDeviceIsActive:boolean = false;
 
+  inputSearch:string = "";
+
+  totalRecords!:number;
+  tableOffset!:number;
+  limitRow:number = 10;
+
   constructor(private devicesService:DevicesService) { }
 
   ngOnInit(): void {
-    this.getListDevices();
+    this.FetchListDevices(0);
   }
 
-  getListDevices():void{
+  FetchListDevices(offset:number):void{
+    this.tableOffset = offset;
     this.loading = true;
-    this.devicesService.GetListDevices("").subscribe((res:IListDevicesReponse) => {
+    this.devicesService.GetListDevices(this.inputSearch,"",offset,this.limitRow).subscribe((res:IListDevicesReponse) => {
       if(res?.success)
       {
         this.loading = false;
         this.devices = res.devices;
+        this.totalRecords = res.count_total;
       }
       else{
         this.loading = false;
@@ -93,7 +101,7 @@ export class DeviceSettingComponent implements OnInit {
           confirmButtonText: 'OK'
         }).then(
           (result) => {
-            this.getListDevices();
+            this.FetchListDevices(this.tableOffset);
           }
         );
       }
@@ -106,7 +114,7 @@ export class DeviceSettingComponent implements OnInit {
           confirmButtonText: 'OK'
         }).then(
           (result) => {
-            this.getListDevices();
+            this.FetchListDevices(this.tableOffset);
           }
         );
       }
@@ -134,7 +142,7 @@ export class DeviceSettingComponent implements OnInit {
                 confirmButtonText: 'OK'
               }).then(
                 (result) => {
-                  this.getListDevices();
+                  this.FetchListDevices(this.tableOffset);
                 }
               );
             }
@@ -146,7 +154,7 @@ export class DeviceSettingComponent implements OnInit {
                 confirmButtonText: 'OK'
               }).then(
                 (result) => {
-                  this.getListDevices();
+                  this.FetchListDevices(this.tableOffset);
                 }
               );
             }

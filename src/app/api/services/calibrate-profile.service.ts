@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthUtils } from 'src/app/core/auth/auth.utils';
 import { environment } from 'src/environments/environment';
-import { IGetLastCalibrateDetailResponse } from '../models/calibrate_profile.model';
+import { ICalibrateItem, IGetLastCalibrateDetailResponse } from '../models/calibrate_profile.model';
 import { IConnectResponse } from '../models/device.model';
 
 @Injectable({
@@ -67,6 +67,35 @@ export class CalibrateProfileService {
         headers: httpHeaders
       }
     );
+  }
+
+  
+  ClearTempCalibration() : void{
+    sessionStorage.setItem("TempCalibration","");
+  }
+  
+
+  GetTempCalibration() : any{
+    const calibtration = (sessionStorage.getItem("TempCalibration") || "" );
+    return JSON.parse(calibtration);
+  }
+
+  SetTempCalibration(calibtration:any) : void{
+    sessionStorage.setItem("TempCalibration",JSON.stringify(calibtration));
+  }
+
+  
+  ClearTempCalibrationItem() : void{
+    sessionStorage.setItem("TempCalibrationItem","");
+  }
+
+  GetTempCalibrationItem() : any{
+    const calibtrationItem = (sessionStorage.getItem("TempCalibrationItem") || "" );
+    return JSON.parse(calibtrationItem);
+  }
+
+  SetTempCalibrationItem(calibrateItem:ICalibrateItem) : void{
+    sessionStorage.setItem("TempCalibrationItem",JSON.stringify(calibrateItem));
   }
 
   EndCalibrate(): Observable<IConnectResponse> {

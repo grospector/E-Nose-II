@@ -6,7 +6,7 @@ import { SocketService } from 'src/app/api/services/socket.service';
 import { Observable, Subscription } from 'rxjs';
 import { DevicesService } from 'src/app/api/services/devices.service';
 import Swal from 'sweetalert2';
-import { EnumSocketCommand } from 'src/app/models/common/enum';
+import { EnumConnectionStatus, EnumSocketCommand } from 'src/app/models/common/enum';
 import { Mode } from 'src/app/modules/testing/testing';
 import { CalibrateProfileService } from 'src/app/api/services/calibrate-profile.service';
 import { DatePipe } from '@angular/common';
@@ -14,6 +14,10 @@ import { IAvgCalibrateProfile, ICalibrateItem, IGetLastCalibrateDetailResponse, 
 import { EnumCalibrateStatus } from './calibration';
 import { AuthUtils } from 'src/app/core/auth/auth.utils';
 import { ToolUtils } from 'src/app/core/common/tool.utils';
+import { UsersService } from 'src/app/api/services/users.service';
+import { IGetConnectedDeviceResponse } from 'src/app/api/models/user.model';
+import { CalibrationStep, StateTesting } from 'src/app/models/common/state-testing';
+import { CurrentStateTestingService } from 'src/app/api/services/current-state-testing.service';
 
 @Component({
   selector: 'app-calibration',
@@ -22,15 +26,18 @@ import { ToolUtils } from 'src/app/core/common/tool.utils';
 })
 export class CalibrationComponent {
   calibrate_item!:ICalibrateItem;
+  @Input() ConnectingStatus:EnumConnectionStatus = EnumConnectionStatus.Calibrate;
   @Output() modeEvent = new EventEmitter<Mode>();
   @Output() footerMessageEvent = new EventEmitter<string>();
   @Output() tempFooterMessageEvent = new EventEmitter<string>();
 
   isShowChart: boolean = false;
-  calibrateStatus:EnumCalibrateStatus = EnumCalibrateStatus.Calibrate
+  calibrateStatus:EnumCalibrateStatus = EnumCalibrateStatus.Calibrate;
 
   calibrate_time: number = 0;
   startCalibrateTime!: Date; 
+
+  calibrateStep:CalibrationStep = CalibrationStep.StepStartCalibration;
 
   basicData: any = {
     labels: [],
@@ -101,7 +108,6 @@ export class CalibrationComponent {
   };
 
   basicOptions:any = {
-    responsive: true,
     animation: {
         duration: 0
     },
@@ -152,21 +158,65 @@ export class CalibrationComponent {
     },
     clip: {left: false, top: false, right: 1000, bottom: false},
     pointRadius: 1,
+    responsive: true,
+    maintainAspectRatio: false
     // pointBorderWidth:5,
     // pointHoverBorderWidth:10
   };
 
   collectingData!: Observable<ISocketResponse>;
 
-  timer!: ReturnType<typeof setTimeout>;
-
   constructor(private socketService:SocketService
               ,private devicesService:DevicesService
-              ,private calibrateProfileService:CalibrateProfileService) { }
+              ,private calibrateProfileService:CalibrateProfileService
+              ,private usersService:UsersService
+              ,private currentStateTestingService:CurrentStateTestingService) { }
 
   ngOnInit() : void {
-    this.isShowChart = true;
-    
+    this.CheckCalibrationStep();
+  }
+
+  CheckCalibrationStep() : void{
+    this.usersService.GetConnectedDeviceDetail().subscribe((res:IGetConnectedDeviceResponse) => {
+      if(res?.success)
+      {
+        switch(res?.device?.status)
+        {
+          // case EnumConnectionStatus.Cleaning:
+          //   this.isShowChart = true;
+
+          //   this.calibrateProfileService.ClearTempCalibration();
+          //   this.calibrateProfileService.ClearTempCalibrationItem();
+          //   this.GetSocketResponse();
+          //   break;
+          case EnumConnectionStatus.Stop:
+            this.isShowChart = true;
+          
+            const TempCalibration:any = this.calibrateProfileService.GetTempCalibration();
+            this.basicData = TempCalibration;
+            
+            this.basicData = {...this.basicData};
+
+            const TempCalibrationItem:ICalibrateItem = this.calibrateProfileService.GetTempCalibrationItem();
+            this.calibrate_item = TempCalibrationItem;
+            //this.GetSocketResponse();
+            break;
+          case EnumConnectionStatus.Calibrate:
+          default:
+            this.currentStateTestingService.SetCurrentStateTesting(StateTesting.Calibrate);
+
+            this.isShowChart = true;
+
+            this.calibrateProfileService.ClearTempCalibration();
+            this.calibrateProfileService.ClearTempCalibrationItem();
+            this.GetSocketResponse();
+            break;
+        }
+      }
+    });
+  }
+
+  GetSocketResponse() : void{
     this.socketService.getCalibrateRes().subscribe((res:ICalibrateSocketResponse) =>{
       //console.log("res",res);
 
@@ -180,7 +230,7 @@ export class CalibrationComponent {
 
         const time:Date = new Date();
         
-        this.basicData.labels.push(ToolUtils.FormatTime(time.toString()));
+        this.basicData.labels.push(ToolUtils.FormatTimeMinute(time.toString()));
         this.calibrate_time = time.getTime() - this.startCalibrateTime.getTime() == 0 ? 1 : time.getTime() - this.startCalibrateTime.getTime()
 
         //const pressure = this.basicData.datasets.find((x:any) => x.label == 'Pressure').data;
@@ -234,17 +284,14 @@ export class CalibrationComponent {
   }
 
   onClickStopCalibration() : void{
-    //test
-    // this.calibrateStatus = EnumCalibrateStatus.Finish;
-    // this.tempFooterMessageEvent.emit("STOP");
-
-
     this.calibrateProfileService.StopCalibrate().subscribe((res:IConnectResponse) => {
       if(res.success)
       {        
-        clearTimeout(this.timer);
-        this.calibrateStatus = EnumCalibrateStatus.Finish;
+        //this.calibrateStatus = EnumCalibrateStatus.Finish;
 
+        this.calibrateProfileService.SetTempCalibration(this.basicData);
+        this.calibrateProfileService.SetTempCalibrationItem(this.calibrate_item);
+        
         // Swal.fire({
         //   title: `Test Process`,
         //   text: `Test is stopped`,
@@ -282,9 +329,9 @@ export class CalibrationComponent {
     this.calibrateProfileService.EndCalibrate().subscribe((res:IConnectResponse) => {
       if(res.success)
       {        
-        AuthUtils.ClearStateStatus();
-        AuthUtils.ClearStateClibration();
-    
+        // AuthUtils.ClearStateStatus();
+        // AuthUtils.ClearStateClibration();
+        this.calibrateProfileService.ClearTempCalibration();
         this.modeEvent.emit(Mode.Cleaning);
 
         // Swal.fire({
@@ -316,6 +363,10 @@ export class CalibrationComponent {
 
   public get CalibrateStatus(): typeof EnumCalibrateStatus{
     return EnumCalibrateStatus;
+  }
+
+  public get EnumConnectionStatus(): typeof EnumConnectionStatus {
+    return EnumConnectionStatus; 
   }
 
   public CalibrateDetailFormatDate(date:string){

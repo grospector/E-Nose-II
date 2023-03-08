@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { EnumConnectionStatus } from 'src/app/models/common/enum';
 
 @Component({
   selector: 'app-start-pre-processing',
@@ -10,6 +11,8 @@ export class StartPreProcessingComponent {
   min: number = 1;
   max: number = 3;
 
+  @Input() ConnectingStatus:EnumConnectionStatus = EnumConnectionStatus.StartPreProcessing;
+  
   ngOnInit() {
     let interval = setInterval(() => {
         this.value = this.value + Math.floor(Math.random() * (this.min + this.max + 1)) + this.min;

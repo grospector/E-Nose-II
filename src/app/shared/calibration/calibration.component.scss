@@ -1,3 +1,8 @@
+p-chart{
+    min-height: 100%;
+    width: 100%;
+}
+
 .calibration-profile{
     padding:0px 40px;
 }
@@ -5,4 +10,8 @@
 label h4{
     font-size:1rem;
     margin-bottom:0px;
+}
+
+.calibrate-detail{
+    height: calc(100% - 42px - 70px);
 }

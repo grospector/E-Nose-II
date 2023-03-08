@@ -14,13 +14,15 @@ export class TestsService {
 
   constructor(private http:HttpClient) { }
   
-  GetListTests(): Observable<ITestsGetListResponse> {
+  GetListTests(keyword:string,offset:number,limit:number): Observable<ITestsGetListResponse> {
     const httpHeaders: HttpHeaders = new HttpHeaders({
       'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
     });
 
     const params: HttpParams = new HttpParams()
-      // .set("keyword","")
+      .set("offset",offset)
+      .set("limit",limit)
+      .set("keyword",keyword);
       // .set("case_id","")
       // .set("device_id","")
       // .set("start_date","")
@@ -110,5 +112,33 @@ export class TestsService {
         headers: httpHeaders
       }
     );
+  }
+
+  
+  ClearCurrentTestingId() : void{
+    sessionStorage.setItem("TestId","");
+  }
+
+  GetCurrentTestingId() : number{
+    const testId = Number.parseInt(sessionStorage.getItem("TestId") || "");
+    return testId
+  }
+
+  SetCurrentTestingId(testId:number) : void{
+    sessionStorage.setItem("TestId",testId.toString());
+  }
+
+  
+  ClearTempTesting() : void{
+    sessionStorage.setItem("TempTesting","");
+  }
+
+  GeTempTesting() : any{
+    const tempTesting = (sessionStorage.getItem("TempTesting") || "");
+    return JSON.parse(tempTesting)
+  }
+
+  SetTempTesting(tempTesting:any) : void{
+    sessionStorage.setItem("TempTesting",JSON.stringify(tempTesting));
   }
 }

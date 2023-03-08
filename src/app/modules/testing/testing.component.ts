@@ -2,7 +2,9 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { Select, Store } from '@ngxs/store';
 import { State } from 'nats.ws/lib/nats-base-client/parser';
+import { Observable } from 'rxjs';
 import { IAvgCalibrateProfile, IGetLastCalibrateDetailResponse } from 'src/app/api/models/calibrate_profile.model';
 import { ICaseDetail, IGetListCasesResponse } from 'src/app/api/models/case.model';
 import { IStatus } from 'src/app/api/models/data.model';
@@ -12,6 +14,7 @@ import { IStartPreTestRequest } from 'src/app/api/models/test.model';
 import { IGetConnectedDeviceResponse } from 'src/app/api/models/user.model';
 import { CalibrateProfileService } from 'src/app/api/services/calibrate-profile.service';
 import { CasesService } from 'src/app/api/services/cases.service';
+import { CurrentStateTestingService } from 'src/app/api/services/current-state-testing.service';
 import { DevicesService } from 'src/app/api/services/devices.service';
 import { SocketService } from 'src/app/api/services/socket.service';
 import { TestsService } from 'src/app/api/services/tests.service';
@@ -19,7 +22,11 @@ import { UsersService } from 'src/app/api/services/users.service';
 import { AuthUtils } from 'src/app/core/auth/auth.utils';
 import { ToolUtils } from 'src/app/core/common/tool.utils';
 import { EnumConnectionStatus, EnumSocketCommand } from 'src/app/models/common/enum';
+import { CalibrationStep, CheckDeviceInitStep, StartProcessCollectingDataStep, StateTesting } from 'src/app/models/common/state-testing';
+import { IStateModeModel } from 'src/app/store/state-mode.model';
+import { StateMode } from 'src/app/store/state-mode.store';
 import Swal from 'sweetalert2';
+import { chartBasicData, chartBasicOptions } from './chart';
 import { Mode, StateCalibration } from './testing';
 
 @Component({
@@ -28,6 +35,8 @@ import { Mode, StateCalibration } from './testing';
   styleUrls: ['./testing.component.scss']
 })
 export class TestingComponent implements OnInit {
+  @Select(StateMode) stateMode$!: Observable<IStateModeModel>;
+
   containerModule = document.querySelector<HTMLElement>('.parent');
   mouseDown = false;
   startX: any;
@@ -52,10 +61,17 @@ export class TestingComponent implements OnInit {
   lastCalibrateDate:string = "";
   lastCalibrateProfile!:IGetLastCalibrateDetailResponse;
   currentStateCalibration!:StateCalibration;
+  isStepPreCalibrate:boolean = false;
+
+  connectingStatus!:EnumConnectionStatus;
+  checkDeviceInitStep:CheckDeviceInitStep = CheckDeviceInitStep.StepTest;
+  calibrationStep:CalibrationStep = CalibrationStep.StepPreCalibration;
+  startProcessCollectingDataStep:StartProcessCollectingDataStep = StartProcessCollectingDataStep.StepStartPreProcessing;
 
   isProcess:boolean = false;
   isFinished:boolean = false;
 
+  currentStateTesting:StateTesting = StateTesting.Menu;
   currentStatus:string = "";
   footerMessage:string = "";
 
@@ -63,87 +79,8 @@ export class TestingComponent implements OnInit {
   inputName:string = "";
   inputPhoneNumber:string = "";
 
-  basicData: any = {
-    labels: ["Avg Gas 1","Avg Gas 2","Avg Gas 3","Avg Gas 4","Avg Gas 5","Avg Gas 6","Avg Gas 7"],
-    datasets: [
-      {
-        label: "calibrate",
-        data: [],
-        fill: false,
-        borderColor: '#ffed4a',
-        tension: 0,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.8)',
-          'rgba(255, 159, 64, 0.8)',
-          'rgba(255, 205, 86, 0.8)',
-          'rgba(75, 192, 192, 0.8)',
-          'rgba(54, 162, 235, 0.8)',
-          'rgba(153, 102, 255, 0.8)',
-          'rgba(201, 203, 207, 0.8)'
-        ],
-      }
-    ]
-  };
-
-  basicOptions:any = {
-    animation: {
-        duration: 0
-    },
-    responsive:true,
-    plugins: {
-      legend: {
-          labels: {
-              color: '#495057'
-          },
-          display: false
-      },
-      title: {
-        display: false,
-      } 
-    },
-    scales: {
-        x: {
-            ticks: {
-                color: '#495057'
-            },
-            grid: {
-                color: '#cdcdcd'
-            }
-        },
-        y: {
-            ticks: {
-                color: '#495057',
-            },
-            grid: {
-                drawOnChartArea: true,
-                color: '#cdcdcd'
-            },
-            beginAtZero: true,
-            min: 0,
-            //max: 3000,
-        }
-    },
-    indexAxis: 'y',
-    interaction: {
-      mode: 'index',
-      intersect: false,
-      callbacks: {
-        label: function(tooltipItem:any) {
-          //console.log("tooltipItem",tooltipItem);
-          var label = tooltipItem.dataset.label || '';
-          if (label) {
-              label += ': ';
-          }
-          label += tooltipItem.formattedValue;
-          return label;
-      }
-
-      }
-    },
-    //clip: {left: false, top: false, right: 1000, bottom: false},
-    //pointBorderWidth:5,
-    //pointHoverBorderWidth:10
-  };
+  basicData: any = chartBasicData;
+  basicOptions:any = chartBasicOptions;
 
   constructor(private router:Router
               ,private socketService:SocketService
@@ -151,18 +88,21 @@ export class TestingComponent implements OnInit {
               ,private devicesService:DevicesService
               ,private casesService:CasesService
               ,private calibrateProfileService:CalibrateProfileService
-              ,private testsService:TestsService) { }
+              ,private testsService:TestsService
+              ,private currentStateTestingService:CurrentStateTestingService
+              ,private store:Store) { }
 
   ngOnInit() : void {
     //Socket
     this.CheckChangeStatus();
 
     //One time
-    this.CheckMode();
+    //this.CheckMode();
     this.CheckConnectedDevice();
     this.CheckIDCard();
     this.CheckCalibrateProfile();
-    this.CheckStateCalibrate();
+    this.CheckCurrentStateTesting();
+    //this.CheckStateCalibrate();
   }
 
   CheckMode(): void{
@@ -185,6 +125,32 @@ export class TestingComponent implements OnInit {
     }
   }
 
+  CheckCurrentStateTesting() : void{
+    this.currentStateTesting = this.currentStateTestingService.GetCurrentStateTesting() as StateTesting;
+
+    switch(+this.currentStateTesting)
+    {
+      case StateTesting.CheckDeviceInit:
+        this.mode = Mode.CheckInit;
+        break;
+      case StateTesting.Calibrate:
+        this.mode = Mode.Calibration;
+        break;
+      case StateTesting.StartProcessCollectingData:
+        this.mode = Mode.CollectingData;
+        break;
+      case StateTesting.Cleaning:
+        this.displayModalCleaning = true;
+        break;
+      case StateTesting.Menu:
+        this.displayModalCleaning = false;
+        this.mode = Mode.Menu;
+        break;
+      default:
+        break;
+    }
+  }
+
   CheckChangeStatus() : void{
     //this.footerMessage = AuthUtils.GetCurrentStateStatus();
 
@@ -198,18 +164,38 @@ export class TestingComponent implements OnInit {
           const status:EnumConnectionStatus = <EnumConnectionStatus>res.data.status;
           this.currentStatus = res.data.status;
 
+          this.isStepPreCalibrate = false;
+
+          // case EnumConnectionStatus.StopTest:
+          //   this.mode = Mode.CheckInit;
+          //   this.checkDeviceInitStep = CheckDeviceInitStep.StepStopTesting;
+          //   break;
+          // case EnumConnectionStatus.Stop:
+          //     this.mode = Mode.Calibration;
+          //     this.calibrationStep = CalibrationStep.StepStopCalibration
+          //     break;
+          this.connectingStatus = status as EnumConnectionStatus;
           switch(status)
           {
-            case EnumConnectionStatus.PreCalibrate:
-              this.displayModalPreCalibration = false;
-              break;
             case EnumConnectionStatus.Cleaning:
               this.displayModalCleaning = true;
 
               this.waitToMenu = true;
               break;
-            case EnumConnectionStatus.StopTest:
+            case EnumConnectionStatus.Test:
+              this.mode = Mode.CheckInit;
+              this.checkDeviceInitStep = CheckDeviceInitStep.StepTest;
               break;
+            case EnumConnectionStatus.PreCalibrate:
+              this.displayModalPreCalibration = false;
+              this.isStepPreCalibrate = true;
+              this.calibrationStep = CalibrationStep.StepPreCalibration
+              break;
+            case EnumConnectionStatus.Calibrate:
+              this.mode = Mode.Calibration;
+              this.calibrationStep = CalibrationStep.StepStartCalibration
+              break;
+            case EnumConnectionStatus.PreProcessing:
             case EnumConnectionStatus.StartPreProcessing:
               this.mode = Mode.StartPreProcessing;
               break;  
@@ -223,14 +209,20 @@ export class TestingComponent implements OnInit {
             case EnumConnectionStatus.Ready:
               this.mode = Mode.Menu;
 
+              this.currentStateTestingService.ClearCurrentStateTesting();
+              this.testsService.ClearTempTesting();
+              this.calibrateProfileService.ClearTempCalibration();
+              this.calibrateProfileService.ClearTempCalibrationItem();
+              this.testsService.ClearCurrentTestingId();
+
               this.displayModalCleaning = false;
               this.displayModalStopTest = false;
 
               if(this.waitToMenu)
               {
-                AuthUtils.ClearStateStatus();
-                AuthUtils.ClearStateClibration();
-                this.CheckStateCalibrate();      
+                //AuthUtils.ClearStateStatus();
+                //AuthUtils.ClearStateClibration();
+                //this.CheckStateCalibrate();      
 
                 this.waitToMenu = false;
               }
@@ -238,41 +230,74 @@ export class TestingComponent implements OnInit {
               break;
           }
 
+          this.store.dispatch(this.mode);
+
           this.changeFooterMessage(res?.data?.status);
-          this.CheckCalibrateProfile();
+          //this.CheckCalibrateProfile();
         }
       }
     });
   }
 
   async CheckConnectedDevice(): Promise<IGetConnectedDeviceResponse>{
-    await this.usersService.GetConnectedDeviceDetail().subscribe((res:IGetConnectedDeviceResponse) => {
-      if(res?.success)
-      {
+    this.usersService.GetConnectedDeviceDetail().subscribe((res: IGetConnectedDeviceResponse) => {
+      if (res?.success) {
         //console.log("Conencted Device",res);
-
         AuthUtils.SetCurrentDevice(res.device);
-        this.currentDevice =  AuthUtils.GetCurrentDevice();
+        this.currentDevice = AuthUtils.GetCurrentDevice();
 
+        this.connectingStatus = res?.device?.status as EnumConnectionStatus;
         //check status
-
-        switch(res?.device?.status)
-        {
-          case EnumConnectionStatus.StartPreProcessing:
-            this.mode = Mode.StartPreProcessing;
-            break;  
-          case EnumConnectionStatus.EndPreProcessing:
-            this.mode = Mode.EndPreProcessing;
-            break;  
+        // case EnumConnectionStatus.StopTest:
+        //   this.mode = Mode.CheckInit;
+        //   this.checkDeviceInitStep = CheckDeviceInitStep.StepStopTesting;
+        //   break;
+        // case EnumConnectionStatus.Stop:
+        //   this.mode = Mode.Calibration;
+        //   this.calibrationStep = CalibrationStep.StepStopCalibration;
+        //   break;
+        
+        switch (this.connectingStatus) {
           case EnumConnectionStatus.Ready:
             this.mode = Mode.Menu;
+
+            this.currentStateTestingService.ClearCurrentStateTesting();
+            this.testsService.ClearTempTesting();
+            this.calibrateProfileService.ClearTempCalibration();
+            this.calibrateProfileService.ClearTempCalibrationItem();
+            this.testsService.ClearCurrentTestingId();
             break;
           case EnumConnectionStatus.Cleaning:
             this.displayModalCleaning = true;
             break;
+          case EnumConnectionStatus.Test:
+            this.mode = Mode.CheckInit;
+            this.checkDeviceInitStep = CheckDeviceInitStep.StepTest;
+            break;
+          case EnumConnectionStatus.PreCalibrate:
+            this.isStepPreCalibrate = true;
+            //this.calibrationStep = CalibrationStep.StepPreCalibration;
+            break;
+          case EnumConnectionStatus.Calibrate:
+            this.mode = Mode.Calibration;
+            this.calibrationStep = CalibrationStep.StepStartCalibration;
+            break;
           case EnumConnectionStatus.PreProcessing:
+            this.mode = Mode.StartPreProcessing;
+            this.startProcessCollectingDataStep = StartProcessCollectingDataStep.StepStartPreProcessing;
+            break;
+          case EnumConnectionStatus.StartPreProcessing:
+            this.mode = Mode.StartPreProcessing;
+            this.startProcessCollectingDataStep = StartProcessCollectingDataStep.StepStartPreProcessing;
+            break;
+          case EnumConnectionStatus.EndPreProcessing:
+            this.mode = Mode.EndPreProcessing;
+            this.startProcessCollectingDataStep = StartProcessCollectingDataStep.StepEndPreProcessing;
+            break;
+          case EnumConnectionStatus.PreCollecting:
           case EnumConnectionStatus.Processing:
             this.mode = Mode.CollectingData;
+            this.startProcessCollectingDataStep = StartProcessCollectingDataStep.StepProcessing;
             this.isProcess = true;
             break;
         }
@@ -281,14 +306,14 @@ export class TestingComponent implements OnInit {
         this.changeFooterMessage(res?.device?.status);
 
         return <IGetConnectedDeviceResponse>{
-          success:res?.success,
-          message:res?.message,
-          device:res?.device,
-          case:res?.case,
-        }
+          success: res?.success,
+          message: res?.message,
+          device: res?.device,
+          case: res?.case,
+        };
       }
-      else
-      {
+
+      else {
         Swal.fire({
           title: `Device status isn't ready.`,
           text: '',
@@ -297,14 +322,13 @@ export class TestingComponent implements OnInit {
           confirmButtonText: 'OK'
         }).then(
           (result) => {
-            
           }
         );
-        
+
         return <IGetConnectedDeviceResponse>{
-          success:res?.success,
-          message:res?.message
-        }
+          success: res?.success,
+          message: res?.message
+        };
       }
     });
 
@@ -402,7 +426,7 @@ export class TestingComponent implements OnInit {
   }
 
   changeFooterMessage(message:string){
-    this.footerMessage = message.toUpperCase();
+    this.footerMessage = message?.toUpperCase();
     //AuthUtils.SetCurrentStateStatus(this.footerMessage);
   }
 
@@ -413,6 +437,7 @@ export class TestingComponent implements OnInit {
         if(res?.success)
         {
           this.mode = Mode.CheckInit;
+          this.currentStateTestingService.SetCurrentStateTesting(StateTesting.CheckDeviceInit);
         }
         else{
           Swal.fire({
@@ -444,16 +469,15 @@ export class TestingComponent implements OnInit {
 
   
   onClickCalibration(){
-    this.displayModalPreCalibration = true;
-
     this.calibrateProfileService.PreStartCalibrate().subscribe((res:IConnectResponse) =>{
       if(res?.success)
       {
-        this.currentStateCalibration = StateCalibration.StartCalibration;
-        AuthUtils.SetCurrentStateCalibration(this.currentStateCalibration);
+        this.displayModalPreCalibration = true;
+        this.isStepPreCalibrate = true;
       }
       else{
         this.displayModalPreCalibration = false;
+        this.isStepPreCalibrate = false;
 
         Swal.fire({
           title: `Error!!! Pre Start Calibrate`,
@@ -541,6 +565,7 @@ export class TestingComponent implements OnInit {
       if(res.success)
       {
         this.displayModalCleaning = true;
+        this.currentStateTestingService.SetCurrentStateTesting(StateTesting.Cleaning);
       }
       else{
         Swal.fire({
@@ -603,26 +628,10 @@ export class TestingComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  onClickBack(): void{
-    switch(this.mode){
-      case Mode.Calibration:
-        this.mode = Mode.Menu;
-        break;
-      case Mode.StartPreProcessing:
-      case Mode.EndPreProcessing:
-      case Mode.CheckInit:
-      case Mode.Cleaning:
-      case Mode.CollectingData:
-      default:
-        this.mode = Mode.Menu;
-        break;
-    }
-  }
-
   async onClickOpenModalIDCards(): Promise<void>{
     await this.CheckConnectedDevice();
 
-    if(this.currentStatus == "ready")
+    if(this.connectingStatus == EnumConnectionStatus.Ready)
     {
       this.displayModal = true;
 
@@ -659,7 +668,7 @@ export class TestingComponent implements OnInit {
   }
 
   onClickSelectIDCard(idCard:string): void{
-    if(this.currentStatus != "ready")
+    if(this.connectingStatus != EnumConnectionStatus.Ready)
     {
       Swal.fire({
         title: `Warning device status don't ready`,
@@ -768,6 +777,10 @@ export class TestingComponent implements OnInit {
     return Mode; 
   }
 
+  public get EnumConnectionStatus(): typeof EnumConnectionStatus {
+    return EnumConnectionStatus; 
+  }
+  
   public FormatDate(date:string){
     return ToolUtils.FormatDate(date);
   }

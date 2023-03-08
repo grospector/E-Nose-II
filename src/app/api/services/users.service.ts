@@ -1,4 +1,4 @@
-import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { AuthUtils } from 'src/app/core/auth/auth.utils';
@@ -16,15 +16,21 @@ export class UsersService {
 
   constructor(private http:HttpClient) { }
 
-  GetListUsers(): Observable<IListUsersReponse>{
+  GetListUsers(keyword:string,offset:number,limit:number): Observable<IListUsersReponse>{
     const httpHeaders: HttpHeaders = new HttpHeaders({
       'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
     });
     
+    const params: HttpParams = new HttpParams()
+      .set("offset",offset)
+      .set("limit",limit)
+      .set("keyword",keyword);
+      
     return this.http.get<IListUsersReponse>(
       this.BaseUrl,
       {
-        headers: httpHeaders
+        headers: httpHeaders,
+        params:params
       }
     );
   }

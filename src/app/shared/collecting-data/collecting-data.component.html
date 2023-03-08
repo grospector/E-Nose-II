@@ -1,6 +1,7 @@
-<div class="collecting-container">
-  <p-chart type="line" [data]="basicData" [options]="basicOptions" width="100%" height="340px"></p-chart>
-  <div class="container-label d-flex flex-row justify-content-center pt-2 mx-auto">
+<div *ngIf="this.ConnectingStatus == EnumConnectionStatus.PreCollecting
+            || this.ConnectingStatus == EnumConnectionStatus.Processing" class="d-flex flex-column h-100">
+  <p-chart type="line" [data]="basicData" [options]="basicOptions" width="100%" height="100%"></p-chart>
+  <div class="container-label d-flex flex-row justify-content-center py-2 mx-auto">
     <div class="d-flex flex-row">
         <label>
             <h2>Temp : </h2>
@@ -19,32 +20,44 @@
     </div>
   </div>
   
-  <div *ngIf="!isFinished" class="pt-2">
-      <div *ngIf="isProcess" class="card text-center justify-content-center" (click)="onClickStopCollectingData()">
-          <label>
-              <h1>
-                  STOP COLLECTING DATA
-              </h1>
-          </label>
-      </div>
-      <div *ngIf="!isProcess" class="card text-center justify-content-center" (click)="onClickFinishCollectingData()">
-          <label>
-              <h1>
-                  FINISH PROCESS
-              </h1>
-          </label>
-      </div>
-  </div>
-  <div *ngIf="isFinished">
-      <div class="card text-center justify-content-center" (click)="onClickShowResult()">
-          <label>
-              <h1>
-                  SHOW RESULT
-              </h1>
-          </label>
-      </div>
+  <div class="card text-center justify-content-center" (click)="onClickStopCollectingData()">
+    <label>
+        <h1>
+            STOP COLLECTING DATA
+        </h1>
+    </label>
   </div>
 </div>
+
+<div *ngIf="this.ConnectingStatus == EnumConnectionStatus.Stop || this.ConnectingStatus == EnumConnectionStatus.Cleaning" class="d-flex flex-column h-100">
+  <p-chart type="bar" [data]="resultBasicData" [options]="resultBasicOptions" width="100%" height="100%"></p-chart>
+  <div class="container-label-avg d-flex flex-row justify-content-center py-2 mx-auto">
+    <div class="d-flex flex-row">
+        <label>
+            <h2>Avg Temp : </h2>
+        </label>
+        <label class="mx-1">
+            <h3>{{avgTempData}}</h3>
+        </label>
+    </div>
+    <div class="d-flex flex-row">
+        <label>
+            <h2>Avg Pressure : </h2>
+        </label>
+        <label class="mx-1">
+            <h3>{{avgPressureData}}</h3>
+        </label>
+    </div>
+  </div>
+  <div class="card text-center justify-content-center" (click)="onClickFinishCollectingData()">
+      <label>
+          <h1>
+              FINISH PROCESS
+          </h1>
+      </label>
+  </div>
+</div>
+
 
 <p-dialog [(visible)]="displayModalResult" [modal]="true" [style]="{width:'500px'}" [baseZIndex]="-100"
     [draggable]="false" [resizable]="false" class="dialog-result">

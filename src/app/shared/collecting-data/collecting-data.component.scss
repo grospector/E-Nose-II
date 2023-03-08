@@ -1,6 +1,5 @@
 p-chart{
-    // padding:0px 30px;
-    overflow-x:visible;
+    height: calc(100% - 32px - 70px);
 }
 
 .collecting-container{
@@ -15,6 +14,16 @@ p-chart{
 }
 .container-label div:last-child{
     width: 150px;
+}
+
+.container-label-avg{
+    width: 360px;
+}
+.container-label-avg div:first-child{
+    width: 180px;
+}
+.container-label-avg div:last-child{
+    width: 220px;
 }
 
 .title label h1{

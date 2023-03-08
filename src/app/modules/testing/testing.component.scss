@@ -1,3 +1,8 @@
+p-chart{
+  min-height: 100%;
+  width: 100%;
+}
+
 article{
   width:80vw;
   max-width: 1100px;
@@ -14,7 +19,7 @@ article{
 
 header{
   //height: 5%;
-    padding-bottom: 1.5vmax;
+  padding-bottom: 5px;
 }
 header>div>div{
  width: calc(100% / 4);
@@ -43,6 +48,8 @@ header .calibrate-date label:hover{
 
 main{
   height: 90%;
+  max-height: 90%;
+  overflow-y: hidden;
 }
 
 main aside{
@@ -256,6 +263,10 @@ footer{
   color:red;
 }
 
+.id-card-clickable label:hover{
+  cursor: pointer;
+}
+
 .modal-id-card h2{
  font-size: 2rem;
 }
@@ -415,4 +426,10 @@ footer{
   }
 
   
+}
+
+@media screen and (max-height: 650px){
+  article{
+    margin-top:7vh;
+  }
 }

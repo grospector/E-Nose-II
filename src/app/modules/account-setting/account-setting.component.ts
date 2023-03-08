@@ -35,11 +35,17 @@ export class AccountSettingComponent implements OnInit {
   inputPasswordConfirmation:string = "";
   cbUserIsActive:boolean = false;
   
+  inputSearch:string = "";
+
+  totalRecords!:number;
+  tableOffset!:number;
+  limitRow:number = 10;
+
   constructor(private http: HttpClient,
               private usersService:UsersService) {}
 
   ngOnInit(): void {
-    this.getListUsers();
+    this.FetchListUsers(0);
   }
 
   getGetUserRole(){
@@ -47,13 +53,16 @@ export class AccountSettingComponent implements OnInit {
     return currentUser.role;
   }
 
-  getListUsers(){
-    var arg = this.usersService.GetListUsers();
+  FetchListUsers(offset:number){
+    this.tableOffset = offset;
+
+    var arg = this.usersService.GetListUsers(this.inputSearch,offset,this.limitRow);
     arg.subscribe(res =>{
       if(res.success)
       {
         this.loading = false;
         this.users = res.users;
+        this.totalRecords = res.count_total;
       }
       else{
         this.loading = false;
@@ -104,7 +113,7 @@ export class AccountSettingComponent implements OnInit {
           confirmButtonText: 'OK'
         }).then(
           (result) => {
-            this.getListUsers();
+            this.FetchListUsers(this.tableOffset);
           }
         );
       }
@@ -117,7 +126,7 @@ export class AccountSettingComponent implements OnInit {
           confirmButtonText: 'OK'
         }).then(
           (result) => {
-            this.getListUsers();
+            this.FetchListUsers(this.tableOffset);
           }
         );
       }
@@ -193,7 +202,7 @@ export class AccountSettingComponent implements OnInit {
                 showCancelButton: true
               }).then(
                 (result) => {
-                  this.getListUsers();
+                  this.FetchListUsers(this.tableOffset);
                 }
               );
             }
@@ -205,7 +214,7 @@ export class AccountSettingComponent implements OnInit {
                 showCancelButton: true
               }).then(
                 (result) => {
-                  this.getListUsers();
+                  this.FetchListUsers(this.tableOffset);
                 }
               );
             }

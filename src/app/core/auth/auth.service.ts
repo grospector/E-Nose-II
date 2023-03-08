@@ -35,6 +35,7 @@ export class AuthService {
       return this.http.post<any>(`${environment.apiUrl}/users/login`, { username, password })
           .pipe(map(user => {
               localStorage.clear();
+              sessionStorage.clear();
               
               // store user details and jwt token in local storage to keep user logged in between page refreshes
               const userString = JSON.stringify(user);
@@ -47,6 +48,7 @@ export class AuthService {
 
   logout(){
     localStorage.clear();
+    sessionStorage.clear();
     this.router.navigate(['/sign-in']);
   }
 }

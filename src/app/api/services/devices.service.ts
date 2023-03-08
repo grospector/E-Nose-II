@@ -2,9 +2,11 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthUtils } from 'src/app/core/auth/auth.utils';
+import { EnumConnectionStatus } from 'src/app/models/common/enum';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
-import { IConnectResponse, IDevice, IListDevicesReponse } from '../models/device.model';
+import { IConnectResponse, IDevice, IGetDeviceDetailResponse, IListDevicesReponse } from '../models/device.model';
+import { IGetConnectedDeviceResponse } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +47,25 @@ export class DevicesService {
     }
   }
 
+  ChangeStatus(deviceSerialNo:string,status:EnumConnectionStatus): Observable<IGetDeviceDetailResponse>{
+    const httpHeaders: HttpHeaders = new HttpHeaders({
+      'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
+    });
+    
+    const body = {
+      "mac_serial_no": deviceSerialNo,
+      "status": status
+    };
+
+    return this.http.post<IGetDeviceDetailResponse>(
+      this.BaseUrl+"/change_status",
+      body,
+      {
+        headers: httpHeaders
+      }
+    );
+  }
+
   GetDeviceDetail(deviceId:number): Observable<IConnectResponse>{
     const httpHeaders: HttpHeaders = new HttpHeaders({
       'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
@@ -58,7 +79,7 @@ export class DevicesService {
     );
   }
 
-  GetListDevices(status:string): Observable<IListDevicesReponse>{
+  GetListDevices(keyword:string,status:string,offset:number,limit:number): Observable<IListDevicesReponse>{
     const httpHeaders: HttpHeaders = new HttpHeaders({
       'Authorization':  AuthUtils.GetLocalStorage().access_token ?? "",
     });
@@ -70,7 +91,10 @@ export class DevicesService {
 
     const params: HttpParams = new HttpParams()
       .set("is_active",true)
-      .set("status",status);
+      .set("status",status)
+      .set("offset",offset)
+      .set("limit",limit)
+      .set("keyword",keyword);
 
     return this.http.get<IListDevicesReponse>(
       this.BaseUrl,

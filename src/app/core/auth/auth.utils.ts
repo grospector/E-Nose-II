@@ -57,7 +57,8 @@ export class AuthUtils
 
   static GetCurrentDevice() : IDevice {
     var local = localStorage.getItem("device");
-    if(local == "" || local == null)
+    
+    if(local == "" || local == null || local == "null")
     {
       return <IDevice>
       {
@@ -78,17 +79,17 @@ export class AuthUtils
     {
       var device = <IDevice>JSON.parse(local);
       return <IDevice>{
-        id: device.id,
-        name: device.name,
-        mac_serial_no: device.mac_serial_no,
-        status: device.status,
-        is_connecting: device.is_connecting,
-        is_active: device.is_active,
-        connecting_user_name: device.connecting_user_name,
-        created_at: device.created_at,
-        updated_at: device.updated_at,
-        working_test_id: device.working_test_id,
-        connecting_user_id: device.connecting_user_id
+        id: device?.id,
+        name: device?.name,
+        mac_serial_no: device?.mac_serial_no,
+        status: device?.status,
+        is_connecting: device?.is_connecting,
+        is_active: device?.is_active,
+        connecting_user_name: device?.connecting_user_name,
+        created_at: device?.created_at,
+        updated_at: device?.updated_at,
+        working_test_id: device?.working_test_id,
+        connecting_user_id: device?.connecting_user_id
       }
     }
   }

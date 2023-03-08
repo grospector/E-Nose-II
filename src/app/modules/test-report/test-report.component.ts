@@ -17,30 +17,15 @@ export class TestReportComponent implements OnInit {
   displayModalResult:boolean = false;
   testResultUrl:string = "";
 
+  inputSearch:string = "";
+
+  limitRow:number = 10;
+  totalRecords!:number;
+
   constructor(private testsService:TestsService) { }
 
   ngOnInit(): void {
-
-    this.testsService.GetListTests().subscribe((res:ITestsGetListResponse) =>{
-      if(res?.success)
-      {
-        this.loading = false;
-        this.tests = res.tests;
-      }
-      else{
-        this.loading = false;
-        Swal.fire({
-          title: `Error!!! Test get list that don't response`,
-          text: res?.message,
-          icon: 'error',
-          showCancelButton: true,
-          confirmButtonText: 'OK'
-        }).then(
-          (result) => {
-          }
-        );
-      }
-    });
+    this.FetchGetListTests(0);
   }
 
   onClickView(testId:number)
@@ -73,6 +58,31 @@ export class TestReportComponent implements OnInit {
       }
     });
     document.execCommand('copy');
+  }
+
+  FetchGetListTests(offset:number) : void{
+    this.loading = true;
+    this.testsService.GetListTests(this.inputSearch,offset,this.limitRow).subscribe((res:ITestsGetListResponse) =>{
+      if(res?.success)
+      {
+        this.totalRecords = res.count_total;
+        this.tests = res.tests;
+        this.loading = false;
+      }
+      else{
+        this.loading = false;
+        Swal.fire({
+          title: `Error!!! Test get list that don't response`,
+          text: res?.message,
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+          }
+        );
+      }
+    });
   }
 
   public FormatFullDate(date:string){

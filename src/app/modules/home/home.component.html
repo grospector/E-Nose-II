@@ -61,8 +61,8 @@
             </div> -->
         </div>
     </div>
-    <div #elemt class="d-flex justify-content-between w-100 card-container p-3">
-        <article class="card card-module module-process" (click)="onClickMobule('testing')">
+    <div #elemt class="d-flex justify-content-end w-100 card-container p-3">
+        <article *ngIf="!((CurrentDevice ? CurrentDevice.id : -1)< 1)" class="card card-module module-process" (click)="onClickMobule('testing')">
             <header>
             </header>
             <main>
@@ -102,7 +102,7 @@
             </footer>
         </article>
         <!-- (click)="onClickMobule('my-account')" -->
-        <article class="card card-module module-account">
+        <article class="card card-module module-account" (click)="onClickMobule('account-setting')">
             <header>
             </header>
             <main>

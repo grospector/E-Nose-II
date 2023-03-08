@@ -9,10 +9,13 @@ export enum EnumConnectionStatus{
     Test = "test",
     StopTest = "stop_test",
     PreCalibrate = "pre-calibrate",
+    Calibrate = "calibrate",
+    Stop = "stop",
     Cleaning = "cleaning",
     StartPreProcessing = "start_pre-processing",
     EndPreProcessing = "end_pre-processing",
     PreProcessing = "pre-processing",
+    PreCollecting = "pre-collecting",
     Processing = "processing"
 }
 
