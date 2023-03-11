@@ -1,5 +1,5 @@
 <div class="calibration-profile h-100">
-    <div *ngIf="!isShowChart">
+    <div *ngIf="!isShowChart && !isShowResultChart">
         Occur Error Please , try again.
     </div>
     <!-- <p-chart *ngIf="isShowChart" type="line" [data]="basicData" [options]="basicOptions" width="100%" height="calc( 100% - 60px)"></p-chart> -->
@@ -92,9 +92,94 @@
                     </label>
                 </div>
             </div>
+
+            <!-- Result -->
+
+            <p-chart *ngIf="isShowResultChart" type="bar" [data]="basicResultData" [options]="basicResultOptions" width="100%" height="100%"></p-chart>
+            <div *ngIf="isShowResultChart && calibrate_item_avg" class="px-3" style="min-width: 210px;">
+                <div>
+                    <label>
+                        <h4>
+                        Date : {{CalibrateDetailFormatDate(calibrate_item_avg.created_at || "")}}
+                        </h4>
+                    </label>
+                    <br>
+                    <label>
+                        <h4>
+                        Time : {{CalibrateDetailFormatTime(calibrate_item_avg.created_at || "")}}
+                        </h4>
+                    </label>
+                </div>
+    
+                <div class="pt-2">
+                    <label>
+                        <h4>
+                            Avg Gas 1 : {{calibrate_item_avg.avg_gas_1 || ""}}
+                        </h4>
+                    </label>
+                    <br>
+                    <label>
+                        <h4>
+                            Avg Gas 2 : {{calibrate_item_avg.avg_gas_2}}
+                        </h4>
+                    </label>
+                    <br>
+                    <label>
+                        <h4>
+                            Avg Gas 3 : {{calibrate_item_avg.avg_gas_3}}
+                        </h4>
+                    </label>
+                    <br>
+                    <label>
+                        <h4>
+                            Avg Gas 4 : {{calibrate_item_avg.avg_gas_4}}
+                        </h4>
+                    </label>
+                    <br>
+                    <label>
+                        <h4>
+                            Avg Gas 5 : {{calibrate_item_avg.avg_gas_5}}
+                        </h4>
+                    </label>
+                    <br>
+                    <label>
+                        <h4>
+                            Avg Gas 6 : {{calibrate_item_avg.avg_gas_6}}
+                        </h4>
+                    </label>
+                    <br>
+                    <label>
+                        <h4>
+                            Avg Gas 7 : {{calibrate_item_avg.avg_gas_7}}
+                        </h4>
+                    </label>
+                </div>
+    
+                 <div class="pt-2">
+                    <label>
+                        <h4>
+                            Avg Temp : {{calibrate_item_avg.avg_temp}}
+                        </h4>
+                    </label>
+                    <br>
+                    <label>
+                        <h4>
+                            Avg Pressure : {{calibrate_item_avg.avg_pressure}} 
+                        </h4>
+                    </label>
+                </div>
+    
+                <div class="pt-2">
+                    <label>
+                        <h4>
+                        Time : {{(calibrate_time_avg/1000).toFixed()}} Seconds
+                        </h4>
+                    </label>
+                </div>
+            </div>
         </div>
 
-        <div *ngIf="isShowChart" class="pt-2">
+        <div *ngIf="isShowChart || isShowResultChart" class="pt-2">
             <div *ngIf="ConnectingStatus == EnumConnectionStatus.Calibrate" class="card text-center justify-content-center" (click)="onClickStopCalibration()">
                 <label>
                     <h1>

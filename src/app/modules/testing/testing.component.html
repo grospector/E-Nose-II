@@ -1,27 +1,27 @@
 <article class="card d-flex flex-column mx-auto"> 
   <header class="d-flex justify-content-between flex-column">
     <div class="d-flex justify-content-between">
-      <div class="d-flex flex-row justify-content-between">
+      <div class="d-flex flex-row justify-content-between" style="min-width: 280px;">
         <div class="d-flex flex-row">
           <label class="align-self-center" style="min-width:60px">
             <h3>
               ID Card
             </h3>
           </label>
-          <label style="min-width:10px">
+          <label class="align-self-center" style="min-width:10px">
             <h3>
               : 
             </h3>
           </label>
         </div>
-        <div *ngIf="currentIDCard != null && currentIDCard?.id_card" class="d-flex flex-row justify-content-between w-100 {{currentIDCard != null && currentIDCard.id_card ? 'id-card-clickable':''}}" (click)="onClickOpenModalIDCards()">
-          <label *ngIf="this.connectingStatus == EnumConnectionStatus.Ready" style="min-width:15px">            
-            <fa-icon class="fa-x" [icon]="['far','hand-pointer']"></fa-icon>
-          </label>
+        <div *ngIf="currentIDCard != null && currentIDCard?.id_card" class="d-flex flex-row justify-content-start w-100 {{currentIDCard != null && currentIDCard.id_card ? 'id-card-clickable':''}}" (click)="onClickOpenModalIDCards()">
           <label class="align-self-center">
-            <h4>
+            <h4 class="id-card-overflow">
               {{currentIDCard.id_card}}
             </h4>
+          </label>
+          <label *ngIf="this.connectingStatus == EnumConnectionStatus.Ready" class="align-self-center mx-2" style="min-width:15px">            
+            <fa-icon class="fa-x" [icon]="['far','hand-pointer']"></fa-icon>
           </label>
         </div>
         <div *ngIf="currentIDCard == null || !currentIDCard?.id_card" class="d-flex flex-row justify-content-between w-100">
@@ -139,7 +139,13 @@
           </div>
         </div>
         <div class="w-100">
-          <div class="card w-100 h-100 text-center cleaning justify-content-center h-100" (click)="onClickCleaning()">
+          <div *ngIf="!isStepPreCalibrate" class="card w-100 h-100 text-center cleaning justify-content-center h-100" (click)="onClickCleaning()">
+            <fa-icon class="fa-5x" icon="hand-sparkles"></fa-icon>
+            <label>
+              CLEANING
+            </label>
+          </div>
+          <div *ngIf="isStepPreCalibrate" class="card w-100 h-100 text-center cleaning justify-content-center h-100 disable">
             <fa-icon class="fa-5x" icon="hand-sparkles"></fa-icon>
             <label>
               CLEANING

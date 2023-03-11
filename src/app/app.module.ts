@@ -61,8 +61,8 @@ import { ResultComponent } from './modules/result/result.component';
 import { AsideBarComponent } from './shared/aside-bar/aside-bar.component';
 import { AsideBarModulesComponent } from './shared/aside-bar-modules/aside-bar-modules.component';
 
-import { NgxsModule } from '@ngxs/store';
-import { StateMode } from './store/state-mode.store';
+// import { NgxsModule } from '@ngxs/store';
+// import { StateMode } from './store/state-mode.store';
 
 
 const config: SocketIoConfig = {
@@ -122,15 +122,15 @@ const config: SocketIoConfig = {
     SplitterModule,
     CarouselModule,
 		SocketIoModule.forRoot(config),
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    }), 
-    NgxsModule.forRoot([StateMode], {
-      developmentMode: !environment.production
-    }),
+    // ServiceWorkerModule.register('ngsw-worker.js', {
+    //   enabled: !isDevMode(),
+    //   // Register the ServiceWorker as soon as the application is stable
+    //   // or after 30 seconds (whichever comes first).
+    //   registrationStrategy: 'registerWhenStable:30000'
+    // }), 
+    // NgxsModule.forRoot([StateMode], {
+    //   developmentMode: !environment.production
+    // }),
   ],
   providers: [
     AuthGuard,
@@ -145,23 +145,6 @@ const config: SocketIoConfig = {
 })
 export class AppModule {
   constructor(library:FaIconLibrary){
-    // library.addIcons(faUsersGear);
-    // library.addIcons(faFlaskVial);
-    // library.addIcons(faHandSparkles);
-    // library.addIcons(faHouse);
-    // library.addIcons(faCircleChevronLeft);
-    // library.addIcons(faListCheck);
-    // library.addIcons(faMagnifyingGlassChart);
-    // library.addIcons(faHouseChimney);
-    // library.addIcons(faFolderPlus);
-    // library.addIcons(faGears);
-    // library.addIcons(faChalkboardUser);
-    // library.addIcons(faFileWaveform);
-    // library.addIcons(faClipboard);
-    // library.addIcons(faAnglesRight);
-    // library.addIcons(faAnglesLeft);
-    // library.addIcons(faHandPointer);
-    
     library.addIconPacks(fas , far);
   }
  }

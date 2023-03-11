@@ -267,6 +267,15 @@ footer{
   cursor: pointer;
 }
 
+.id-card-overflow{
+  white-space: nowrap;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
 .modal-id-card h2{
  font-size: 2rem;
 }

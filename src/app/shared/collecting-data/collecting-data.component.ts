@@ -16,7 +16,9 @@ import { StateTesting } from 'src/app/models/common/state-testing';
 import { chartBasicData, chartBasicOptions, chartResultBasicData, chartResultBasicOptions } from './chart';
 import { IGetConnectedDeviceResponse } from 'src/app/api/models/user.model';
 import { UsersService } from 'src/app/api/services/users.service';
-import { IItem, ITestDetailResponse } from 'src/app/api/models/test.model';
+import { IDifCalibrate, IItem, ITestDetailResponse } from 'src/app/api/models/test.model';
+import { CalibrateProfileService } from 'src/app/api/services/calibrate-profile.service';
+import { IAvgCalibrateProfile, IGetLastCalibrateDetailResponse } from 'src/app/api/models/calibrate_profile.model';
 
 @Component({
   selector: 'app-collecting-data',
@@ -45,6 +47,8 @@ export class CollectingDataComponent {
   resultBasicData: any = chartResultBasicData;
   resultBasicOptions:any = chartResultBasicOptions;
 
+  avgCalibrateData!:IAvgCalibrateProfile;
+
   collectingData!: Observable<ISocketResponse>;
   tempData:number = 0;
   pressureData:number = 0;
@@ -54,139 +58,168 @@ export class CollectingDataComponent {
 
   constructor(private socketService:SocketService
               ,private testsService:TestsService
+              ,private calibrateProfileService:CalibrateProfileService
               ,private currentStateTestingService:CurrentStateTestingService
               ,private usersService:UsersService) { }
 
   ngOnInit() : void {        
     this.CheckCollectingDataStep();
   }
-
+  
   CheckCollectingDataStep() : void{
     this.usersService.GetConnectedDeviceDetail().subscribe((res:IGetConnectedDeviceResponse) => {
       if(res?.success)
       {
         if(this.ConnectingStatus == EnumConnectionStatus.Stop
           || this.ConnectingStatus == EnumConnectionStatus.Cleaning){
-          this.plotLastCollectingData();
+          this.PlotLastCollectingData();
         }
         else if(this.ConnectingStatus == EnumConnectionStatus.PreCollecting
           || this.ConnectingStatus == EnumConnectionStatus.Processing){
     
           this.currentStateTestingService.SetCurrentStateTesting(StateTesting.StartProcessCollectingData);
     
-          this.socketService.getNewRes().subscribe((res:ISocketResponse) =>{
-            if(res.command == EnumSocketCommand.ShowCollectData && res?.data?.test_item)
+          this.calibrateProfileService.GetLastCalibrate().subscribe((res:IGetLastCalibrateDetailResponse) => {
+            if(res?.success)
             {
-              console.log("res",res);
-      
-              const data:ITestItem = res.data.test_item;
-      
-              this.basicData.labels.push(ToolUtils.FormatTimeMinute(new Date().toString()));
-      
-              //const pressure = this.basicData.datasets.find((x:any) => x.label == 'Pressure').data;
-              //const temp = this.basicData.datasets.find((x:any) => x.label == 'Temp').data;
-              const gas_1 = this.basicData.datasets.find((x:any) => x.label == 'Gas 1').data;
-              const gas_2 = this.basicData.datasets.find((x:any) => x.label == 'Gas 2').data;
-              const gas_3 = this.basicData.datasets.find((x:any) => x.label == 'Gas 3').data;
-              const gas_4 = this.basicData.datasets.find((x:any) => x.label == 'Gas 4').data;
-              const gas_5 = this.basicData.datasets.find((x:any) => x.label == 'Gas 5').data;
-              const gas_6 = this.basicData.datasets.find((x:any) => x.label == 'Gas 6').data;
-              const gas_7 = this.basicData.datasets.find((x:any) => x.label == 'Gas 7').data;
-      
-              this.testId = res.data.test_item.test_id;
-              this.testsService.SetCurrentTestingId(this.testId);
-      
-              const routeUrl = "result?id="+this.testsService.GetCurrentTestingId();
-              this.url = ToolUtils.FormatUrl(routeUrl);
-              
-              this.tempData = data?.temp;
-              this.pressureData = data?.pressure;
-      
-              if(this.basicData.labels.length <= 30)
-              {
-                //pressure.push(data?.pressure);
-                //temp.push(data?.temp);
-                gas_1.push(data?.gas_1);
-                gas_2.push(data?.gas_2);
-                gas_3.push(data?.gas_3);
-                gas_4.push(data?.gas_4);
-                gas_5.push(data?.gas_5);
-                gas_6.push(data?.gas_6);
-                gas_7.push(data?.gas_7);
-              }
-              else{
-                this.basicData.labels.splice(0,1);
-                //pressure.splice(0,1);
-                //temp.splice(0,1);
-                gas_1.splice(0,1);
-                gas_2.splice(0,1);
-                gas_3.splice(0,1);
-                gas_4.splice(0,1);
-                gas_5.splice(0,1);
-                gas_6.splice(0,1);
-                gas_7.splice(0,1);
-      
-                //pressure.push(data?.pressure);
-                //temp.push(data?.temp);
-                gas_1.push(data?.gas_1);
-                gas_2.push(data?.gas_2);
-                gas_3.push(data?.gas_3);
-                gas_4.push(data?.gas_4);
-                gas_5.push(data?.gas_5);
-                gas_6.push(data?.gas_6);
-                gas_7.push(data?.gas_7);
-              }
+              const calibrateData:IAvgCalibrateProfile = res.calibrate_profile;
+
+              this.socketService.getNewRes().subscribe((res:ISocketResponse) =>{
+                if(res.command == EnumSocketCommand.ShowCollectData && res?.data?.test_item)
+                {
+          
+                  const data:ITestItem = res.data.test_item;
+          
+                  this.basicData.labels.push(ToolUtils.FormatTimeMinute(new Date().toString()));
+          
+                  //const pressure = this.basicData.datasets.find((x:any) => x.label == 'Pressure').data;
+                  //const temp = this.basicData.datasets.find((x:any) => x.label == 'Temp').data;
+                  const gas_1 = this.basicData.datasets.find((x:any) => x.label == 'Gas 1').data;
+                  const gas_2 = this.basicData.datasets.find((x:any) => x.label == 'Gas 2').data;
+                  const gas_3 = this.basicData.datasets.find((x:any) => x.label == 'Gas 3').data;
+                  const gas_4 = this.basicData.datasets.find((x:any) => x.label == 'Gas 4').data;
+                  const gas_5 = this.basicData.datasets.find((x:any) => x.label == 'Gas 5').data;
+                  const gas_6 = this.basicData.datasets.find((x:any) => x.label == 'Gas 6').data;
+                  const gas_7 = this.basicData.datasets.find((x:any) => x.label == 'Gas 7').data;
+          
+                  this.testId = res.data.test_item.test_id;
+                  this.testsService.SetCurrentTestingId(this.testId);
+          
+                  const routeUrl = "result?id="+this.testsService.GetCurrentTestingId();
+                  this.url = ToolUtils.FormatUrl(routeUrl);
+                  
+                  this.tempData = Math.round((data?.temp - calibrateData.avg_temp) * 100) / 100;
+                  this.pressureData = Math.round((data?.pressure - calibrateData.avg_pressure) * 100) / 100;
+          
+                  console.log("gas1",data?.gas_1);
+                  console.log("avg calibrate",calibrateData.avg_gas_1);
+                  console.log("plot gas1",data?.gas_1 - calibrateData.avg_gas_1);
+                  if(this.basicData.labels.length <= 30)
+                  {
+                    //pressure.push(data?.pressure);
+                    //temp.push(data?.temp);
+                    gas_1.push(data?.gas_1 - calibrateData.avg_gas_1);
+                    gas_2.push(data?.gas_2 - calibrateData.avg_gas_2);
+                    gas_3.push(data?.gas_3 - calibrateData.avg_gas_3);
+                    gas_4.push(data?.gas_4 - calibrateData.avg_gas_4);
+                    gas_5.push(data?.gas_5 - calibrateData.avg_gas_5);
+                    gas_6.push(data?.gas_6 - calibrateData.avg_gas_6);
+                    gas_7.push(data?.gas_7 - calibrateData.avg_gas_7);
+                  }
+                  else{
+                    this.basicData.labels.splice(0,1);
+                    //pressure.splice(0,1);
+                    //temp.splice(0,1);
+                    gas_1.splice(0,1);
+                    gas_2.splice(0,1);
+                    gas_3.splice(0,1);
+                    gas_4.splice(0,1);
+                    gas_5.splice(0,1);
+                    gas_6.splice(0,1);
+                    gas_7.splice(0,1);
+          
+                    //pressure.push(data?.pressure);
+                    //temp.push(data?.temp);
+                    gas_1.push(data?.gas_1 - calibrateData.avg_gas_1);
+                    gas_2.push(data?.gas_2 - calibrateData.avg_gas_2);
+                    gas_3.push(data?.gas_3 - calibrateData.avg_gas_3);
+                    gas_4.push(data?.gas_4 - calibrateData.avg_gas_4);
+                    gas_5.push(data?.gas_5 - calibrateData.avg_gas_5);
+                    gas_6.push(data?.gas_6 - calibrateData.avg_gas_6);
+                    gas_7.push(data?.gas_7 - calibrateData.avg_gas_7);
+                  }
+                }
+          
+                this.basicData = {...this.basicData};
+              });
             }
-      
-            this.basicData = {...this.basicData};
+            else{
+              Swal.fire({
+                title: `Error can't get last calibrate`,
+                text: res.message,
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonText: 'OK'
+              }).then(
+                (result) => {
+                }
+              );
+            }
           });
+
+          
         }
       }
     });
   }
   
-  plotLastCollectingData() : void{
+  PlotLastCollectingData() : void{
     this.testsService.GetTestDetail(this.testsService.GetCurrentTestingId()).subscribe((res:ITestDetailResponse) =>{
       if(res?.success)
       {
-        const test_items:IItem[] = res.test.test_items;
+        const data:IDifCalibrate[] = res.test.test_item_dif_calibrates;
+      
+        //const pressure = this.basicData.datasets.find((x:any) => x.label == 'Pressure').data;
+        //const temp = this.basicData.datasets.find((x:any) => x.label == 'Temp').data;
+        const gas_1 = this.resultBasicData.datasets.find((x:any) => x.label == 'Gas 1').data;
+        const gas_2 = this.resultBasicData.datasets.find((x:any) => x.label == 'Gas 2').data;
+        const gas_3 = this.resultBasicData.datasets.find((x:any) => x.label == 'Gas 3').data;
+        const gas_4 = this.resultBasicData.datasets.find((x:any) => x.label == 'Gas 4').data;
+        const gas_5 = this.resultBasicData.datasets.find((x:any) => x.label == 'Gas 5').data;
+        const gas_6 = this.resultBasicData.datasets.find((x:any) => x.label == 'Gas 6').data;
+        const gas_7 = this.resultBasicData.datasets.find((x:any) => x.label == 'Gas 7').data;
 
-        let arr_gas_1:number[] = [];
-        let arr_gas_2:number[] = [];
-        let arr_gas_3:number[] = [];
-        let arr_gas_4:number[] = [];
-        let arr_gas_5:number[] = [];
-        let arr_gas_6:number[] = [];
-        let arr_gas_7:number[] = [];
-        let arr_temp:number[] = [];
-        let arr_pressure:number[] = [];
+        let arrTemps:number[] = [];
+        let arrPresures:number[] = [];
 
-        test_items.forEach((item:IItem) => {
-          arr_gas_1.push(item.gas_1);
-          arr_gas_2.push(item.gas_2);
-          arr_gas_3.push(item.gas_3);
-          arr_gas_4.push(item.gas_4);
-          arr_gas_5.push(item.gas_5);
-          arr_gas_6.push(item.gas_6);
-          arr_gas_7.push(item.gas_7);
-          arr_temp.push(item.temp);
-          arr_pressure.push(item.pressure);
+        const currentDate = new Date();
+
+        data.forEach((item:IDifCalibrate) => {
+            this.resultBasicData.labels.push("");
+
+            // arrTemps.push(item?.temp - calibrateData?.avg_temp);
+            // arrPresures.push(item?.pressure - calibrateData?.avg_pressure);
+            // gas_1.push(item?.gas_1 - calibrateData?.avg_gas_1);
+            // gas_2.push(item?.gas_2 - calibrateData?.avg_gas_2);
+            // gas_3.push(item?.gas_3 - calibrateData?.avg_gas_3);
+            // gas_4.push(item?.gas_4 - calibrateData?.avg_gas_4);
+            // gas_5.push(item?.gas_5 - calibrateData?.avg_gas_5);
+            // gas_6.push(item?.gas_6 - calibrateData?.avg_gas_6);
+            // gas_7.push(item?.gas_7 - calibrateData?.avg_gas_7);
+            
+            arrTemps.push(item?.temp);
+            arrPresures.push(item?.pressure);
+            gas_1.push(item?.gas_1);
+            gas_2.push(item?.gas_2);
+            gas_3.push(item?.gas_3);
+            gas_4.push(item?.gas_4);
+            gas_5.push(item?.gas_5);
+            gas_6.push(item?.gas_6);
+            gas_7.push(item?.gas_7);
         });
 
-        this.resultBasicData.datasets[0].data = [];
-        
-        this.resultBasicData = {...this.resultBasicData};
-
-        this.resultBasicData.datasets[0].data.push(arr_gas_1.reduce((a,b) => a+b ,0) / arr_gas_1.length);
-        this.resultBasicData.datasets[0].data.push(arr_gas_2.reduce((a,b) => a+b ,0) / arr_gas_2.length);
-        this.resultBasicData.datasets[0].data.push(arr_gas_3.reduce((a,b) => a+b ,0) / arr_gas_3.length);
-        this.resultBasicData.datasets[0].data.push(arr_gas_4.reduce((a,b) => a+b ,0) / arr_gas_4.length);
-        this.resultBasicData.datasets[0].data.push(arr_gas_5.reduce((a,b) => a+b ,0) / arr_gas_5.length);
-        this.resultBasicData.datasets[0].data.push(arr_gas_6.reduce((a,b) => a+b ,0) / arr_gas_6.length);
-        this.resultBasicData.datasets[0].data.push(arr_gas_7.reduce((a,b) => a+b ,0) / arr_gas_7.length);
-
-        this.avgTempData = Math.round(arr_temp.reduce((a,b) => a+b ,0) / arr_temp.length * 100) / 100;
-        this.avgPressureData = Math.round(arr_pressure.reduce((a,b) => a+b ,0) / arr_pressure.length * 100) / 100;
+        this.avgTempData = Math.round(arrTemps.reduce((a,b) => a+b,0) * 100) / 100;
+        this.avgPressureData = Math.round(arrPresures.reduce((a,b) => a+b,0) * 100) / 100;
 
         this.resultBasicData = {...this.resultBasicData};
       }
@@ -214,7 +247,7 @@ export class CollectingDataComponent {
         //this.isProcess = false;
 
         //this.testsService.SetTempTesting(this.basicData);
-        this.plotLastCollectingData();
+        this.PlotLastCollectingData();
       }
       else{
         Swal.fire({

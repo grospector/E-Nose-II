@@ -23,8 +23,7 @@ import { AuthUtils } from 'src/app/core/auth/auth.utils';
 import { ToolUtils } from 'src/app/core/common/tool.utils';
 import { EnumConnectionStatus, EnumSocketCommand } from 'src/app/models/common/enum';
 import { CalibrationStep, CheckDeviceInitStep, StartProcessCollectingDataStep, StateTesting } from 'src/app/models/common/state-testing';
-import { IStateModeModel } from 'src/app/store/state-mode.model';
-import { StateMode } from 'src/app/store/state-mode.store';
+
 import Swal from 'sweetalert2';
 import { chartBasicData, chartBasicOptions } from './chart';
 import { Mode, StateCalibration } from './testing';
@@ -35,9 +34,6 @@ import { Mode, StateCalibration } from './testing';
   styleUrls: ['./testing.component.scss']
 })
 export class TestingComponent implements OnInit {
-  @Select(StateMode) stateMode$!: Observable<IStateModeModel>;
-
-  containerModule = document.querySelector<HTMLElement>('.parent');
   mouseDown = false;
   startX: any;
   scrollLeft: any;
@@ -89,8 +85,7 @@ export class TestingComponent implements OnInit {
               ,private casesService:CasesService
               ,private calibrateProfileService:CalibrateProfileService
               ,private testsService:TestsService
-              ,private currentStateTestingService:CurrentStateTestingService
-              ,private store:Store) { }
+              ,private currentStateTestingService:CurrentStateTestingService) { }
 
   ngOnInit() : void {
     //Socket
@@ -230,7 +225,7 @@ export class TestingComponent implements OnInit {
               break;
           }
 
-          this.store.dispatch(this.mode);
+          //this.store.dispatch(this.mode);
 
           this.changeFooterMessage(res?.data?.status);
           //this.CheckCalibrateProfile();
@@ -399,6 +394,27 @@ export class TestingComponent implements OnInit {
 
   CheckStateCalibrate() : void{
     this.currentStateCalibration = AuthUtils.GetCurrentStateCalibration();
+  }
+
+  startLoadingCleaning() : void{
+
+  }
+  stopLoadingCleaning() : void{
+
+  }
+
+  startLoading() : void{
+
+  }
+  stopLoading() : void{
+
+  }
+  
+  startLoadingPreCalibrate() : void{
+
+  }
+  stopLoadingPreCalibrate() : void{
+
   }
 
   startDragging(e:any, flag:any, el:any) {

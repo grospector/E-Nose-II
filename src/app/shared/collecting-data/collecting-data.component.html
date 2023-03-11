@@ -30,7 +30,7 @@
 </div>
 
 <div *ngIf="this.ConnectingStatus == EnumConnectionStatus.Stop || this.ConnectingStatus == EnumConnectionStatus.Cleaning" class="d-flex flex-column h-100">
-  <p-chart type="bar" [data]="resultBasicData" [options]="resultBasicOptions" width="100%" height="100%"></p-chart>
+  <p-chart type="line" [data]="resultBasicData" [options]="resultBasicOptions" width="100%" height="100%"></p-chart>
   <div class="container-label-avg d-flex flex-row justify-content-center py-2 mx-auto">
     <div class="d-flex flex-row">
         <label>

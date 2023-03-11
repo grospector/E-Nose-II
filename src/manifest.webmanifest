@@ -1,17 +1,97 @@
 {
+  "lang": "en",
   "name": "E-NoseII",
+  "description": "",
   "short_name": "E-NoseII",
-  "theme_color": "#A9D9D0",
-  "background_color": "#A9D9D0",
-  "display": "standalone",
-  "scope": "./",
-  "start_url": "./",
+  "theme_color": "transparent",
+  "orientation": "landscape-primary",
+  "background_color": "transparent",
+  "display": "fullscreen",
+  "scope": "/",
+  "start_url": "/index.html",
+  "related_applications": "",
+  "prefer_related_applications": "false",
   "icons": [
     {
+      "src":
+        "assets/icons/logo2@3x.png",
+      "sizes": "16x16 32x32"
+    },
+    {
       "src": "assets/icons/logo2@3x.png",
-      "sizes": "303x367",
-      "type": "image/png",
-      "purpose": "maskable any"
+      "sizes": "44x44"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "1240x600"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "300x300"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "150x150"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "88x88"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "24x24"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "50x50"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "620x300"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "36x36"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "1024x1024"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "180x180"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "120x120"
+    },
+    {
+      "src": "assets/icons/logo2@3x.png",
+      "sizes": "76x76"
     }
   ]
 }

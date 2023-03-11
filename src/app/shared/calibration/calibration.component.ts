@@ -18,6 +18,7 @@ import { UsersService } from 'src/app/api/services/users.service';
 import { IGetConnectedDeviceResponse } from 'src/app/api/models/user.model';
 import { CalibrationStep, StateTesting } from 'src/app/models/common/state-testing';
 import { CurrentStateTestingService } from 'src/app/api/services/current-state-testing.service';
+import { chartBasicData, chartBasicOptions, chartResultBasicData, chartResultBasicOptions } from './chart';
 
 @Component({
   selector: 'app-calibration',
@@ -26,143 +27,28 @@ import { CurrentStateTestingService } from 'src/app/api/services/current-state-t
 })
 export class CalibrationComponent {
   calibrate_item!:ICalibrateItem;
+  calibrate_item_avg!:IAvgCalibrateProfile;
+
   @Input() ConnectingStatus:EnumConnectionStatus = EnumConnectionStatus.Calibrate;
   @Output() modeEvent = new EventEmitter<Mode>();
   @Output() footerMessageEvent = new EventEmitter<string>();
   @Output() tempFooterMessageEvent = new EventEmitter<string>();
 
   isShowChart: boolean = false;
+  isShowResultChart: boolean = false;
   calibrateStatus:EnumCalibrateStatus = EnumCalibrateStatus.Calibrate;
 
   calibrate_time: number = 0;
+  calibrate_time_avg: number = 0;
   startCalibrateTime!: Date; 
 
   calibrateStep:CalibrationStep = CalibrationStep.StepStartCalibration;
 
-  basicData: any = {
-    labels: [],
-    datasets: [
-      // {
-      //   label: 'Pressure',
-      //   data: [],
-      //   hidden: true,
-      //   borderColor: '#e3342f',
-      // },
-      // {
-      //   label: 'Temp',
-      //   data: [],
-      //   hidden: true,
-      //   borderColor: '#f6993f',
-      // },
-      {
-        type: 'line',
-        label: 'Gas 1',
-        data: [],
-        fill: false,
-        borderColor: 'rgba(255, 99, 132, 0.8)',
-        tension: 0
-      },
-      {
-        label: 'Gas 2',
-        data: [],
-        fill: false,
-        borderColor: 'rgba(255, 159, 64, 0.8)',
-        tension: 0
-      },
-      {
-        label: 'Gas 3',
-        data: [],
-        fill: false,
-        borderColor: 'rgba(255, 205, 86, 0.8)',
-        tension: 0
-      },
-      {
-        label: 'Gas 4',
-        data: [],
-        fill: false,
-        borderColor: 'rgba(75, 192, 192, 0.8)',
-        tension: 0
-      },
-      {
-        label: 'Gas 5',
-        data: [],
-        fill: false,
-        borderColor: 'rgba(54, 162, 235, 0.8)',
-        tension: 0
-      },
-      {
-        label: 'Gas 6',
-        data: [],
-        fill: false,
-        borderColor: 'rgba(153, 102, 255, 0.8)',
-        tension: 0
-      },
-      {
-        label: 'Gas 7',
-        data: [],
-        fill: false,
-        borderColor: 'rgba(201, 203, 207, 0.8)',
-        tension: 0
-      }
-    ]
-  };
+  basicData: any = chartBasicData;
+  basicOptions:any = chartBasicOptions;
 
-  basicOptions:any = {
-    animation: {
-        duration: 0
-    },
-    plugins: {
-        legend: {
-            labels: {
-                color: '#495057'
-            }
-        }
-    },
-    scales: {
-      x: {
-          ticks: {
-              color: '#495057'
-          },
-          grid: {
-              color: '#cdcdcd'
-          }
-      },
-      y: {
-          ticks: {
-              color: '#495057',
-          },
-          grid: {
-              drawOnChartArea: true,
-              color: '#cdcdcd'
-          },
-          beginAtZero: true,
-          min: 0,
-          //max: 3000,
-      }
-    },
-    interaction: {
-      mode: 'index',
-      intersect: false,
-      callbacks: {
-        label: function(tooltipItem:any) {
-          //console.log("tooltipItem",tooltipItem);
-          var label = tooltipItem.dataset.label || '';
-          if (label) {
-              label += ': ';
-          }
-          label += tooltipItem.formattedValue;
-          return label;
-      }
-
-      }
-    },
-    clip: {left: false, top: false, right: 1000, bottom: false},
-    pointRadius: 1,
-    responsive: true,
-    maintainAspectRatio: false
-    // pointBorderWidth:5,
-    // pointHoverBorderWidth:10
-  };
+  basicResultData: any = chartResultBasicData;
+  basicResultOptions:any = chartResultBasicOptions;
 
   collectingData!: Observable<ISocketResponse>;
 
@@ -190,15 +76,15 @@ export class CalibrationComponent {
           //   this.GetSocketResponse();
           //   break;
           case EnumConnectionStatus.Stop:
-            this.isShowChart = true;
-          
-            const TempCalibration:any = this.calibrateProfileService.GetTempCalibration();
-            this.basicData = TempCalibration;
-            
-            this.basicData = {...this.basicData};
+            this.PlotLastCalibration();
 
-            const TempCalibrationItem:ICalibrateItem = this.calibrateProfileService.GetTempCalibrationItem();
-            this.calibrate_item = TempCalibrationItem;
+            // const TempCalibration:any = this.calibrateProfileService.GetTempCalibration();
+            // this.basicData = TempCalibration;
+            
+            // this.basicData = {...this.basicData};
+
+            // const TempCalibrationItem:ICalibrateItem = this.calibrateProfileService.GetTempCalibrationItem();
+            // this.calibrate_item = TempCalibrationItem;
             //this.GetSocketResponse();
             break;
           case EnumConnectionStatus.Calibrate:
@@ -283,14 +169,58 @@ export class CalibrationComponent {
     })
   }
 
+  PlotLastCalibration() : void{
+    this.isShowChart = false;
+    this.isShowResultChart = true;
+  
+    this.calibrateProfileService.GetLastCalibrate().subscribe((res:IGetLastCalibrateDetailResponse) => {
+      if(res?.success)
+      {
+        const data:IAvgCalibrateProfile = res.calibrate_profile;
+        const startDate = new Date(data.created_at);
+        const endDate = new Date(data.updated_at);
+
+        this.calibrate_item_avg = data;
+        this.calibrate_time_avg = (endDate.getTime() - startDate.getTime());
+
+        this.basicResultData.datasets[0].data = [];
+        
+        this.basicResultData = {...this.basicResultData};
+
+        this.basicResultData.datasets[0].data.push(data?.avg_gas_1);
+        this.basicResultData.datasets[0].data.push(data?.avg_gas_2);
+        this.basicResultData.datasets[0].data.push(data?.avg_gas_3);
+        this.basicResultData.datasets[0].data.push(data?.avg_gas_4);
+        this.basicResultData.datasets[0].data.push(data?.avg_gas_5);
+        this.basicResultData.datasets[0].data.push(data?.avg_gas_6);
+        this.basicResultData.datasets[0].data.push(data?.avg_gas_7);
+        
+        this.basicResultData = {...this.basicResultData};
+      }
+      else{
+        Swal.fire({
+          title: `Error can't get last calibrate`,
+          text: res.message,
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonText: 'OK'
+        }).then(
+          (result) => {
+          }
+        );
+      }
+    });
+  }
+
   onClickStopCalibration() : void{
     this.calibrateProfileService.StopCalibrate().subscribe((res:IConnectResponse) => {
       if(res.success)
       {        
         //this.calibrateStatus = EnumCalibrateStatus.Finish;
 
-        this.calibrateProfileService.SetTempCalibration(this.basicData);
-        this.calibrateProfileService.SetTempCalibrationItem(this.calibrate_item);
+        this.PlotLastCalibration();
+        // this.calibrateProfileService.SetTempCalibration(this.basicData);
+        // this.calibrateProfileService.SetTempCalibrationItem(this.calibrate_item);
         
         // Swal.fire({
         //   title: `Test Process`,

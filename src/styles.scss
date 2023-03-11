@@ -89,3 +89,11 @@ body::-webkit-scrollbar-thumb {
 .p-component-overlay{
     background-color: rgb(13, 13, 13,0.5) !important;
 }
+
+@media screen and (orientation: portrait) {
+    body {
+    //    transform: rotate(-90deg);
+    //    height: 100vw !important;
+    //    width: 100vh !important;
+    }
+  }
