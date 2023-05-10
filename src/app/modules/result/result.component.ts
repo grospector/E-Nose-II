@@ -60,11 +60,11 @@ export class ResultComponent {
         this.textLevel = "มีความเสี่ยงในระดับ ต่ำ";
         break;
       case 3:
+      case 4:
         this.levelScoreClass = "bg-lv2";
         this.levelTextScoreClass = "text-lv2";
         this.textLevel = "มีความเสี่ยงในระดับ ปานกลาง";
         break;
-      case 4:
       case 5:
         this.levelScoreClass = "bg-lv3";
         this.levelTextScoreClass = "text-lv3";

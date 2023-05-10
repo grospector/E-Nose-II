@@ -15,18 +15,6 @@
                 </h1>
             </label>
             <div [ngSwitch]="checkLevelScore(testDetail.score)">
-                <div *ngSwitchCase="4" class="text-recommend d-flex flex-column">
-                    <label>
-                        <h5>
-                            คำแนะนำ
-                        </h5>
-                    </label>
-                    <label>
-                        <h6>
-                            หมั่นล้างมือด้วยน้ำและสบู่
-                        </h6>
-                    </label>
-                </div>
                 <div *ngSwitchCase="5" class="text-recommend d-flex flex-column">
                     <label>
                         <h5>
@@ -35,7 +23,7 @@
                     </label>
                     <label>
                         <h6>
-                            หมั่นล้างมือด้วยน้ำและสบู่
+                            เข้ารับการตรวจโดยแพทย์
                         </h6>
                     </label>
                 </div>
