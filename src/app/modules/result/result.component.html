@@ -14,17 +14,32 @@
                     {{textLevel}}
                 </h1>
             </label>
-            <div class="text-recommend d-flex flex-column">
-                <label>
-                    <h5>
-                        คำแนะนำ
-                    </h5>
-                </label>
-                <label>
-                    <h6>
-                        หมั่นล้างมือด้วยน้ำและสบู่
-                    </h6>
-                </label>
+            <div [ngSwitch]="checkLevelScore(testDetail.score)">
+                <div *ngSwitchCase="4" class="text-recommend d-flex flex-column">
+                    <label>
+                        <h5>
+                            คำแนะนำ
+                        </h5>
+                    </label>
+                    <label>
+                        <h6>
+                            หมั่นล้างมือด้วยน้ำและสบู่
+                        </h6>
+                    </label>
+                </div>
+                <div *ngSwitchCase="5" class="text-recommend d-flex flex-column">
+                    <label>
+                        <h5>
+                            คำแนะนำ
+                        </h5>
+                    </label>
+                    <label>
+                        <h6>
+                            หมั่นล้างมือด้วยน้ำและสบู่
+                        </h6>
+                    </label>
+                </div>
+                <div *ngSwitchDefault class="text-recommend d-flex flex-column">
             </div>
         </div>
     
@@ -49,7 +64,7 @@
                 </label>
                 <label>
                     <h4>
-                        {{testDetail.device_name}}
+                        {{testDetail.device_name}} : {{testDetail.device_id}}
                     </h4>
                 </label>
             </div>

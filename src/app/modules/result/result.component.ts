@@ -51,36 +51,24 @@ export class ResultComponent {
   checkLevelScore(score:number) : void {
     switch(score)
     {
-      case 0:
-      default:
-        this.levelScoreClass = "bg-lv0";
-        this.levelTextScoreClass = "text-lv0";
-        this.textLevel = "ไม่มีความเสี่ยง";
-        break;
+      // case 0:
       case 1:
+      case 2:
+      default:
         this.levelScoreClass = "bg-lv1";
         this.levelTextScoreClass = "text-lv1";
         this.textLevel = "มีความเสี่ยงในระดับ ต่ำ";
         break;
-      case 2:
+      case 3:
         this.levelScoreClass = "bg-lv2";
         this.levelTextScoreClass = "text-lv2";
         this.textLevel = "มีความเสี่ยงในระดับ ปานกลาง";
         break;
-      case 3:
+      case 4:
+      case 5:
         this.levelScoreClass = "bg-lv3";
         this.levelTextScoreClass = "text-lv3";
         this.textLevel = "มีความเสี่ยงในระดับ สูง";
-        break;
-      case 4:
-        this.levelScoreClass = "bg-lv4";
-        this.levelTextScoreClass = "text-lv4";
-        this.textLevel = "มีความเสี่ยงในระดับ สูงมาก";
-        break;
-      case 5:
-        this.levelScoreClass = "bg-lv5";
-        this.levelTextScoreClass = "text-lv5";
-        this.textLevel = "อันตราย";
         break;
     }
   }
