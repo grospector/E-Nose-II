@@ -7,49 +7,47 @@
     border-radius: 15px;
 }
 
-.bg-lv0{
-    background-color: rgb(0, 128, 0,0.2) !important;    
-    background: radial-gradient(circle, rgb(0, 128, 0,0.1) 0%, rgb(0, 128, 0,0.3) 70%, rgb(0, 128, 0,0.4) 100%);
-
-    //background-color: white !important;
+.bg-lv0{ //เขียว
+    background-color: rgb(1, 92, 1,0.2) !important;    
+    background: radial-gradient(circle, rgb(1, 92, 1,0.1) 0%, rgb(1, 92, 1,0.3) 70%, rgb(1, 92, 1,0.4) 100%);
 }
-.bg-lv1{
-    background-color: rgb(173, 255, 47,0.2) !important;
-    background: radial-gradient(circle, rgb(173, 255, 47,0.2) 0%, rgb(173, 255, 47,0.3) 70%, rgb(173, 255, 47,0.4) 100%);
+.bg-lv1{ //เขียวอ่อน
+    background-color: rgb(132, 204, 23,0.2) !important;
+    background: radial-gradient(circle, rgb(132, 204, 23,0.2) 0%, rgb(132, 204, 23,0.3) 70%, rgb(132, 204, 23,0.4) 100%);
 }
-.bg-lv2{
-    background-color: rgb(255, 255, 0,0.2) !important;
-    background: radial-gradient(circle, rgb(255, 255, 0,0.2) 0%, rgb(255, 255, 0,0.3) 70%, rgb(255, 255, 0,0.4) 100%);
+.bg-lv2{ //เขียวส้ม
+    background-color: rgb(124, 124, 0,0.2) !important;
+    background: radial-gradient(circle, rgb(124, 124, 0,0.2) 0%, rgb(124, 124, 0,0.3) 70%, rgb(124, 124, 0,0.4) 100%);
 }
-.bg-lv3{
-    background-color: rgb(255, 165, 0,0.2) !important;
-    background: radial-gradient(circle, rgb(255, 165, 0,0.2) 0%, rgb(255, 165, 0,0.3) 70%, rgb(255, 165, 0,0.4) 100%);
+.bg-lv3{ //ฟ้า
+    background-color: rgb(0, 171, 194,0.2) !important;
+    background: radial-gradient(circle, rgb(0, 171, 194,0.2) 0%, rgb(0, 171, 194,0.3) 70%, rgb(0, 171, 194,0.4) 100%);
 }
-.bg-lv4{
+.bg-lv4{ //แดง
     background-color: rgb(255, 0, 0,0.2) !important;
     background: radial-gradient(circle, rgb(255, 0, 0,0.2) 0%, rgb(255, 0, 0,0.3) 70%, rgb(255, 0, 0,0.4) 100%);
 }
-.bg-lv5{
+.bg-lv5{ //ม่วง
     background-color: rgba(163, 0, 168, 0.2) !important;
-    background: radial-gradient(circle, rgb(163, 0, 168,0.2) 0%, rgb(163, 0, 168,0.3) 70%, rgb(163, 0, 168,0.4) 100%);
+    background: radial-gradient(circle, rgb(163, 0, 168,0.2) 0%, rgb(163, 0, 168,0.3) 70%, rgb(163, 0, 168,0.4) 100%); 
 }
 
-.text-lv0{
-    color: rgb(0, 128, 0,1) !important;
+.text-lv0{ //เขียวเข้ม
+    color: rgb(1, 92, 1,1) !important;
 }
-.text-lv1{
-    color: rgb(173, 255, 47,1) !important;
+.text-lv1{ //เขียวอ่อน
+    color: rgb(132, 204, 23,1) !important;
 }
-.text-lv2{
-    color: rgb(255, 255, 0,1) !important;
+.text-lv2{ //ฟ้า
+    color: rgb(0, 171, 194,1) !important;
 }
-.text-lv3{
+.text-lv3{ //ส้ม
     color: rgb(255, 165, 0,1) !important;
 }
-.text-lv4{
+.text-lv4{ //แดง
     color: rgb(255, 0, 0,1) !important;
 }
-.text-lv5{    
+.text-lv5{ //ม่วง
     color: rgba(163, 0, 168, 1) !important;
 }
 
