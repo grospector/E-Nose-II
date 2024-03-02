@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "build": "ng build  --configuration development",
+    "build-prd": "ng build --configuration production",
     "test": "ng test"
   },
   "private": true,
@@ -31,6 +31,7 @@
     "crypto-browserify": "^3.12.0",
     "crypto-js": "^4.1.1",
     "firebase": "^9.17.1",
+    "firebase-cli": "^1.2.0",
     "fs": "^0.0.1-security",
     "https-browserify": "^1.0.0",
     "moment": "^2.29.4",
