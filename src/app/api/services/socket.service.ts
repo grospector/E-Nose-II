@@ -6,59 +6,68 @@ import { IDevice } from '../models/device.model';
 import { ICalibrateSocketResponse, ISocketResponse, IStatusSocketResponse } from '../models/socket.mode';
 import { DevicesService } from './devices.service';
 import { connect, StringCodec } from "nats.ws";
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { io } from 'socket.io-client';
 import { IShowCollectCalibrateProfile } from '../models/calibrate_profile.model';
+import { EnumConnectionStatus, EnumSocketCommand } from 'src/app/models/common/enum';
 // const io = require("socket.io-client/dist/socket.io")
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
-  no:number = 0;
-  //collectingData = this.socket.fromEvent<ISocketResponse>('subscribe_nats');
+  private device: IDevice = {
+    connecting_user_id: '',
+    connecting_user_name: '',
+    created_at: '',
+    id: -1,
+    is_active: false,
+    is_connecting: false,
+    mac_serial_no: '',
+    name: '',
+    status: '',
+    updated_at: '',
+    working_test_id: ''
+  };
+
+  private socket: any;
+
   public res$: BehaviorSubject<ISocketResponse> = new BehaviorSubject(<ISocketResponse>{});
   public calibrateRes$: BehaviorSubject<ICalibrateSocketResponse> = new BehaviorSubject(<ICalibrateSocketResponse>{});
   public statusRes$: BehaviorSubject<IStatusSocketResponse> = new BehaviorSubject(<IStatusSocketResponse>{});
 
-  deviceJson = localStorage.getItem("device");
-  device:IDevice = <IDevice>JSON.parse(this.deviceJson ?? "")
-  socket = io(environment.socketUrl,{transports: ['websocket']}).emit('subscribe_nats', {"channel_name":`_e-nose_user_device_${this.device?.mac_serial_no}`});
+	constructor() { 
+    this.device = JSON.parse(localStorage.getItem("device") ?? this.device.toString());
+    this.socket = io(environment.socketUrl, { transports: ['websocket'] });
+   
+    this.subscribeToSocketEvents();
+  }
 
-	constructor() { }
+  private subscribeToSocketEvents() {
+    const channel = `_e-nose_user_device_${this.device?.mac_serial_no}`;
 
-  public getNewRes = () => {
-    const deviceJson = localStorage.getItem("device");
-    const device:IDevice = <IDevice>JSON.parse(deviceJson ?? "")
+    this.socket.emit('subscribe_nats', { "channel_name": channel });
 
-    this.socket.on(`_e-nose_user_device_${device?.mac_serial_no}`, (res:ISocketResponse) =>{
-      this.res$.next(res);
+    this.socket.on(channel, (res: any) => {
+      if (res.command === EnumSocketCommand.ShowTestData) {
+        this.res$.next(res);
+      } else if (res.command === EnumSocketCommand.ShowCollectCalibrateData) {
+        this.calibrateRes$.next(res);
+      } else if(res.command === EnumSocketCommand.ChangeStatus){
+        this.statusRes$.next(res);
+      }
     });
+  }
 
+  public getNewRes(): Observable<ISocketResponse> {
     return this.res$.asObservable();
-  };
+  }
 
-  public getCalibrateRes = () =>{
-    
-    const deviceJson = localStorage.getItem("device");
-    const device:IDevice = <IDevice>JSON.parse(deviceJson ?? "")
-
-    this.socket.on(`_e-nose_user_device_${device?.mac_serial_no}`, (res:ICalibrateSocketResponse) =>{
-      this.calibrateRes$.next(res);
-    });
-
+  public getCalibrateRes(): Observable<ICalibrateSocketResponse> {
     return this.calibrateRes$.asObservable();
   }
 
-  
-  public getStatus = () => {
-    const deviceJson = localStorage.getItem("device");
-    const device:IDevice = <IDevice>JSON.parse(deviceJson ?? "")
-
-    this.socket.on(`_e-nose_user_device_${device?.mac_serial_no}`, (res:IStatusSocketResponse) =>{
-      this.statusRes$.next(res);
-    });
-
+  public getStatus(): Observable<IStatusSocketResponse> {
     return this.statusRes$.asObservable();
-  };
+  }
 }

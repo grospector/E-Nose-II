@@ -66,6 +66,8 @@ export class CheckInitComponent {
   }
 
   GetSocketResponse() : void{
+    this.basicData.labels = [];
+    
     this.socketService.getNewRes().subscribe((res:ISocketResponse) =>{
       console.log("res",res);
 
